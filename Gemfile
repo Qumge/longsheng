@@ -39,6 +39,9 @@ gem 'fullcalendar-rails',               '3.4.0.0'             # FullCalendar is 
 gem 'momentjs-rails',                   '2.17.1'              # Moment.js is a lightweight javascript date library for parsing, manipulating, and formatting dates. This gem allows for its easy inclusion into the rails asset pipeline.
 gem 'fastclick-rails',                  '1.0.1'               # This is the gem for fastclick.js.
 
+gem 'devise'                                                  # for user login
+gem 'mysql2',                            '0.4.10'           # database
+
 group :development, :test do
   gem 'byebug',                         '9.0.6'               # Byebug is a Ruby 2 debugger.
 end

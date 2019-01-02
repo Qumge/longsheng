@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  devise_for :users
   root 'dashboard#version1'
 
   match ':controller(/:action(/:id))', :via => :get

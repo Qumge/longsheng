@@ -4,14 +4,21 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
   before_action :get_adminlte_config
+  # before_action :set_layout
+  before_action :authenticate_user!
 
   private
+
+  #set default layout
+  def set_layout
+    render layout: 'devise' if params[:controller] == 'devise/sessions'
+  end
+
 
   # -Please configure AdminLTE in the AdminLteConfig class and do not change this function
   # -This function is only used as an intermediate function to get the config settings and transfer them
   # to the layout as instance variables
   def get_adminlte_config
-
     alc = AdminLteConfig.new
 
     # If this setting is on, none of the settings that you configured are going to be used
