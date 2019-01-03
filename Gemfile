@@ -40,7 +40,10 @@ gem 'momentjs-rails',                   '2.17.1'              # Moment.js is a l
 gem 'fastclick-rails',                  '1.0.1'               # This is the gem for fastclick.js.
 
 gem 'devise'                                                  # for user login
-gem 'mysql2',                            '0.4.10'           # database
+gem 'mysql2',                           '0.4.10'              # database
+gem 'rails_admin',                      '>= 1.0.0.rc'         # 后台数据管理
+gem 'paper_trail',                      '>= 3.0.0'            # rails admin 分页
+gem 'cancancan',                        '~> 2.0'              # 权限管理
 
 group :development, :test do
   gem 'byebug',                         '9.0.6'               # Byebug is a Ruby 2 debugger.

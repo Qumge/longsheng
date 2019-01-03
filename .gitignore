@@ -95,6 +95,8 @@ atlassian-ide-plugin.xml
 
 .idea
 .idea/*
+tmp
+test
 
 # Cursive Clojure plugin
 .idea/replstate.xml

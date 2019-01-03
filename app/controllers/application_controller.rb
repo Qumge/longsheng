@@ -7,6 +7,13 @@ class ApplicationController < ActionController::Base
   # before_action :set_layout
   before_action :authenticate_user!
 
+
+  def authenticate_admin_user!
+    if user_signed_in?
+      redirect_to '/' unless current_user.role && current_user.role.name == 'super_admin'
+    end
+  end
+
   private
 
   #set default layout
@@ -95,7 +102,7 @@ class ApplicationController < ActionController::Base
       # 'skin-purple-light',
       # 'skin-green-light'
 
-      @skin = 'skin-green'
+      @skin = 'skin-purple-light'
     end
 
     # reader methods for the class variables

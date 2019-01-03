@@ -1,26 +1,26 @@
-<h2>Log in</h2>
+<div class="login-box-body">
+  <p class="login-box-msg">登录</p>
 
 <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
-  </div>
-
-  <div class="field">
-    <%= f.label :password %><br />
-    <%= f.password_field :password, autocomplete: "current-password" %>
-  </div>
-
-  <% if devise_mapping.rememberable? -%>
-    <div class="field">
-      <%= f.check_box :remember_me %>
-      <%= f.label :remember_me %>
+    <div class="form-group has-feedback">
+      <%= f.text_field :login, autofocus: true, autocomplete: "login", class: 'form-control', placeholder: "账号" %>
+      <span class="glyphicon glyphicon-user form-control-feedback"></span>
     </div>
-  <% end -%>
+    <div class="form-group has-feedback">
+      <%= f.password_field :password, autocomplete: "current-password", class: "form-control", placeholder: "密码"%>
+      <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+    </div>
+    <div class="row">
+      <div class="col-xs-8">
 
-  <div class="actions">
-    <%= f.submit "Log in" %>
-  </div>
+      </div>
+      <!-- /.col -->
+      <div class="col-xs-4">
+        <%= f.submit "登录", class: "btn btn-primary btn-block btn-flat" %>
+      </div>
+      <!-- /.col -->
+    </div>
+
 <% end %>
+</div>
 
-<%= render "devise/shared/links" %>

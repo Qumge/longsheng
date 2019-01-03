@@ -17,4 +17,6 @@
 /*
  *= require dist/AdminLTE
  *= require dist/skins/_all-skins
+ *= require_tree .
+ *= require_self
  */
