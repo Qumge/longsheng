@@ -58,6 +58,10 @@ zh-CN:
       item: "项目"
       message: "信息"
     actions:
+      nestable:
+        menu: '结构'
+        breadcrumb: '架构管理'
+        title: '架构管理'
       dashboard:
         title: "网站管理"
         menu: "信息板"

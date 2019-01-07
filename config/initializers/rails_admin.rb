@@ -6,7 +6,7 @@ RailsAdmin.config do |config|
   # config.authenticate_with do
   #   warden.authenticate! scope: :user
   # end
-  # config.current_user_method(&:current_user)
+  config.current_user_method(&:current_user)
   ## == Devise ==
   config.authenticate_with do
     # authenticate_admin_user!
@@ -15,7 +15,7 @@ RailsAdmin.config do |config|
 
   ## == Cancan ==
   # config.authorize_with :cancan
-
+  config.authorize_with :cancancan
   ## == Pundit ==
   # config.authorize_with :pundit
 
@@ -29,7 +29,7 @@ RailsAdmin.config do |config|
   # config.show_gravatar = true
   #
   config.main_app_name = ["龙胜", "工程"]
-  config.included_models = ["Resource", 'Role', 'User']
+  config.included_models = ["Resource", 'Role', 'User', 'Organization', 'Product']
 
   config.model 'User' do
     label_plural "用户"
@@ -44,6 +44,10 @@ RailsAdmin.config do |config|
     end
     field :name do
       label '姓名'
+    end
+    field :organization do
+      associated_collection_cache_all true  # REQUIRED if you want to SORT the list as below
+      label '组织'
     end
     field :role do
       associated_collection_cache_all true  # REQUIRED if you want to SORT the list as below
@@ -67,7 +71,7 @@ RailsAdmin.config do |config|
 
   config.model 'Resource' do
     label_plural "权限资源"
-    field :desc do
+    field :name do
       label '说明'
     end
     field :action do
@@ -75,6 +79,37 @@ RailsAdmin.config do |config|
     end
     field :target do
       label '模块'
+    end
+  end
+
+  config.model 'Organization' do
+    label '组织架构'
+    label_plural "组织架构"
+    field :name do
+      label '组织名'
+    end
+    nestable_tree({
+                      live_update: :only
+                  })
+
+  end
+
+  config.model 'Product' do
+    label_plural "产品类型"
+    field :no do
+      label '序号'
+    end
+    field :name do
+      label '产品名'
+    end
+    field :product_no do
+      label '产品型号'
+    end
+    field :unit do
+      label '单位'
+    end
+    field :reference_price do
+      label '参考价（元）'
     end
   end
 
@@ -94,5 +129,7 @@ RailsAdmin.config do |config|
     ## With an audit adapter, you can add:
     # history_index
     # history_show
+    # Add the nestable action for configured models
+    nestable
   end
 end

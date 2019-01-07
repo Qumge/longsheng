@@ -3,7 +3,7 @@ class CreateResources < ActiveRecord::Migration
     create_table :resources do |t|
       t.string :action
       t.string :target
-      t.string :desc
+      t.string :name
       t.timestamps null: false
     end
   end

@@ -1,0 +1,22 @@
+zh-CN:
+  activerecord:
+    models:
+      role: '角色'
+      organization: '组织架构'
+      resource: '权限资源'
+      user: '用户'
+    attributes:
+      user:
+        login: "帐号"
+        email: "邮箱"
+        password: "密码"
+        phone: '手机号码'
+        password_confirmation: "重复密码"
+      organization:
+        name: '组织名'
+        created_at: '创建时间'
+        updated_at: '最后修改时间'
+
+
+
+

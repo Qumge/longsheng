@@ -11,12 +11,30 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190103063330) do
+ActiveRecord::Schema.define(version: 20190107073509) do
+
+  create_table "organizations", force: :cascade do |t|
+    t.string   "name",       limit: 255
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+    t.string   "ancestry",   limit: 255
+  end
+
+  add_index "organizations", ["ancestry"], name: "index_organizations_on_ancestry", using: :btree
+
+  create_table "products", force: :cascade do |t|
+    t.string   "no",              limit: 255
+    t.string   "product_no",      limit: 255
+    t.string   "unit",            limit: 255
+    t.float    "reference_price", limit: 24
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+  end
 
   create_table "resources", force: :cascade do |t|
     t.string   "action",     limit: 255
     t.string   "target",     limit: 255
-    t.string   "desc",       limit: 255
+    t.string   "name",       limit: 255
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
   end
@@ -29,8 +47,8 @@ ActiveRecord::Schema.define(version: 20190103063330) do
   end
 
   create_table "roles", force: :cascade do |t|
-    t.string   "name",       limit: 255
     t.string   "desc",       limit: 255
+    t.string   "name",       limit: 255
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
   end
@@ -51,6 +69,7 @@ ActiveRecord::Schema.define(version: 20190103063330) do
     t.string   "last_sign_in_ip",        limit: 255
     t.datetime "created_at",                                      null: false
     t.datetime "updated_at",                                      null: false
+    t.integer  "organization_id",        limit: 4
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree

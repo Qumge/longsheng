@@ -28,7 +28,7 @@ class Ability
     #
     # See the wiki for details:
     # https://github.com/CanCanCommunity/cancancan/wiki/Defining-Abilities
-    if user && (user.has_role? :admin)
+    if user && (user.has_role? 'super_admin')
       can :manage, :all
     end
     if user
