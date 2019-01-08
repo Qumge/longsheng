@@ -1,0 +1,51 @@
+<%= render 'projects/header' %>
+
+<div class="row">
+  <div class="col-md-10">
+    <div class="box">
+      <div class="box-header with-border">
+        <h3 class="box-title">负责项目</h3>
+          <%= create_link Project.new, '立项', class: 'font-a label pull-right bg-green', style: 'font-size: 100%' %>
+      </div>
+      <!-- /.box-header -->
+      <div class="box-body">
+        <table class="table table-bordered">
+          <tr>
+            <th>项目名</th>
+            <th>甲方</th>
+            <th>规模</th>
+            <th>立项人</th>
+            <th>状态</th>
+          </tr>
+          <% if @projects.present? %>
+          <% @projects.each do |project| %>
+            <tr>
+              <td><%= project.name %></td>
+              <td><%= project.a_name %></td>
+              <td><%= project.estimate %></td>
+              <td><%= project.owner.name %></td>
+              <td><%= project.owner.name %></td>
+            </tr>
+          <% end %>
+          <% else %>
+            <tr>
+              <td colspan="5" align="center">没有可显示的内容</td>
+            </tr>
+          <% end %>
+
+        </table>
+      </div>
+      <!-- /.box-body -->
+      <div class="box-footer clearfix">
+        <ul class="pagination pagination-sm no-margin pull-right">
+          <li><a href="#">&laquo;</a></li>
+          <li><a href="#">1</a></li>
+          <li><a href="#">2</a></li>
+          <li><a href="#">3</a></li>
+          <li><a href="#">&raquo;</a></li>
+        </ul>
+      </div>
+    </div>
+    <!-- /.box -->
+  </div>
+</div>
