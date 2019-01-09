@@ -16,3 +16,5 @@
 //= require dist/adminlte
 //= require dist/adminlte_extra
 //= require dist/demo
+//= require dashboard_v1
+//= require uielements_icons

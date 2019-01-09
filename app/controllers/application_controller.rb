@@ -18,7 +18,7 @@ class ApplicationController < ActionController::Base
 
   #set default layout
   def set_layout
-    render layout: 'devise' if params[:controller] == 'devise/sessions'
+    render layout: false if params[:controller] == 'devise/sessions'
   end
 
 
@@ -102,7 +102,7 @@ class ApplicationController < ActionController::Base
       # 'skin-purple-light',
       # 'skin-green-light'
 
-      @skin = 'skin-purple-light'
+      @skin = 'skin-purple'
     end
 
     # reader methods for the class variables

@@ -1,0 +1,90 @@
+
+<div class="row">
+  <div class="box-body">
+    <div class="nav-tabs-custom">
+      <ul class="nav nav-tabs" data-turbolinks="false">
+        <li class="active"><a href="#tab_1" data-toggle="tab">项目操作</a></li>
+        <li><a href="#tab_2" data-toggle="tab">基本信息</a></li>
+      </ul>
+      <div class="tab-content">
+        <div class="tab-pane active" id="tab_1">
+          <%= render 'projects/control' %>
+        </div>
+        <!-- /.tab-pane -->
+        <div class="tab-pane" id="tab_2">
+          <div class="row">
+            <div class="table-responsive col-sm-6">
+              <table class="table">
+                <tbody>
+                <tr>
+                  <th style="width:50%">项目名</th>
+                  <td><%= @project.name %></td>
+                </tr>
+                <tr>
+                  <th>甲方名称</th>
+                  <td><%= @project.a_name %></td>
+                </tr>
+                <tr>
+                  <th>项目类别</th>
+                  <td><%= @project.category %></td>
+                </tr>
+                <tr>
+                  <th>城市</th>
+                  <td><%= @project.city %></td>
+                </tr>
+                <tr>
+                  <th>项目地址</th>
+                  <td><%= @project.address %></td>
+                </tr>
+                <tr>
+                  <th>供货方式</th>
+                  <td><%= @project.supplier_type %></td>
+                </tr>
+                <tr>
+                  <th>是否战略</th>
+                  <td><%= @project.strategic ? '是' : '否' %></td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="table-responsive col-sm-6">
+              <table class="table">
+                <tbody>
+
+                <tr>
+                  <th>预估规模</th>
+                  <td><%= @project.estimate %></td>
+                </tr>
+                <tr>
+                  <th>负责人</th>
+                  <td><%= @project.owner&.name %></td>
+                </tr>
+                <tr>
+                  <th>创建人</th>
+                  <td><%= @project.create_user&.name %></td>
+                </tr>
+                <tr>
+                  <th>项目对接人</th>
+                  <td><%= @project.butt_name %></td>
+                </tr>
+                <tr>
+                  <th>对接人职务</th>
+                  <td><%= @project.butt_title %></td>
+                </tr>
+                <tr>
+                  <th>对接人电话</th>
+                  <td><%= @project.butt_phone %></td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <!-- /.tab-pane -->
+      </div>
+      <!-- /.tab-content -->
+    </div>
+    <!-- nav-tabs-custom -->
+  </div>
+
+</div>

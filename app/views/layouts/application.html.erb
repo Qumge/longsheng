@@ -3,7 +3,7 @@
 
   <%= render 'layouts/head' %>
 
-<body class="hold-transition sidebar-mini <%= !@demo_mode ? @layout  + ' ' + @top_nav + ' ' + @sidebar + ' ' + @skin : 'skin-purple-light' %>">
+<body class="hold-transition sidebar-mini <%= !@demo_mode ? @layout  + ' ' + @top_nav + ' ' + @sidebar + ' ' + @skin : 'skin-purple' %>">
 
   <div class="wrapper">
 
@@ -34,9 +34,9 @@
 
   </div>
 
-  <% if controller.controller_name == 'dashboard' && controller.action_name == 'version1' %>
-    <%= javascript_include_tag 'dashboard_v1', 'data-turbolinks-track' => false %>
-  <% elsif controller.controller_name == 'dashboard' && controller.action_name == 'version2' %>
+  <%# if controller.controller_name == 'dashboard' && controller.action_name == 'version1' %>
+    <%#= javascript_include_tag 'dashboard_v1', 'data-turbolinks-track' => false %>
+  <% if controller.controller_name == 'dashboard' && controller.action_name == 'version2' %>
     <%= javascript_include_tag 'dashboard_v2', 'data-turbolinks-track' => false %>
 
   <% elsif controller.controller_name == 'widgets' %>

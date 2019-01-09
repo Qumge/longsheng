@@ -16,6 +16,18 @@ zh-CN:
         name: '组织名'
         created_at: '创建时间'
         updated_at: '最后修改时间'
+      project:
+        name: '项目名'
+        a_name: '甲方名称'
+        category: '项目类别'
+        address: '项目地址'
+        city: '城市'
+        supplier_type: '供货方式'
+        strategic: '是否战略'
+        estimate: '预估规模'
+        butt_name: '对接人名'
+        butt_title: '对接人职务'
+        butt_phone: '对接人电话'
 
 
 

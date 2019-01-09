@@ -17,13 +17,23 @@
 /*
  *= require dist/AdminLTE
  *= require dist/skins/_all-skins
+ *= require uielements_icons
  *= require_tree .
  *= require_self
  */
 
-
+.devise{
+    background: url(bg.jpg) ;
+}
 .font-a{
     color: #fff;
     font-weight: bold;
 }
 
+.required abbr, .invalid-feedback{
+    color: red;
+}
+
+.small-box .icon{
+    font-size: 70px;
+}

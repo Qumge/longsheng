@@ -45,8 +45,11 @@ gem 'rails_admin',                      '>= 1.0.0.rc'         # 后台数据管�
 gem 'paper_trail',                      '>= 3.0.0'            # rails admin 分页
 gem 'cancancan',                        '~> 2.0'              # 权限管理
 gem 'ancestry'                                                # 组织架构树结构
-gem 'rails_admin_nestable',             '~> 0.3.2'
-gem 'simple_form'
+gem 'rails_admin_nestable',             '~> 0.3.2'            # railsadmin 树结构支持
+gem 'simple_form'                                             # form表单
+gem 'kaminari'                                                # 分页
+gem 'kaminari-bootstrap', '~> 3.0.1'                          # 分页 bootstrap样式
+gem "rails_config", "~> 0.4.2"
 
 group :development, :test do
   gem 'byebug',                         '9.0.6'               # Byebug is a Ruby 2 debugger.

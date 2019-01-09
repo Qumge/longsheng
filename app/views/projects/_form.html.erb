@@ -1,12 +1,12 @@
 <%= simple_form_for project do |f| %>
   <div class="box-body">
     <%= f.input :name, label: '项目名' %>
-    <%= f.input :city, label: '城市', error: 'Username is mandatory, please specify one' %>
-    <%= f.input :category, collection: {a: 1, b: 2}, label: '项目类别' %>
     <%= f.input :a_name, label: '甲方名称' %>
+    <%= f.input :category, collection: ['地产', '酒店', '其他'], label: '项目类别' %>
+    <%= f.input :city, label: '城市'%>
     <%= f.input :address, label: '项目地址' %>
-    <%= f.input :supplier_type, label: '供货方式' %>
-    <%= f.input :strategic, label: '是否战略', collection: {'否': 0, '是': 1} %>
+    <%= f.input :supplier_type, label: '供货方式', collection: ['甲采', '甲指', '乙供'] %>
+    <%= f.input :strategic, label: '是否战略', collection: {'是': 1, '否': 0} %>
     <%= f.input :estimate, label: '预估规模' %>
     <%= f.input :butt_name, label: '项目对接人名' %>
     <%= f.input :butt_title, label: '对接人职务' %>

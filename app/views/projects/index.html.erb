@@ -20,11 +20,11 @@
           <% if @projects.present? %>
           <% @projects.each do |project| %>
             <tr>
-              <td><%= project.name %></td>
+              <td><%= link_to project.name, project_path(project) %></td>
               <td><%= project.a_name %></td>
               <td><%= project.estimate %></td>
               <td><%= project.owner.name %></td>
-              <td><%= project.owner.name %></td>
+              <td><%= project.status %></td>
             </tr>
           <% end %>
           <% else %>
@@ -37,13 +37,10 @@
       </div>
       <!-- /.box-body -->
       <div class="box-footer clearfix">
-        <ul class="pagination pagination-sm no-margin pull-right">
-          <li><a href="#">&laquo;</a></li>
-          <li><a href="#">1</a></li>
-          <li><a href="#">2</a></li>
-          <li><a href="#">3</a></li>
-          <li><a href="#">&raquo;</a></li>
-        </ul>
+        <div class="pull-right pagination-sm no-margin">
+        <%= paginate @projects%>
+        </div>
+
       </div>
     </div>
     <!-- /.box -->

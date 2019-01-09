@@ -61,6 +61,8 @@ ActiveRecord::Schema.define(version: 20190108030213) do
     t.string   "butt_title",    limit: 255
     t.string   "butt_phone",    limit: 255
     t.integer  "owner_id",      limit: 4
+    t.integer  "create_id",     limit: 4
+    t.integer  "agency_id",     limit: 4
     t.datetime "created_at",                null: false
     t.datetime "updated_at",                null: false
   end

@@ -1,26 +1,19 @@
-<div class="login-box-body">
-  <p class="login-box-msg">登录</p>
 
-<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-    <div class="form-group has-feedback">
-      <%= f.text_field :login, autofocus: true, autocomplete: "login", class: 'form-control', placeholder: "账号" %>
-      <span class="glyphicon glyphicon-user form-control-feedback"></span>
-    </div>
-    <div class="form-group has-feedback">
-      <%= f.password_field :password, autocomplete: "current-password", class: "form-control", placeholder: "密码"%>
-      <span class="glyphicon glyphicon-lock form-control-feedback"></span>
-    </div>
-    <div class="row">
-      <div class="col-xs-8">
 
-      </div>
-      <!-- /.col -->
-      <div class="col-xs-4">
-        <%= f.submit "登录", class: "btn btn-primary btn-block btn-flat" %>
-      </div>
-      <!-- /.col -->
+
+<%= form_for(resource, as: resource_name, url: session_path(resource_name), class: 'login-form') do |f| %>
+    <div class="form-group">
+      <label class="sr-only" for="login">账号</label>
+      <%= f.text_field :login, autofocus: true, autocomplete: "login", class: 'form-username form-control', placeholder: "账号" %>
     </div>
+    <div class="form-group">
+      <label class="sr-only" for="password">密码</label>
+      <%= f.password_field :password, autocomplete: "current-password", class: "form-password form-control", placeholder: "密码"%>
+    </div>
+    <%= f.submit "登录", class: "btn" %>
 
 <% end %>
 </div>
+
+
 

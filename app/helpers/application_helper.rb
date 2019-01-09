@@ -8,7 +8,8 @@ module ApplicationHelper
         projects: {
             index: '项目列表',
             new: '立项',
-            create: '立项'
+            create: '立项',
+            show: '详情'
         }
     }
   end

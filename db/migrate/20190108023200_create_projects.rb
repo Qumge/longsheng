@@ -13,6 +13,7 @@ class CreateProjects < ActiveRecord::Migration
       t.string :butt_title
       t.string :butt_phone
       t.integer :owner_id
+      t.integer :create_id
       t.integer :agency_id
       t.timestamps null: false
     end
