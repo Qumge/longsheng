@@ -4,7 +4,6 @@
 //= require jquery-ui
 //= require dist/resolve_tooltip_conflict
 //= require bootstrap-sprockets
-//= require morris
 //= require jquery.sparkline
 //= require externals/jvectormap/jquery-jvectormap-1.2.2.min
 //= require externals/jvectormap/jquery-jvectormap-world-mill-en

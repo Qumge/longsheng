@@ -1,5 +1,5 @@
 <li class="time-label">
-                  <span class="bg-green">
+                  <span class="bg-purple">
                     结清确认
                   </span>
 </li>
@@ -7,14 +7,12 @@
 <!-- timeline item -->
 <li>
   <!--        <i class="fa fa-envelope bg-blue"></i>-->
-
+  <i class="fa fa-check bg-blue"></i>
   <div class="timeline-item">
-    <span class="time"><i class="fa fa-clock-o"></i> 12:05</span>
-
-    <h3 class="timeline-header"><a href="#">Support Team</a> sent you an email</h3>
-
     <div class="timeline-body">
-
+      <%= link_to new_contract_path, 'data-toggle' => "modal", 'data-target' => "#global-modal", class: 'btn btn-xs bg-blue' do %>
+        确认结清
+      <% end %>
     </div>
   </div>
 </li>

@@ -37,3 +37,7 @@
 .small-box .icon{
     font-size: 70px;
 }
+
+.timeline>li>.timeline-item{
+    background-color: #ecf0f5;
+}

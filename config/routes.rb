@@ -60,8 +60,13 @@ Rails.application.routes.draw do
   #   end
   #
   resources :projects do
-
+    member do
+      get :edit_control
+      get :update_control
+    end
   end
+
+  resources :contracts
 
   match ':controller(/:action(/:id))', :via => :get
 

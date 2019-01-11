@@ -24,6 +24,14 @@ class ProjectsController < ApplicationController
     end
   end
 
+  def edit_control
+    render layout: false
+  end
+
+  def update_control
+
+  end
+
   private
   def project_permit
     params.require(:project).permit(:name, :a_name, :category, :address, :city, :supplier_type, :strategic, :estimate,

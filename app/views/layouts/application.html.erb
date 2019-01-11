@@ -33,60 +33,7 @@
     <% end %>
 
   </div>
-
-  <%# if controller.controller_name == 'dashboard' && controller.action_name == 'version1' %>
-    <%#= javascript_include_tag 'dashboard_v1', 'data-turbolinks-track' => false %>
-  <% if controller.controller_name == 'dashboard' && controller.action_name == 'version2' %>
-    <%= javascript_include_tag 'dashboard_v2', 'data-turbolinks-track' => false %>
-
-  <% elsif controller.controller_name == 'widgets' %>
-    <%= javascript_include_tag 'widgets', 'data-turbolinks-track' => false %>
-
-  <% elsif controller.controller_name == 'charts' && controller.action_name == 'chartjs' %>
-    <%= javascript_include_tag 'charts_chartjs', 'data-turbolinks-track' => false %>
-  <% elsif controller.controller_name == 'charts' && controller.action_name == 'morris' %>
-    <%= javascript_include_tag 'charts_morris', 'data-turbolinks-track' => false %>
-  <% elsif controller.controller_name == 'charts' && controller.action_name == 'flot' %>
-    <%= javascript_include_tag 'charts_flot', 'data-turbolinks-track' => false %>
-  <% elsif controller.controller_name == 'charts' && controller.action_name == 'inline' %>
-    <%= javascript_include_tag 'charts_inline', 'data-turbolinks-track' => false %>
-
-  <% elsif controller.controller_name == 'uielements' && controller.action_name == 'general' %>
-    <%= javascript_include_tag 'uielements_general', 'data-turbolinks-track' => false %>
-  <% elsif controller.controller_name == 'uielements' && controller.action_name == 'icons' %>
-    <%= javascript_include_tag 'uielements_icons', 'data-turbolinks-track' => false %>
-  <% elsif controller.controller_name == 'uielements' && controller.action_name == 'buttons' %>
-    <%= javascript_include_tag 'uielements_buttons', 'data-turbolinks-track' => false %>
-  <% elsif controller.controller_name == 'uielements' && controller.action_name == 'sliders' %>
-    <%= javascript_include_tag 'uielements_sliders', 'data-turbolinks-track' => false %>
-  <% elsif controller.controller_name == 'uielements' && controller.action_name == 'timeline' %>
-    <%= javascript_include_tag 'uielements_timeline', 'data-turbolinks-track' => false %>
-  <% elsif controller.controller_name == 'uielements' && controller.action_name == 'modals' %>
-    <%= javascript_include_tag 'uielements_modals', 'data-turbolinks-track' => false %>
-
-  <% elsif controller.controller_name == 'forms' && controller.action_name == 'general' %>
-    <%= javascript_include_tag 'forms_general', 'data-turbolinks-track' => false %>
-  <% elsif controller.controller_name == 'forms' && controller.action_name == 'advanced' %>
-    <%= javascript_include_tag 'forms_advanced', 'data-turbolinks-track' => false %>
-  <% elsif controller.controller_name == 'forms' && controller.action_name == 'editors' %>
-    <%= javascript_include_tag 'forms_editors', 'data-turbolinks-track' => false %>
-
-  <% elsif controller.controller_name == 'tables' && controller.action_name == 'simple' %>
-    <%= javascript_include_tag 'tables_simple', 'data-turbolinks-track' => false %>
-  <% elsif controller.controller_name == 'tables' && controller.action_name == 'data' %>
-    <%= javascript_include_tag 'tables_data', 'data-turbolinks-track' => false %>
-
-  <% elsif controller.controller_name == 'calendar' %>
-    <%= javascript_include_tag 'calendar', 'data-turbolinks-track' => false %>
-
-  <% elsif controller.controller_name == 'mailbox' && controller.action_name == 'inbox' %>
-    <%= javascript_include_tag 'mailbox_inbox', 'data-turbolinks-track' => false %>
-  <% elsif controller.controller_name == 'mailbox' && controller.action_name == 'compose' %>
-    <%= javascript_include_tag 'mailbox_compose', 'data-turbolinks-track' => false %>
-  <% elsif controller.controller_name == 'mailbox' && controller.action_name == 'read' %>
-    <%= javascript_include_tag 'mailbox_read', 'data-turbolinks-track' => false %>
-
-  <% end %>
+  <%= render 'layouts/modal' %>
 
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => false %>
 
@@ -99,8 +46,6 @@
         right_sidebar_slide();
       <% end %>
     <% else %>
-      <!-- AdminLTE for demo purposes -->
-      run_demo();
     <% end %>
   </script>
 

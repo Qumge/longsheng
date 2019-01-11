@@ -15,6 +15,16 @@
 //= require jquery
 //= require dist/adminlte
 //= require dist/adminlte_extra
-//= require dist/demo
 //= require dashboard_v1
 //= require uielements_icons
+
+
+var initPage = function () {
+    console.log(222);
+    $(".modal").on("hidden.bs.modal", function() {
+        $(this).removeData("bs.modal");
+    });
+}
+
+$(document).ready(initPage);
+// $(document).on("turbolinks:load", initPage);

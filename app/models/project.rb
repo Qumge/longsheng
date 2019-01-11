@@ -11,6 +11,10 @@ class Project < ActiveRecord::Base
     ''
   end
 
+  def contract
+
+  end
+
   private
   def create_audit
     Audit.create model_id: self.id, model_type: self.class.name
