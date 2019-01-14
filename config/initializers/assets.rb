@@ -39,3 +39,4 @@ Rails.application.config.assets.precompile += %w( calendar.css calendar.js)
 Rails.application.config.assets.precompile += %w( mailbox_inbox.css mailbox_inbox.js)
 Rails.application.config.assets.precompile += %w( mailbox_compose.css mailbox_compose.js)
 Rails.application.config.assets.precompile += %w( mailbox_read.css mailbox_read.js)
+

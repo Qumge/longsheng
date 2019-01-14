@@ -1,5 +1,6 @@
 class ProjectsController < ApplicationController
   before_action :set_project, only: [:show]
+  include ApplicationHelper
   def index
 
     @projects = current_user.view_projects.page(params[:page]).per(Settings.per_page)
@@ -10,7 +11,7 @@ class ProjectsController < ApplicationController
   end
 
   def show
-
+    @uptoken = uptoken
   end
 
   def create

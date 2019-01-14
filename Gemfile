@@ -50,6 +50,8 @@ gem 'simple_form'                                             # form表单
 gem 'kaminari'                                                # 分页
 gem 'kaminari-bootstrap', '~> 3.0.1'                          # 分页 bootstrap样式
 gem "rails_config", "~> 0.4.2"
+gem 'qiniu', '>= 6.9.0'
+gem 'bower-rails', '~> 0.10.0'
 
 group :development, :test do
   gem 'byebug',                         '9.0.6'               # Byebug is a Ruby 2 debugger.

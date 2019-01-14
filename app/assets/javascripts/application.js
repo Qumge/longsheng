@@ -17,10 +17,11 @@
 //= require dist/adminlte_extra
 //= require dashboard_v1
 //= require uielements_icons
+//= require plupload/js/moxie
+//= require plupload/js/plupload.dev
 
 
 var initPage = function () {
-    console.log(222);
     $(".modal").on("hidden.bs.modal", function() {
         $(this).removeData("bs.modal");
     });
