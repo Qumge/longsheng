@@ -16,6 +16,7 @@
             <th>规模</th>
             <th>立项人</th>
             <th>状态</th>
+            <th></th>
           </tr>
           <% if @projects.present? %>
           <% @projects.each do |project| %>
@@ -25,6 +26,9 @@
               <td><%= project.estimate %></td>
               <td><%= project.owner.name %></td>
               <td><%= project.status %></td>
+              <td><button class="btn btn-primary btn-lg show-file" data-url="http://heyen.nat300.top/test/test.docx" data-file-name="test.docx">word</button>
+                <button class="btn btn-primary btn-lg show-file" data-url="http://heyen.nat300.top/test/aa.pdf" data-file-name="aa.pdf">pdf</button>
+              </td>
             </tr>
           <% end %>
           <% else %>

@@ -29,3 +29,20 @@ var initPage = function () {
 
 $(document).ready(initPage);
 // $(document).on("turbolinks:load", initPage);
+
+
+$('.show-file').click(function(e){
+    var filename = $(this).attr('data-file-name');
+    var url = $(this).attr('data-url');
+    var ext = filename.split('.').pop();
+    // word ppt xls 使用微软在线编辑
+    // pdf 使用
+    $('#file-modal-label').text('data-file-name');
+    console.log(ext);
+    if(['docx', 'doc', 'ppt', 'pptx', 'xls', 'xlsx'].indexOf(ext) >= 0){
+        $('#file-modal-body').html("<iframe src='https://view.officeapps.live.com/op/view.aspx?src=" + url + "' width='100%' height='100%' frameborder='1'>\n</iframe>");
+    }else if(['pdf'].indexOf(ext) >= 0){
+        $('#file-modal-body').html("<iframe src='" + url + "' width='100%' height='100%' frameborder='1'>\n");
+    }
+    $('#file-modal').modal();
+});
