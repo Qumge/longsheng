@@ -12,6 +12,7 @@
 //
 
 // This file includes the common AdminLTE JS files that is commonly used on every page
+
 //= require jquery
 //= require dist/adminlte
 //= require dist/adminlte_extra
@@ -37,12 +38,14 @@ $('.show-file').click(function(e){
     var ext = filename.split('.').pop();
     // word ppt xls 使用微软在线编辑
     // pdf 使用
-    $('#file-modal-label').text('data-file-name');
+    $('#file-modal-label').text($(this).attr('data-file-name'));
     console.log(ext);
     if(['docx', 'doc', 'ppt', 'pptx', 'xls', 'xlsx'].indexOf(ext) >= 0){
-        $('#file-modal-body').html("<iframe src='https://view.officeapps.live.com/op/view.aspx?src=" + url + "' width='100%' height='100%' frameborder='1'>\n</iframe>");
+       $('#file-modal-body').html("<iframe src='https://view.officeapps.live.com/op/embed.aspx?src=" + url +"' width='100%' height='100%' frameborder='0'></iframe>");
     }else if(['pdf'].indexOf(ext) >= 0){
-        $('#file-modal-body').html("<iframe src='" + url + "' width='100%' height='100%' frameborder='1'>\n");
+        // $('#file-modal-body').html("<iframe src='" + url + "' width='100%' height='100%' frameborder='1'>\n");
+        $('#file-modal-body').html('<iframe :src="http://lvh.me:3000/PDF.js/web/viewer.html?file='+ url + '" width="100%" height="99%"></iframe>');
+
     }
     $('#file-modal').modal();
 });
