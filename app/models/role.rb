@@ -1,3 +1,14 @@
+# == Schema Information
+#
+# Table name: roles
+#
+#  id         :integer          not null, primary key
+#  desc       :string(255)
+#  name       :string(255)
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#
+
 class Role < ActiveRecord::Base
   has_and_belongs_to_many :resources, join_table: 'role_resources'
   validates_presence_of :name

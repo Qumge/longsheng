@@ -21,17 +21,33 @@
 //= require plupload/js/moxie
 //= require plupload/js/plupload.dev
 
-
+$.fn.datepicker.dates['zh-cn'] = {
+    days: ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"],
+    daysShort: ["日", "一", "二", "三", "四", "五", "六"],
+    daysMin: ["日", "一", "二", "三", "四", "五", "六"],
+    months: ["1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月", "9月", "10月", "11月", "12月"],
+    monthsShort: ["一", "二", "三", "四", "五", "六", "七", "八", "九", "十", "十一", "十二"],
+    today: "今天",
+    clear: "清除",
+    format: "yyyy-mm-dd",
+    titleFormat: "yyyy年 MM", /* Leverages same syntax as 'format' */
+    weekStart: 0
+};
 var initPage = function () {
     $(".modal").on("hidden.bs.modal", function() {
         $(this).removeData("bs.modal");
     });
 }
 
+$('.datepicker').datepicker({
+    autoclose: true,
+    language: 'zh-cn'
+});
+
 $(document).ready(initPage);
 // $(document).on("turbolinks:load", initPage);
 
-
+// 在线预览office pdf
 $('.show-file').click(function(e){
     var filename = $(this).attr('data-file-name');
     var url = $(this).attr('data-url');

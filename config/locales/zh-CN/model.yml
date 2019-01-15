@@ -5,6 +5,7 @@ zh-CN:
       organization: '组织架构'
       resource: '权限资源'
       user: '用户'
+      contract: '战略合同'
     attributes:
       user:
         login: "帐号"
@@ -28,6 +29,18 @@ zh-CN:
         butt_name: '对接人名'
         butt_title: '对接人职务'
         butt_phone: '对接人电话'
+      contract:
+        name: '明细'
+        no: '合同编号'
+        product: '产品品类'
+        partner: '战略合作方'
+        valid_date: '有效期限'
+        cycle: '供货周期'
+        advance_time: '预付款请款时间'
+        process_time: '进度款请款时间'
+        settlement_time: '结算款请款时间'
+        tail_time: '尾款请款时间'
+        others: '合同其他关键条款'
 
 
 

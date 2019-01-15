@@ -1,3 +1,26 @@
+# == Schema Information
+#
+# Table name: projects
+#
+#  id            :integer          not null, primary key
+#  city          :string(255)
+#  category      :string(255)
+#  a_name        :string(255)
+#  name          :string(255)
+#  address       :string(255)
+#  supplier_type :string(255)
+#  strategic     :boolean
+#  estimate      :integer
+#  butt_name     :string(255)
+#  butt_title    :string(255)
+#  butt_phone    :string(255)
+#  owner_id      :integer
+#  create_id     :integer
+#  agency_id     :integer
+#  created_at    :datetime         not null
+#  updated_at    :datetime         not null
+#
+
 class Project < ActiveRecord::Base
   belongs_to :owner, class_name: 'User', foreign_key: :owner_id
   belongs_to :create_user, class_name: 'User', foreign_key: :create_id

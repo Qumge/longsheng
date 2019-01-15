@@ -13,6 +13,10 @@ module ApplicationHelper
 
   end
 
+  def simple_time datetime
+    datetime.strftime('%Y-%m-%d')if datetime.present?
+  end
+
 
   def get_title params
     title_config[params[:controller].to_sym].present? ? title_config[params[:controller].to_sym][params[:action].to_sym] : ''
@@ -25,6 +29,14 @@ module ApplicationHelper
             new: '立项',
             create: '立项',
             show: '详情'
+        },
+        contracts: {
+            index: '战略合同列表',
+            new: '添加合同',
+            create: '添加合同',
+            show: '详情',
+            edit: '合同编辑',
+            update: '合同编辑'
         }
     }
   end

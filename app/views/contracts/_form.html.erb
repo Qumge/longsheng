@@ -1,0 +1,26 @@
+<%= simple_form_for contract do |f| %>
+  <div class="box-body">
+    <%= f.input :no, label: '合同编号' %>
+    <%= f.input :name, label: '明细' %>
+    <%= f.input :partner, label: '战略合作方' %>
+    <%= f.input :product, label: '产品品类' %>
+    <div class="form-group">
+      <label>合同有效期限:</label>
+
+      <div class="input-group date">
+        <div class="input-group-addon">
+          <i class="fa fa-calendar"></i>
+        </div>
+        <input type="text" class="form-control pull-right datepicker readonly" value='<%=simple_time contract.valid_date %>' id="contract_valid_date" name="contract[valid_date]" readonly>
+      </div>
+      <!-- /.input group -->
+    </div>
+    <%= f.input :cycle, label: '供货周期' %>
+    <%= f.input :advance_time, label: '预付款请款时间（天）' %>
+    <%= f.input :process_time, label: '进度款请款时间（天）' %>
+    <%= f.input :settlement_time, label: '结算款请款时间（天）' %>
+    <%= f.input :tail_time, label: '尾款请款时间（天）' %>
+    <%= f.input :others, label: '其他条款' %>
+    <%= f.button :submit, '提交', class: "btn btn-primary" %>
+  </div>
+<% end %>

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190108030213) do
+ActiveRecord::Schema.define(version: 20190115094750) do
 
   create_table "audit_details", force: :cascade do |t|
     t.integer  "audit_id",   limit: 4
@@ -27,6 +27,22 @@ ActiveRecord::Schema.define(version: 20190108030213) do
     t.string   "status",     limit: 255
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
+  end
+
+  create_table "contracts", force: :cascade do |t|
+    t.string   "name",            limit: 255
+    t.string   "partner",         limit: 255
+    t.string   "product",         limit: 255
+    t.datetime "valid_date"
+    t.string   "no",              limit: 255
+    t.string   "cycle",           limit: 255
+    t.text     "others",          limit: 65535
+    t.integer  "advance_time",    limit: 4
+    t.integer  "process_time",    limit: 4
+    t.integer  "settlement_time", limit: 4
+    t.integer  "tail_time",       limit: 4
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
   end
 
   create_table "organizations", force: :cascade do |t|
@@ -87,6 +103,15 @@ ActiveRecord::Schema.define(version: 20190108030213) do
     t.string   "name",       limit: 255
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
+  end
+
+  create_table "sales", force: :cascade do |t|
+    t.integer  "product_id",  limit: 4
+    t.float    "price",       limit: 24
+    t.integer  "contract_id", limit: 4
+    t.string   "desc",        limit: 255
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
   end
 
   create_table "users", force: :cascade do |t|
