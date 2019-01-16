@@ -20,6 +20,7 @@
 //= require uielements_icons
 //= require plupload/js/moxie
 //= require plupload/js/plupload.dev
+//= require select2-full
 
 $.fn.datepicker.dates['zh-cn'] = {
     days: ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"],
@@ -43,6 +44,8 @@ $('.datepicker').datepicker({
     autoclose: true,
     language: 'zh-cn'
 });
+
+
 
 $(document).ready(initPage);
 // $(document).on("turbolinks:load", initPage);

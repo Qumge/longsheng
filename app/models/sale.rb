@@ -14,4 +14,7 @@
 class Sale < ActiveRecord::Base
   belongs_to :product
   belongs_to :contract
+  validates_presence_of :contract_id, :price, :product_id
+  validates_numericality_of :price, if: proc{|sale| sale.price.present?}
+  validates_uniqueness_of :product_id, scope: :contract_id
 end

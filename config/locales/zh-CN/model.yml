@@ -6,6 +6,7 @@ zh-CN:
       resource: '权限资源'
       user: '用户'
       contract: '战略合同'
+      product: '产品'
     attributes:
       user:
         login: "帐号"
@@ -41,6 +42,10 @@ zh-CN:
         settlement_time: '结算款请款时间'
         tail_time: '尾款请款时间'
         others: '合同其他关键条款'
+      sale:
+        product_id: '序号 / 产品型号'
+        price: '价格'
+        desc: '备注'
 
 
 

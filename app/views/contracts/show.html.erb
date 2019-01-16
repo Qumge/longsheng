@@ -13,7 +13,7 @@
           <%= render 'contracts/detail', contract: @contract %>
         </div>
         <div class="tab-pane" id="tab_2">
-          价格体系
+          <%= render 'sales/list', sales: @contract.sales %>
         </div>
         <!-- /.tab-pane -->
       </div>

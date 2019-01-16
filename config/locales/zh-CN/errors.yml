@@ -6,7 +6,7 @@ zh-CN:
       messages:
         too_long_validation: "最多只能有 %{max} 个字；你已经输入了 %{length} 个字。"
         invalid_boolean: "无效布尔值。"
-        taken: "重复的内容"
+        taken: "重复的内容或已经存在"
         accepted: 必须被接受
         blank: 不能为空
         present: 必须为空

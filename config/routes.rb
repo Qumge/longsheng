@@ -119,7 +119,11 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :contracts
+  resources :contracts do
+    member do
+      resources :sales
+    end
+  end
 
   match ':controller(/:action(/:id))', :via => :get
 

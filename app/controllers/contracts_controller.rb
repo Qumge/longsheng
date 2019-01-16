@@ -42,7 +42,7 @@ class ContractsController < ApplicationController
   end
 
   def set_contract
-    @contract = Contract.includes(:sales).find_by id: params[:id]
+    @contract = Contract.includes(sales: :product).find_by id: params[:id]
     redirect_to contracts_path, alert: '找不到数据' unless @contract.present?
   end
 
