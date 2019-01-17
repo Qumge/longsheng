@@ -2,6 +2,7 @@
 <html>
 
   <%= render 'layouts/head' %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => false %>
 
 <body class="hold-transition sidebar-mini <%= !@demo_mode ? @layout  + ' ' + @top_nav + ' ' + @sidebar + ' ' + @skin : 'skin-blue' %>">
 
@@ -25,6 +26,7 @@
       <section class="content">
         <%= yield %>
       </section>
+
     </div>
 
     <%= render 'layouts/footer' %>
@@ -35,7 +37,6 @@
   </div>
   <%= render 'layouts/modal' %>
 
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => false %>
 
   <script>
     <% if !@demo_mode %>
@@ -48,6 +49,8 @@
     <% else %>
     <% end %>
   </script>
+  <div id="spinner">
 
+  </div>
 </body>
 </html>

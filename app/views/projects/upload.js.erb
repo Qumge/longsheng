@@ -1,0 +1,5 @@
+<% unless @flag %>
+alert_modal('上传失败');
+<% end %>
+hideSpinner();
+$('#tab_2').html('<%= j render "/projects/process"%>');

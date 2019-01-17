@@ -41,3 +41,17 @@
 .timeline>li>.timeline-item{
     background-color: #ecf0f5;
 }
+
+.spinner {
+    display: block;
+    position:   fixed;
+    z-index:    1200;
+    top:        0;
+    left:       0;
+    height:     100%;
+    width:      100%;
+    background: rgba( 255, 255, 255, .8 )
+    50% 50%
+    no-repeat;
+    background-image: url('loading.gif');
+}

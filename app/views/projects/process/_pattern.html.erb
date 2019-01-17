@@ -10,9 +10,16 @@
   <i class="fa fa-cog bg-red"></i>
   <div class="timeline-item">
     <div class="timeline-body">
-      <%= link_to edit_control_project_path(@project), 'data-toggle' => "modal", 'data-target' => "#global-modal", class: 'btn btn-xs bg-red' do %>
-        设置
-      <% end %>
+      <div class="form-group">
+        <label>代理商</label>
+        <%= select_tag :agency_id, options_for_select([['工程队1', 1], ['工程队2', 2]], @project.agency_id), include_blank: '自营', class: "form-control select2", style: "width: 100%;"%>
+      </div>
     </div>
   </div>
 </li>
+
+<script type="text/javascript">
+  $('#agency_id').change(function(){
+      alert(1);
+  })
+</script>

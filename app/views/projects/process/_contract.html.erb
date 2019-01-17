@@ -5,22 +5,6 @@
 </li>
 <!-- /.timeline-label -->
 <!-- timeline item -->
-<li>
-  <i class="fa fa-list-alt bg-blue"></i>
-
-  <div class="timeline-item">
-    <div class="timeline-body">
-      <% if @project.contract.present? %>
-        <%= render 'contracts/detail', locals: {contract: @project.contract}%>
-        <% else %>
-        <%= link_to new_contract_path, 'data-toggle' => "modal", 'data-target' => "#global-modal", class: 'btn btn-xs bg-blue' do %>
-           合同录入
-        <% end %>
-      <% end %>
-    </div>
-  </div>
-</li>
-
 
 <li>
   <i class="fa fa-file-pdf-o bg-green"></i>
@@ -31,7 +15,19 @@
     </div>
     <div class="timeline-body">
       <label for="exampleInputFile">项目合同文件</label>
-      <input type="file" id="exampleInputFile">
+      <div >
+        <a class="btn btn-default " id="project_contract" href="#" >
+          <i class="fa fa-plus"></i>
+          <span>选择文件</span>
+        </a>
+      </div>
+
+      <% if @project.project_contract.present? %>
+      <a href="javascript:void(0)" onclick="show_file(this)" class="btn show-file" data-url="<%= @project.project_contract.preview_url%>" data-file-name="<%= @project.project_contract.file_name %>">
+        <i class="fa fa-eye"></i><%= @project.project_contract.file_name %>
+      </a>
+      <% end %>
     </div>
   </div>
 </li>
+

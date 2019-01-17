@@ -3,22 +3,25 @@
 # Table name: projects
 #
 #  id            :integer          not null, primary key
-#  city          :string(255)
-#  category      :string(255)
 #  a_name        :string(255)
-#  name          :string(255)
 #  address       :string(255)
-#  supplier_type :string(255)
-#  strategic     :boolean
-#  estimate      :integer
 #  butt_name     :string(255)
-#  butt_title    :string(255)
 #  butt_phone    :string(255)
-#  owner_id      :integer
-#  create_id     :integer
-#  agency_id     :integer
+#  butt_title    :string(255)
+#  category      :string(255)
+#  city          :string(255)
+#  estimate      :integer
+#  name          :string(255)
+#  step          :integer          default(0)
+#  step_status   :string(255)
+#  strategic     :boolean
+#  supplier_type :string(255)
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
+#  agency_id     :integer
+#  contract_id   :integer
+#  create_id     :integer
+#  owner_id      :integer
 #
 
 class Project < ActiveRecord::Base
@@ -28,15 +31,15 @@ class Project < ActiveRecord::Base
   after_create :create_audit
   validates_presence_of :name, :a_name, :category, :address, :city, :supplier_type
   validates_numericality_of :estimate, if: Proc.new{|p| p.estimate.present?}
+  has_one :project_contract, -> {where(model_type: 'contract')}, class_name: 'Attachment', foreign_key: :model_id
+  has_one :advance, -> {where(model_type: 'advance')}, class_name: 'Attachment', foreign_key: :model_id
+  has_one :plate, -> {where(model_type: 'plate')}, class_name: 'Attachment', foreign_key: :model_id
 
   # 根据审核表获取当前的审核状态
   def status
     ''
   end
-
-  def contract
-
-  end
+  
 
   private
   def create_audit

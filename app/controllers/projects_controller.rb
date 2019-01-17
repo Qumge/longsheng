@@ -1,5 +1,5 @@
 class ProjectsController < ApplicationController
-  before_action :set_project, only: [:show]
+  before_action :set_project, only: [:show, :upload, :update_agency]
   include ApplicationHelper
   def index
     @projects = current_user.view_projects.page(params[:page]).per(Settings.per_page)
@@ -24,12 +24,23 @@ class ProjectsController < ApplicationController
     end
   end
 
-  def edit_control
-    render layout: false
+  def update_agency
+
   end
 
-  def update_control
 
+  def upload
+    @uptoken = uptoken
+    @flag = true
+    if ['project_contract', 'advance'].include? params[:name]
+      if @project.send(params[:name]).present?
+        @flag = @project.send(params[:name]).update file_name: params[:file_name], path: params[:path]
+      else
+        @flag = @project.send("create_#{params[:name]}", {file_name: params[:file_name], path: params[:path]})
+      end
+    else
+      @flag = false
+    end
   end
 
   private
