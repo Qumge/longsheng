@@ -1,5 +1,6 @@
 class ProjectsController < ApplicationController
-  before_action :set_project, only: [:show, :upload, :update_agency]
+  before_action :set_project, only: [:show, :upload, :update_agency, :edit_information, :update_information]
+  before_action :set_uptoken, only: [:show, :upload, :update_agency, :update_information]
   include ApplicationHelper
   def index
     @projects = current_user.view_projects.page(params[:page]).per(Settings.per_page)
@@ -10,7 +11,6 @@ class ProjectsController < ApplicationController
   end
 
   def show
-    @uptoken = uptoken
   end
 
   def create
@@ -24,13 +24,23 @@ class ProjectsController < ApplicationController
     end
   end
 
+  # 添加操作模式
   def update_agency
-
+    @flag = @project.update agency_id: params[:agency_id]
   end
 
+  # 添加项目资料
+  def edit_information
+    render layout: false
+  end
 
+  # 添加项目资料
+  def update_information
+    @flag = @project.update information_permit
+  end
+
+  # 上传各类文件资料
   def upload
-    @uptoken = uptoken
     @flag = true
     if ['project_contract', 'advance', 'plate'].include? params[:name]
       if @project.send(params[:name]).present?
@@ -52,6 +62,15 @@ class ProjectsController < ApplicationController
   def set_project
     @project = current_user.view_projects.find_by_id params[:id]
     redirect_to projects_path, alert: '找不到这个项目' unless @project.present?
+  end
+
+  def set_uptoken
+    @uptoken = uptoken
+  end
+
+  def information_permit
+    params.require(:project).permit(:purchase, :purchase_phone, :design, :design_phone, :cost, :cost_phone, :settling,
+                                    :settling_phone, :constructor, :constructor_phone, :supervisor, :supervisor_phone)
   end
 
 

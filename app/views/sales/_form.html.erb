@@ -12,14 +12,12 @@
   <% end %>
 
   <div class="modal-footer">
-    <%= button_tag '保存', class: 'btn btn-primary commit', data: { disable_with: '保存中' } %>
+    <%= button_tag '保存', class: 'btn btn-primary commit commit', data: { disable_with: '保存中' } %>
     <button type="button" class="btn btn-default" data-dismiss="modal">返回</button>
   </div>
 </div>
-
-
-
-<script type="text/javascript">
+<script tye="text/javascript">
+    //ajax提交表单
     $(function(){
         $('.commit').click(function(){
             $.ajax({
@@ -39,5 +37,7 @@
         })
         $('.select2').select2();
 
-    })
+    });
 </script>
+
+

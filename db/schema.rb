@@ -11,16 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190117060410) do
-
-  create_table "attachments", force: :cascade do |t|
-    t.integer  "model_id",   limit: 4
-    t.string   "model_type", limit: 255
-    t.string   "path",       limit: 255
-    t.string   "file_name",  limit: 255
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
-  end
+ActiveRecord::Schema.define(version: 20190115055536) do
 
   create_table "audit_details", force: :cascade do |t|
     t.integer  "audit_id",   limit: 4
@@ -88,11 +79,8 @@ ActiveRecord::Schema.define(version: 20190117060410) do
     t.integer  "owner_id",      limit: 4
     t.integer  "create_id",     limit: 4
     t.integer  "agency_id",     limit: 4
-    t.datetime "created_at",                            null: false
-    t.datetime "updated_at",                            null: false
-    t.integer  "contract_id",   limit: 4
-    t.integer  "step",          limit: 4,   default: 0
-    t.string   "step_status",   limit: 255
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
   end
 
   create_table "resources", force: :cascade do |t|
@@ -115,15 +103,6 @@ ActiveRecord::Schema.define(version: 20190117060410) do
     t.string   "name",       limit: 255
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
-  end
-
-  create_table "sales", force: :cascade do |t|
-    t.integer  "product_id",  limit: 4
-    t.float    "price",       limit: 24
-    t.integer  "contract_id", limit: 4
-    t.string   "desc",        limit: 255
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
   end
 
   create_table "users", force: :cascade do |t|

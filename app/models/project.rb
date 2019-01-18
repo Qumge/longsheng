@@ -12,14 +12,11 @@
 #  city          :string(255)
 #  estimate      :integer
 #  name          :string(255)
-#  step          :integer          default(0)
-#  step_status   :string(255)
 #  strategic     :boolean
 #  supplier_type :string(255)
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
 #  agency_id     :integer
-#  contract_id   :integer
 #  create_id     :integer
 #  owner_id      :integer
 #

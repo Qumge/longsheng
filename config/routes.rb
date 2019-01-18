@@ -114,8 +114,11 @@ Rails.application.routes.draw do
   #
   resources :projects do
     member do
-      get :update_agency
+      post :update_agency
       post :upload
+      get :edit_information
+      patch :update_information
+      resources :orders
     end
   end
 

@@ -20,6 +20,15 @@
 
 <script type="text/javascript">
   $('#agency_id').change(function(){
-      alert(1);
+      showSpinner();
+      $.ajax({
+          type: 'POST',
+          url: '<%= update_agency_project_path @project %>',
+          data: {agency_id: $(this).val()},
+          dataType: 'script',
+          success: function (data) {
+
+          }
+      })
   })
 </script>
