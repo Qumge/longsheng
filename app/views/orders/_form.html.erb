@@ -1,0 +1,13 @@
+<div class="form-group row string optional order_products_<%= order.id %>_product_id">
+  <label class="col-sm-3 col-form-label string optional" for="order_products_<%= order.id %>_product_id">产品</label>
+  <div class="col-sm-9">
+    <input class="form-control string optional" type="text" name="order_products[<%= order.id %>][product_id]" id="order_products_<%= order.id %>_product_id">
+  </div>
+</div>
+<div class="form-group row string optional order_products_<%= order.id %>_number">
+  <label class="col-sm-3 col-form-label string optional" for="order_products_<%= order.id %>_number">数量</label>
+  <div class="col-sm-9">
+    <input class="form-control numeric float optional" type="number" name="order_products_[<%= order.id %>][number]" id="order_products_<%= order.id %>_number">
+  </div>
+</div>
+

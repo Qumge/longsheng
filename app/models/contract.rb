@@ -25,4 +25,5 @@ class Contract < ActiveRecord::Base
   validates_numericality_of :settlement_time, if: Proc.new{|p| p.settlement_time.present?}
   validates_numericality_of :tail_time, if: Proc.new{|p| p.tail_time.present?}
   has_many :sales
+  has_one :project
 end

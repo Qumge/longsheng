@@ -2,16 +2,14 @@ class OrdersController < ApplicationController
   before_action :set_default_order, only: [:new, :create]
   before_action :set_order, only: [:show, :edit, :update, :destroy]
   def new
+    @order_product = OrderProduct.new
     render layout: false
+
   end
 
-  def show
-    render layout: false
-  end
 
   def create
-    @flag = @order.update order_permit
-    @orders = Sale.where(contract_id: params[:id])
+
   end
 
   def edit
@@ -30,14 +28,15 @@ class OrdersController < ApplicationController
 
   private
   def set_default_order
-    @order = Order.new contract_id: params[:id]
+    @project = Project.find_by id: params[:id]
+    @order = Order.new project_id: params[:project_id]
   end
 
-  def set_sale
+  def set_order
     @order = Order.find_by id: params[:id]
     # redirect_to contracts_path, alert: '找不到数据' unless @sale.present?
   end
 
-  def sale_permit
+  def order_permit
   end
 end

@@ -11,7 +11,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190115055536) do
+ActiveRecord::Schema.define(version: 20190118070407) do
+
+  create_table "attachments", force: :cascade do |t|
+    t.integer  "model_id",   limit: 4
+    t.string   "model_type", limit: 255
+    t.string   "path",       limit: 255
+    t.string   "file_name",  limit: 255
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
 
   create_table "audit_details", force: :cascade do |t|
     t.integer  "audit_id",   limit: 4
@@ -45,6 +54,26 @@ ActiveRecord::Schema.define(version: 20190115055536) do
     t.datetime "updated_at",                    null: false
   end
 
+  create_table "order_products", force: :cascade do |t|
+    t.integer  "product_id",           limit: 4
+    t.integer  "order_id",             limit: 4
+    t.integer  "number",               limit: 4
+    t.float    "price",                limit: 24
+    t.float    "total_price",          limit: 24
+    t.float    "discount",             limit: 24
+    t.float    "discount_price",       limit: 24
+    t.float    "discount_total_price", limit: 24
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
+  end
+
+  create_table "orders", force: :cascade do |t|
+    t.integer  "project_id", limit: 4
+    t.string   "order_type", limit: 255
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
   create_table "organizations", force: :cascade do |t|
     t.string   "name",       limit: 255
     t.datetime "created_at",             null: false
@@ -65,22 +94,37 @@ ActiveRecord::Schema.define(version: 20190115055536) do
   end
 
   create_table "projects", force: :cascade do |t|
-    t.string   "city",          limit: 255
-    t.string   "category",      limit: 255
-    t.string   "a_name",        limit: 255
-    t.string   "name",          limit: 255
-    t.string   "address",       limit: 255
-    t.string   "supplier_type", limit: 255
+    t.string   "city",              limit: 255
+    t.string   "category",          limit: 255
+    t.string   "a_name",            limit: 255
+    t.string   "name",              limit: 255
+    t.string   "address",           limit: 255
+    t.string   "supplier_type",     limit: 255
     t.boolean  "strategic"
-    t.integer  "estimate",      limit: 4
-    t.string   "butt_name",     limit: 255
-    t.string   "butt_title",    limit: 255
-    t.string   "butt_phone",    limit: 255
-    t.integer  "owner_id",      limit: 4
-    t.integer  "create_id",     limit: 4
-    t.integer  "agency_id",     limit: 4
-    t.datetime "created_at",                null: false
-    t.datetime "updated_at",                null: false
+    t.integer  "estimate",          limit: 4
+    t.string   "butt_name",         limit: 255
+    t.string   "butt_title",        limit: 255
+    t.string   "butt_phone",        limit: 255
+    t.integer  "owner_id",          limit: 4
+    t.integer  "create_id",         limit: 4
+    t.integer  "agency_id",         limit: 4
+    t.datetime "created_at",                                null: false
+    t.datetime "updated_at",                                null: false
+    t.integer  "contract_id",       limit: 4
+    t.integer  "step",              limit: 4,   default: 0
+    t.string   "step_status",       limit: 255
+    t.string   "purchase",          limit: 255
+    t.string   "purchase_phone",    limit: 255
+    t.string   "design",            limit: 255
+    t.string   "design_phone",      limit: 255
+    t.string   "cost",              limit: 255
+    t.string   "cost_phone",        limit: 255
+    t.string   "settling",          limit: 255
+    t.string   "settling_phone",    limit: 255
+    t.string   "constructor",       limit: 255
+    t.string   "constructor_phone", limit: 255
+    t.string   "supervisor",        limit: 255
+    t.string   "supervisor_phone",  limit: 255
   end
 
   create_table "resources", force: :cascade do |t|
@@ -103,6 +147,15 @@ ActiveRecord::Schema.define(version: 20190115055536) do
     t.string   "name",       limit: 255
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
+  end
+
+  create_table "sales", force: :cascade do |t|
+    t.integer  "product_id",  limit: 4
+    t.float    "price",       limit: 24
+    t.integer  "contract_id", limit: 4
+    t.string   "desc",        limit: 255
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
   end
 
   create_table "users", force: :cascade do |t|
