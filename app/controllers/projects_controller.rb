@@ -32,7 +32,7 @@ class ProjectsController < ApplicationController
   def upload
     @uptoken = uptoken
     @flag = true
-    if ['project_contract', 'advance'].include? params[:name]
+    if ['project_contract', 'advance', 'plate'].include? params[:name]
       if @project.send(params[:name]).present?
         @flag = @project.send(params[:name]).update file_name: params[:file_name], path: params[:path]
       else
