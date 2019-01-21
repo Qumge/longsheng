@@ -58,6 +58,9 @@ zh-CN:
         product_id: '序号 / 产品型号'
         price: '价格'
         desc: '备注'
+      order_product:
+        product_id: '产品'
+        number: '数量'
 
 
 

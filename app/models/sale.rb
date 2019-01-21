@@ -2,13 +2,15 @@
 #
 # Table name: sales
 #
-#  id          :integer          not null, primary key
-#  desc        :string(255)
-#  price       :float(24)
-#  created_at  :datetime         not null
-#  updated_at  :datetime         not null
-#  contract_id :integer
-#  product_id  :integer
+#  id             :integer          not null, primary key
+#  desc           :string(255)
+#  discount       :float(24)
+#  discount_price :float(24)
+#  price          :float(24)
+#  created_at     :datetime         not null
+#  updated_at     :datetime         not null
+#  contract_id    :integer
+#  product_id     :integer
 #
 
 class Sale < ActiveRecord::Base

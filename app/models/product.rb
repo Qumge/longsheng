@@ -14,6 +14,7 @@
 
 class Product < ActiveRecord::Base
   has_many :sales
+  has_one :sale, ->(sale) { where("project_id = ?", sale.project_id) }
 
 
   # 价格体系
@@ -27,5 +28,9 @@ class Product < ActiveRecord::Base
         contract.sales.find_by product: self
       end
     end
+  end
+
+  def sale project
+    sales.find_by(contract_id: project.contract_id)
   end
 end

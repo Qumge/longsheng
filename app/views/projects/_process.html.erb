@@ -35,6 +35,22 @@
   <!-- /.col -->
 </div>
 <script type="text/javascript">
+    function place_order(order_id){
+        if(confirm('下单后不可变更，确认下单吗？')){
+            showSpinner();
+            $.ajax({
+                type: 'POST',
+                url: '<%= place_order_orders_path %>',
+                data: {id: order_id},
+                dataType: 'script',
+                success: function (data) {
+
+                }
+            })
+        }
+    }
+
+
     function set_option(name){
         return {
             runtimes: 'html5,html4',          //上传模式,依次退化
@@ -125,6 +141,6 @@
     var plate_qiniu = new QiniuJsSDK();
     var plate_option = set_option('plate');
     var plate_uploader = plate_qiniu.uploader(plate_option);
-
+    $('.select2').select2();
 
 </script>

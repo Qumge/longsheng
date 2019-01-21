@@ -10,6 +10,18 @@
 #
 
 class Order < ActiveRecord::Base
-  belongs_to :product
+  belongs_to :project
   has_many :order_products
+
+  def real_total_price
+    total_price = 0
+    order_products.each do |p|
+      total_price += p.real_total_price
+    end
+    total_price
+  end
+
+  def no
+    'LG#NO.' + id.to_s.rjust(6, '0')
+  end
 end

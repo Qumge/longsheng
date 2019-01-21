@@ -1,13 +1,118 @@
-<div class="form-group row string optional order_products_<%= order.id %>_product_id">
-  <label class="col-sm-3 col-form-label string optional" for="order_products_<%= order.id %>_product_id">产品</label>
-  <div class="col-sm-9">
-    <input class="form-control string optional" type="text" name="order_products[<%= order.id %>][product_id]" id="order_products_<%= order.id %>_product_id">
+<div id="form">
+  <div class="modal-header" style="padding:5px; padding-left: 15px;">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title" id="file-modal-label">
+      添加商品
+    </h4>
   </div>
-</div>
-<div class="form-group row string optional order_products_<%= order.id %>_number">
-  <label class="col-sm-3 col-form-label string optional" for="order_products_<%= order.id %>_number">数量</label>
-  <div class="col-sm-9">
-    <input class="form-control numeric float optional" type="number" name="order_products_[<%= order.id %>][number]" id="order_products_<%= order.id %>_number">
-  </div>
-</div>
+  <%= simple_form_for(@order_product, url: url,html: {class: 'form-horizontal group_form', onkeydown: "if(event.keyCode==13)return false;"}, wrapper: :horizontal_form) do |f| %>
+    <div class="modal-body" >
+      <%= f.input :product_id, label: '序号 / 产品型号', input_html: { class: 'select2 form-control', style: 'width:100%' }, collection: @project.contract.sales.all.collect{|sale| ["#{sale.product.no} / #{sale.product.product_no}", sale.product.id, data: {price: sale.price, discount: sale.discount, discount_price: sale.discount_price}.to_json]} %>
+      <%= f.input :number, label: '数量' %>
+      <div class="form-group row string optional ">
+        <label class="col-sm-3 col-form-label string optional" >价格（元）</label>
+        <div class="col-sm-9">
+          <span id="price"></span>
+        </div>
+      </div>
+      <div class="form-group row string optional ">
+        <label class="col-sm-3 col-form-label string optional" >总价（元）</label>
+        <div class="col-sm-9">
+          <span id="total_price"></span>
+        </div>
+      </div>
+      <div class="form-group row string optional ">
+        <label class="col-sm-3 col-form-label string optional" >折扣</label>
+        <div class="col-sm-9">
+          <span id="discount"></span>
+        </div>
+      </div>
+      <div class="form-group row string optional ">
+        <label class="col-sm-3 col-form-label string optional" >折后价（元）</label>
+        <div class="col-sm-9">
+          <span id="discount_price"></span>
+        </div>
+      </div>
+      <div class="form-group row string optional ">
+        <label class="col-sm-3 col-form-label string optional" >折后总价（元）</label>
+        <div class="col-sm-9">
+          <span id="total_discount_price"></span>
+        </div>
+      </div>
+    </div>
+  <% end %>
 
+  <div class="modal-footer">
+    <%= button_tag '保存', class: 'btn btn-primary commit commit', data: { disable_with: '保存中' } %>
+    <button type="button" class="btn btn-default" data-dismiss="modal">返回</button>
+  </div>
+</div>
+<script tye="text/javascript">
+    //ajax提交表单
+    $(function(){
+        $('.commit').click(function(){
+            $.ajax({
+                type: "POST",
+                url: $('.group_form').attr('action'),
+                data: $('.group_form').serialize(),
+                dataType: 'script',
+                async: false,
+                error: function(request) {
+                    alert("Connection error");
+                },
+                success: function(data) {
+                    //接收后台返回的结果
+                }
+            });
+
+        });
+        $('.select2').select2();
+        show_price();
+        show_total();
+        //选择后显示 单价 折扣价
+        function show_price(){
+            var data = {}
+            if($('#order_product_product_id').val()){
+                var data = JSON.parse($('#order_product_product_id').find("option:selected").attr('data'));
+                console.log(data);
+            }
+            $('#price').text(data.price);
+            if(data.discount){
+                $('#discount').text(data.discount);
+            }else{
+                $('#discount').text('')
+            }
+            if(data.discount_price){
+                $('#discount_price').text(data.discount_price);
+            }else{
+                $('#discount_price').text('')
+            }
+        }
+        //计算价格
+        function show_total(){
+            if($('#order_product_number').val() && $('#order_product_product_id').val()){
+                var number =  $('#order_product_number').val();
+                var price =  $('#price').text();
+                var discount_price = $('#discount_price').text();
+                $('#total_price').text(number * price);
+                if(discount_price){
+                    $('#total_discount_price').text(number * discount_price);
+                }else{
+                    $('#total_discount_price').text('');
+                }
+            }else{
+                $('#total_price').text('');
+                $('#total_discount_price').text('');
+            }
+        }
+
+        $('#order_product_product_id').change(function(e){
+            show_price();
+            show_total();
+        });
+
+        $('#order_product_number').keyup(function(e){
+            show_total();
+        });
+    });
+</script>
