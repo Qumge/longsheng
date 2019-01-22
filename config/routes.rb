@@ -118,11 +118,13 @@ Rails.application.routes.draw do
       post :upload
       get :edit_information
       patch :update_information
+      post :delete_attachment
       resources :orders do
         collection do
           post :place_order
         end
       end
+      resources :invoices
     end
   end
 

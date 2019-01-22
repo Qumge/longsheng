@@ -50,6 +50,22 @@
         }
     }
 
+    //删除文件
+    function delete_attachment(id, url){
+        if(confirm('确认删除该文件吗？')){
+            showSpinner();
+            $.ajax({
+                type: 'POST',
+                url: url,
+                data: {attachment_id: id},
+                dataType: 'script',
+                success: function (data) {
+
+                }
+            })
+        }
+    }
+
 
     function set_option(name){
         return {
@@ -141,6 +157,19 @@
     var plate_qiniu = new QiniuJsSDK();
     var plate_option = set_option('plate');
     var plate_uploader = plate_qiniu.uploader(plate_option);
+
+    var payments_qiniu = new QiniuJsSDK();
+    var payments_option = set_option('payments');
+    var payments_uploader = payments_qiniu.uploader(payments_option);
+
+    var settlements_qiniu = new QiniuJsSDK();
+    var settlements_option = set_option('settlements');
+    var settlements_uploader = settlements_qiniu.uploader(settlements_option);
+
+    var bond_qiniu = new QiniuJsSDK();
+    var bond_option = set_option('bond');
+    var bond_uploader = bond_qiniu.uploader(bond_option);
+
     $('.select2').select2();
 
 </script>

@@ -1,0 +1,105 @@
+<div id="form">
+  <div class="modal-header" style="padding:5px; padding-left: 15px;">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title" id="file-modal-label">
+      选择订单
+    </h4>
+  </div>
+  <div class="box box-primary">
+    <!-- /.box-header -->
+    <div class="box-body">
+      <div class="table-responsive mailbox-messages">
+        <%= simple_form_for(@invoice, url: url,html: {class: 'form-horizontal group_form', onkeydown: "if(event.keyCode==13)return false;"}, wrapper: :horizontal_form) do |f| %>
+          <table class="table table-hover table-striped">
+            <tbody>
+            <tr>
+              <th> <button type="button" class="btn btn-default btn-sm checkbox-toggle"><i class="fa fa-square-o"></i>
+              </button></th>
+              <th>订单号</th>
+              <th>总金额(元)</th>
+            </tr>
+            <% @orders.each do |order| %>
+              <tr>
+                <td><input type="checkbox" name="order[<%= order.id %>]" <%= 'checked' if @invoice.orders.include?(order)%> ></td>
+                <td class="mailbox-star"><%= order.no %></td>
+                <td class="mailbox-name"><%= order.real_total_price %></td>
+              </tr>
+            <% end %>
+            </tbody>
+          </table>
+        <% end %>
+        <!-- /.table -->
+      </div>
+      <!-- /.mail-box-messages -->
+    </div>
+    <!-- /.box-body -->
+  </div>
+
+  <div class="modal-footer">
+    <%= button_tag '保存', class: 'btn btn-primary commit commit', data: { disable_with: '保存中' } %>
+    <button type="button" class="btn btn-default" data-dismiss="modal">返回</button>
+  </div>
+</div>
+
+<script text="javascript">
+    $(function () {
+        //Enable iCheck plugin for checkboxes
+        //iCheck for checkbox and radio inputs
+        $('.mailbox-messages input[type="checkbox"]').iCheck({
+            checkboxClass: 'icheckbox_flat-blue',
+            radioClass: 'iradio_flat-blue'
+        });
+
+        //Enable check and uncheck all functionality
+        $(".checkbox-toggle").click(function () {
+            var clicks = $(this).data('clicks');
+            if (clicks) {
+                //Uncheck all checkboxes
+                $(".mailbox-messages input[type='checkbox']").iCheck("uncheck");
+                $(".fa", this).removeClass("fa-check-square-o").addClass('fa-square-o');
+            } else {
+                //Check all checkboxes
+                $(".mailbox-messages input[type='checkbox']").iCheck("check");
+                $(".fa", this).removeClass("fa-square-o").addClass('fa-check-square-o');
+            }
+            $(this).data("clicks", !clicks);
+        });
+
+        //Handle starring for glyphicon and font awesome
+        $(".mailbox-star").click(function (e) {
+            e.preventDefault();
+            //detect type
+            var $this = $(this).find("a > i");
+            var glyph = $this.hasClass("glyphicon");
+            var fa = $this.hasClass("fa");
+
+            //Switch states
+            if (glyph) {
+                $this.toggleClass("glyphicon-star");
+                $this.toggleClass("glyphicon-star-empty");
+            }
+
+            if (fa) {
+                $this.toggleClass("fa-star");
+                $this.toggleClass("fa-star-o");
+            }
+        });
+    });
+
+    $('.commit').click(function(){
+        $.ajax({
+            type: "POST",
+            url: $('.group_form').attr('action'),
+            data: $('.group_form').serialize(),
+            dataType: 'script',
+            async: false,
+            error: function(request) {
+                alert("Connection error");
+            },
+            success: function(data) {
+                //接收后台返回的结果
+            }
+        });
+
+    });
+</script>

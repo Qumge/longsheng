@@ -20,6 +20,8 @@
 //= require plupload/js/moxie
 //= require plupload/js/plupload.dev
 //= require select2-full
+//= require icheck
+
 
 $.fn.datepicker.dates['zh-cn'] = {
     days: ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"],
@@ -81,5 +83,7 @@ function hideSpinner() {
 function alert_modal(message){
     // modal提示消息处理
 }
+
+
 
 

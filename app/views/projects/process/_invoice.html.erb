@@ -5,14 +5,6 @@
 </li>
 <!-- /.timeline-label -->
 <!-- timeline item -->
-<li>
-  <i class="fa fa-list-alt bg-blue"></i>
-
-  <div class="timeline-item">
-    <div class="timeline-body">
-        <%= link_to new_contract_path, 'data-toggle' => "modal", 'data-target' => "#global-modal", class: 'btn btn-xs bg-blue' do %>
-          开票
-        <% end %>
-    </div>
-  </div>
+<li id="invoices_item">
+  <%= render 'projects/invoices_item'%>
 </li>

@@ -3,8 +3,7 @@
                     结算款
                   </span>
 </li>
-<!-- /.timeline-label -->
-<!-- timeline item -->
+
 <li>
   <i class="fa fa-file-pdf-o bg-green"></i>
 
@@ -13,8 +12,26 @@
 
     </div>
     <div class="timeline-body">
-      <label for="exampleInputFile">进度申请款资料</label>
-      <input type="file" id="exampleInputFile">
+      <label for="exampleInputFile">结算款资料</label>
+      <div >
+        <a class="btn btn-default " id="settlements" href="#" >
+          <i class="fa fa-plus"></i>
+          <span>选择文件</span>
+        </a>
+      </div>
+
+      <% if @project.settlements.present? %>
+        <% @project.settlements.each do |settlement| %>
+          <div>
+          <a href="javascript:void(0)" onclick="show_file(this)" class="btn show-file" data-url="<%= settlement.preview_url%>" data-file-name="<%= settlement.file_name %>">
+            <i class="fa fa-eye"></i><%= settlement.file_name %>
+          </a>
+          <%= link_to 'JavaScript:void(0)', onclick: "delete_attachment(#{settlement.id}, '#{delete_attachment_project_path @project.id}')",class: 'btn  btn-sm ', style: 'color: red' do %>
+            删除
+          <% end %>
+          </div>
+        <% end %>
+      <% end %>
     </div>
   </div>
 </li>

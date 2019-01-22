@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190118090008) do
+ActiveRecord::Schema.define(version: 20190122015109) do
 
   create_table "attachments", force: :cascade do |t|
     t.integer  "model_id",   limit: 4
@@ -52,6 +52,21 @@ ActiveRecord::Schema.define(version: 20190118090008) do
     t.integer  "tail_time",       limit: 4
     t.datetime "created_at",                    null: false
     t.datetime "updated_at",                    null: false
+  end
+
+  create_table "invoices", force: :cascade do |t|
+    t.integer  "project_id", limit: 4
+    t.integer  "user_id",    limit: 4
+    t.string   "no",         limit: 255
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
+  create_table "order_invoices", force: :cascade do |t|
+    t.integer  "invoice_id", limit: 4
+    t.integer  "order_id",   limit: 4
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
   end
 
   create_table "order_products", force: :cascade do |t|

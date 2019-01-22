@@ -46,14 +46,28 @@ class Project < ActiveRecord::Base
   has_one :project_contract, -> {where(model_type: 'contract')}, class_name: 'Attachment', foreign_key: :model_id
   has_one :advance, -> {where(model_type: 'advance')}, class_name: 'Attachment', foreign_key: :model_id
   has_one :plate, -> {where(model_type: 'plate')}, class_name: 'Attachment', foreign_key: :model_id
+  has_many :payments, -> {where(model_type: 'payment')}, class_name: 'Attachment', foreign_key: :model_id
+  has_many :settlements, -> {where(model_type: 'settlement')}, class_name: 'Attachment', foreign_key: :model_id
+  has_many :attachments, foreign_key: :model_id
+  has_one :bond, -> {where(model_type: 'bond')}, class_name: 'Attachment', foreign_key: :model_id
   has_many :orders
   has_many :sample_orders, -> {where(order_type: 'sample')}, class_name: 'Order', foreign_key: :order_id
   has_many :normal_orders, -> {where(order_type: 'normal')}, class_name: 'Order', foreign_key: :order_id
   belongs_to :contract
+  has_many :invoices
 
   # 根据审核表获取当前的审核状态
   def status
     ''
+  end
+
+  def order_invoices
+    OrderInvoice.includes(:order).where('orders.project_id = ?', self.id).references(:order)
+  end
+
+
+  def can_invoice_orders
+    self.orders.where('orders.id not in (?)', self.order_invoices.collect{|o| o.order_id})
   end
   
 

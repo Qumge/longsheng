@@ -12,6 +12,8 @@
 class Order < ActiveRecord::Base
   belongs_to :project
   has_many :order_products
+  has_many :order_invoices
+  has_and_belongs_to_many :invoices, join_table: "order_invoices"
 
   def real_total_price
     total_price = 0
@@ -24,4 +26,6 @@ class Order < ActiveRecord::Base
   def no
     'LG#NO.' + id.to_s.rjust(6, '0')
   end
+
+
 end
