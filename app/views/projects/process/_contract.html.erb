@@ -16,20 +16,23 @@
     <div class="timeline-body">
       <label for="exampleInputFile">项目合同文件</label>
       <div >
+        <% if @project.can_do? :contract %>
         <a class="btn btn-default " id="project_contract" href="#" >
           <i class="fa fa-plus"></i>
           <span>选择文件</span>
         </a>
+        <%end %>
       </div>
 
       <% if @project.project_contract.present? %>
       <a href="javascript:void(0)" onclick="show_file(this)" class="btn show-file" data-url="<%= @project.project_contract.preview_url%>" data-file-name="<%= @project.project_contract.file_name %>">
         <i class="fa fa-eye"></i><%= @project.project_contract.file_name %>
       </a>
-        <%= link_to 'JavaScript:void(0)', onclick: "delete_attachment(#{@project.project_contract.id}, '#{delete_attachment_project_path @project.id}')",class: 'btn  btn-sm ', style: 'color: red' do %>
-          删除
-        <% end %>
+        <%= link_to '删除', 'JavaScript:void(0)', onclick: "delete_attachment(#{@project.project_contract.id}, '#{delete_attachment_project_path @project.id}')",class: 'btn  btn-sm ', style: 'color: red' if @project.can_do? :contract %>
       <% end %>
+      <div class="pull-right">
+          <%= link_to '下一步', 'JavaScript:void(0)', onclick: "step_event('done_contract')",class: 'btn  btn-sm btn-success', style: 'color: red' if @project.can_do? :contract %>
+      </div>
     </div>
   </div>
 </li>

@@ -3,29 +3,29 @@
     <!-- The time line -->
     <ul class="timeline" style=""><!--timeline item -->
       <!--项目合同-->
-      <%= render 'projects/process/contract' %>
+      <%= render 'projects/process/contract' if @project.can_view? :contract %>
       <!--预付款-->
-      <%= render 'projects/process/advance' %>
+      <%= render 'projects/process/advance' if @project.can_view? :advance %>
       <!--操作模式-->
-      <%= render 'projects/process/pattern' %>
+      <%= render 'projects/process/pattern' if @project.can_view? :pattern %>
       <!--做样板房-->
-      <%= render 'projects/process/plate' %>
+      <%= render 'projects/process/plate' if @project.can_view? :plate %>
       <!--完善项目资料-->
-      <%= render 'projects/process/detail' %>
+      <%= render 'projects/process/detail' if @project.can_view? :detail %>
       <!--批量订单-->
-      <%= render 'projects/process/order' %>
+      <%= render 'projects/process/order' if @project.can_view? :order %>
       <!--开票申请-->
-      <%= render 'projects/process/invoice' %>
+      <%= render 'projects/process/invoice' if @project.can_view? :invoice %>
       <!--进度款-->
-      <%= render 'projects/process/process_payment' %>
+      <%= render 'projects/process/process_payment' if @project.can_view? :process_payment %>
       <!--结算款-->
-      <%= render 'projects/process/settlement' %>
+      <%= render 'projects/process/settlement' if @project.can_view? :settlement  %>
       <!--金额确认-->
-      <%= render 'projects/process/payment' %>
+      <%= render 'projects/process/payment' if @project.can_view? :payment  %>
       <!--保证金-->
-      <%= render 'projects/process/bond' %>
+      <%= render 'projects/process/bond' if @project.can_view? :bond %>
       <!--项目结清确认-->
-      <%= render 'projects/process/confirm' %>
+      <%= render 'projects/process/confirm' if @project.can_view? :confirm %>
       <!-- END timeline item -->
       <li>
         <i class="fa fa-clock-o bg-gray"></i>
@@ -103,6 +103,10 @@
                 }
             })
         }
+    }
+    //下一步
+    function step_event(action){
+        
     }
 
 
@@ -188,29 +192,41 @@
             }
         }
     }
+    <% if @project.can_do? :contract %>
     var contract_qiniu = new QiniuJsSDK();
     var contract_option = set_option('project_contract');
     var contract_uploader = contract_qiniu.uploader(contract_option);
+    <% end %>
 
+    <% if @project.can_do? :advance %>
     var advance_qiniu = new QiniuJsSDK();
     var advance_option = set_option('advance');
     var advance_uploader = advance_qiniu.uploader(advance_option);
+    <% end %>
 
+    <% if @project.can_do? :plate %>
     var plate_qiniu = new QiniuJsSDK();
     var plate_option = set_option('plate');
     var plate_uploader = plate_qiniu.uploader(plate_option);
+    <% end %>
 
+    <% if @project.can_do? :process_payment %>
     var payments_qiniu = new QiniuJsSDK();
     var payments_option = set_option('payments');
     var payments_uploader = payments_qiniu.uploader(payments_option);
+    <% end %>
 
+    <% if @project.can_do? :settlement %>
     var settlements_qiniu = new QiniuJsSDK();
     var settlements_option = set_option('settlements');
     var settlements_uploader = settlements_qiniu.uploader(settlements_option);
+    <% end %>
 
+    <% if @project.can_do? :bond %>
     var bond_qiniu = new QiniuJsSDK();
     var bond_option = set_option('bond');
     var bond_uploader = bond_qiniu.uploader(bond_option);
+    <% end %>
 
     $('.select2').select2();
 

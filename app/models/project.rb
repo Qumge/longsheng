@@ -38,6 +38,7 @@
 #
 
 class Project < ActiveRecord::Base
+  include AASM
   belongs_to :owner, class_name: 'User', foreign_key: :owner_id
   belongs_to :create_user, class_name: 'User', foreign_key: :create_id
   has_one :audit, -> {where(model_type: 'Project')}, foreign_key: :model_id
@@ -56,6 +57,59 @@ class Project < ActiveRecord::Base
   has_many :normal_orders, -> {where(order_type: 'normal')}, class_name: 'Order', foreign_key: :order_id
   belongs_to :contract
   has_many :invoices
+
+  aasm :step_status do
+    state :contract, :initial => true
+    state :advance, :pattern, :plate, :detail, :order, :invoice, :process_payment, :settlement, :payment, :bond, :confirm, :done
+
+    event :done_contract do
+      transitions :from => :contract, :to => :advance
+    end
+
+    event :done_advance do
+      transitions :from => :advance, :to => :pattern
+    end
+
+    event :done_pattern do
+      transitions :from => :pattern, :to => :plate
+    end
+
+    event :done_plate do
+      transitions :from => :plate, :to => :detail
+    end
+
+    event :done_detail do
+      transitions :from => :detail, :to => :order
+    end
+    event :done_order do
+      transitions :from => :order, :to => :invoice
+    end
+
+    event :done_invoice do
+      transitions :from => :invoice, :to => :process_payment
+    end
+
+    event :done_process_payment do
+      transitions :from => :process_payment, :to => :settlement
+    end
+
+    event :done_settlement do
+      transitions :from => :settlement, :to => :payment
+    end
+
+    event :done_payment do
+      transitions :from => :payment, :to => :bond
+    end
+
+    event :done_bond do
+      transitions :from => :bond, :to => :confirm
+    end
+
+    event :done_confirm do
+      transitions :from => :confirm, :to => :done
+    end
+
+  end
 
   # 根据审核表获取当前的审核状态
   def status
@@ -79,6 +133,18 @@ class Project < ActiveRecord::Base
     else
       []
     end
+  end
+
+  # 判断是否可查看当前步骤
+  def can_view? step
+    steps = [:contract, :advance, :pattern, :plate, :detail, :order, :invoice, :process_payment, :settlement, :payment, :bond, :confirm, :done]
+    # 当前进度大于步骤 可见
+    steps.index(self.step_status.to_sym) >= steps.index(step)
+  end
+
+  # 判断是否可以操作
+  def can_do? step
+    self.step_status.to_sym == step
   end
   
 

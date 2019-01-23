@@ -52,6 +52,7 @@ gem 'kaminari-bootstrap', '~> 3.0.1'                          # 分页 bootstrap
 gem "rails_config", "~> 0.4.2"
 gem 'qiniu', '>= 6.9.0'
 gem 'bower-rails', '~> 0.10.0'
+gem 'aasm'
 
 
 group :development, :test do
