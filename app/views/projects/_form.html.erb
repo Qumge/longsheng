@@ -6,7 +6,7 @@
     <%= f.input :city, label: '城市'%>
     <%= f.input :address, label: '项目地址' %>
     <%= f.input :supplier_type, label: '供货方式', collection: ['甲采', '甲指', '乙供'] %>
-    <%= f.input :strategic, label: '是否战略', collection: {'是': 1, '否': 0} %>
+    <%= f.input :contract_id, label: '', collection: Contract.all.collect{|contract| ["#{contract.partner} / #{contract.no}", contract.id]} %>
     <%= f.input :estimate, label: '预估规模' %>
     <%= f.input :butt_name, label: '项目对接人名' %>
     <%= f.input :butt_title, label: '对接人职务' %>

@@ -18,6 +18,7 @@
 #  design_phone      :string(255)
 #  estimate          :integer
 #  name              :string(255)
+#  payment           :string(255)
 #  purchase          :string(255)
 #  purchase_phone    :string(255)
 #  settling          :string(255)
@@ -67,7 +68,17 @@ class Project < ActiveRecord::Base
 
 
   def can_invoice_orders
-    self.orders.where('orders.id not in (?)', self.order_invoices.collect{|o| o.order_id})
+    invoice_orders = self.orders
+    invoice_orders = invoice_orders.where('orders.id not in (?)', self.order_invoices.collect{|o| o.order_id}) if self.order_invoices.present?
+    invoice_orders
+  end
+
+  def sales
+    if contract
+      contract.sales
+    else
+      []
+    end
   end
   
 

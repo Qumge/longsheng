@@ -119,6 +119,8 @@ Rails.application.routes.draw do
       get :edit_information
       patch :update_information
       post :delete_attachment
+      post :payment
+      post :done
       resources :orders do
         collection do
           post :place_order

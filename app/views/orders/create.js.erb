@@ -1,3 +1,4 @@
+
 <% if @flag %>
 $('#orders_item').html('<%= j render(partial: 'projects/orders_item')%>')
 $('#global-modal').modal('hide')
@@ -17,5 +18,5 @@ $("[data-widget='collapse']").click(function() {
     }
 });
 <% else %>
-$('#form').html('<%= j render "orders/form"%>');
+$('#form').html('<%= j render(partial: "orders/form", locals: {url: orders_path(@project.id, order_id: @order.id)}) %>');
 <% end %>

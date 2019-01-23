@@ -29,7 +29,7 @@ class OrdersController < ApplicationController
 
   # TODO
   def place_order
-    @order = Order.find_by id: params[:id]
+    @order = Order.find_by id: params[:order_id]
     redirect_to projects_path, alert: '找不到数据' unless @order.present?
     @project = @order.project
   end

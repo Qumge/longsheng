@@ -20,7 +20,7 @@
             </tr>
             <% @orders.each do |order| %>
               <tr>
-                <td><input type="checkbox" name="order[<%= order.id %>]" <%= 'checked' if @invoice.orders.include?(order)%> ></td>
+                <td><input type="checkbox" name="order[<%= order.id %>]" <%= 'checked' if @invoice.orders.present? && @invoice.orders.include?(order)%> ></td>
                 <td class="mailbox-star"><%= order.no %></td>
                 <td class="mailbox-name"><%= order.real_total_price %></td>
               </tr>

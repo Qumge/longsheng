@@ -1,6 +1,6 @@
 class ProjectsController < ApplicationController
-  before_action :set_project, only: [:show, :upload, :update_agency, :edit_information, :update_information, :delete_attachment]
-  before_action :set_uptoken, only: [:show, :upload, :update_agency, :update_information, :delete_attachment]
+  before_action :set_project, only: [:show, :upload, :update_agency, :edit_information, :update_information, :delete_attachment, :payment, :done]
+  before_action :set_uptoken, only: [:show, :upload, :update_agency, :update_information, :delete_attachment, :payment, :done]
   include ApplicationHelper
   def index
     @projects = current_user.view_projects.page(params[:page]).per(Settings.per_page)
@@ -27,6 +27,7 @@ class ProjectsController < ApplicationController
   # 添加操作模式
   def update_agency
     @flag = @project.update agency_id: params[:agency_id]
+    render template: 'projects/reload_process'
   end
 
   # 添加项目资料
@@ -53,6 +54,7 @@ class ProjectsController < ApplicationController
     else
       @flag = false
     end
+    render template: 'projects/reload_process'
   end
 
   # 删除项目资料
@@ -60,12 +62,24 @@ class ProjectsController < ApplicationController
     @attachment = @project.attachments.find_by id: params[:attachment_id]
     redirect_to projects_path, alert: '找不到数据' unless @attachment.present?
     @attachment.destroy
+    render template: 'projects/reload_process'
+  end
+
+  # 回款金额确认
+  def payment
+    @project.update payment: params[:payment]
+    render template: 'projects/reload_process'
+  end
+
+  # 项目结清确认 todo
+  def done
+    render template: 'projects/reload_process'
   end
 
   private
   def project_permit
     params.require(:project).permit(:name, :a_name, :category, :address, :city, :supplier_type, :strategic, :estimate,
-                                    :butt_name, :butt_title, :butt_phone)
+                                    :butt_name, :butt_title, :butt_phone, :contract_id)
   end
 
   def set_project

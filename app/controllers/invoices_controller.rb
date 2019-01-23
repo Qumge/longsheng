@@ -4,17 +4,20 @@ class InvoicesController < ApplicationController
 
   def new
     @orders = @project.can_invoice_orders
+    p @orders, 1111
     render layout: false
   end
 
   def create
     orders = []
-    params[:order].each do |key, val|
-      order = Order.find_by id: key
-      orders << order if order.present? && order.invoices.blank?
+    if params[:order].present?
+      params[:order].each do |key, val|
+        order = Order.find_by id: key
+        orders << order if order.present? && order.invoices.blank?
+      end
+      @invoice.orders = orders
+      @invoice.save
     end
-    @invoice.orders = orders
-    @invoice.save
   end
 
   def edit

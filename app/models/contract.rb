@@ -20,6 +20,7 @@
 
 class Contract < ActiveRecord::Base
   validates_presence_of :name, :no, :partner, :product
+  validates_uniqueness_of :no
   validates_numericality_of :advance_time, if: Proc.new{|p| p.advance_time.present?}
   validates_numericality_of :process_time, if: Proc.new{|p| p.process_time.present?}
   validates_numericality_of :settlement_time, if: Proc.new{|p| p.settlement_time.present?}

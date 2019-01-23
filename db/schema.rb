@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190122015109) do
+ActiveRecord::Schema.define(version: 20190123071224) do
 
   create_table "attachments", force: :cascade do |t|
     t.integer  "model_id",   limit: 4
@@ -140,6 +140,7 @@ ActiveRecord::Schema.define(version: 20190122015109) do
     t.string   "constructor_phone", limit: 255
     t.string   "supervisor",        limit: 255
     t.string   "supervisor_phone",  limit: 255
+    t.string   "payment",           limit: 255
   end
 
   create_table "resources", force: :cascade do |t|

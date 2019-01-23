@@ -1,6 +1,6 @@
 <li class="time-label">
                   <span class="bg-purple">
-                    金额确认
+                    回款金额确认
                   </span>
 </li>
 <!-- /.timeline-label -->
@@ -10,9 +10,10 @@
   <i class="fa fa-check bg-blue"></i>
   <div class="timeline-item">
     <div class="timeline-body">
-      <%= link_to new_contract_path, 'data-toggle' => "modal", 'data-target' => "#global-modal", class: 'btn btn-xs bg-blue' do %>
-        确认金额
-      <% end %>
+        <input class="form-control string optional" type="text" name="payment" id="payment" style="max-width: 250px;" placeholder="录入付款形式" value="<%=@project.payment %>">
+      <a data-toggle="modal" class="btn btn-xs bg-blue" onclick="payment()">
+        回款金额确认
+      </a>
     </div>
   </div>
 </li>

@@ -35,13 +35,14 @@
   <!-- /.col -->
 </div>
 <script type="text/javascript">
+    //下单
     function place_order(order_id){
         if(confirm('下单后不可变更，确认下单吗？')){
             showSpinner();
             $.ajax({
                 type: 'POST',
                 url: '<%= place_order_orders_path %>',
-                data: {id: order_id},
+                data: {order_id: order_id},
                 dataType: 'script',
                 success: function (data) {
 
@@ -49,6 +50,44 @@
             })
         }
     }
+
+    //回款确认
+    function payment(){
+        if($('#payment').val()){
+            if(confirm('确认金额无误吗？')){
+                showSpinner();
+                $.ajax({
+                    type: 'POST',
+                    url: '<%= payment_project_path @project %>',
+                    data: {payment: $('#payment').val()},
+                    dataType: 'script',
+                    success: function (data) {
+
+                    }
+                })
+            }
+        }else{
+            alert('请录入付款形式！');
+        }
+
+    }
+
+    // 项目结清
+    function done(){
+        if(confirm('确认结清该项目吗？')){
+            showSpinner();
+            $.ajax({
+                type: 'POST',
+                url: '<%= done_project_path @project %>',
+                data: {},
+                dataType: 'script',
+                success: function (data) {
+
+                }
+            })
+        }
+    }
+
 
     //删除文件
     function delete_attachment(id, url){
@@ -87,6 +126,9 @@
             // drop_element: 'container',        //拖曳上传区域元素的ID，拖曳文件或文件夹后可触发上传
             chunk_size: '4mb',                //分块上传时，每片的体积
             auto_start: true,                 //选择文件后自动上传，若关闭需要自己绑定事件触发上传
+            filters: [
+                {title: "files", extensions: "xls,xslx,doc,docx,pdf,png,jpg,jpeg,gif,bmp"}
+            ],
             init: {
                 'FilesAdded': function (up, files) {
                     plupload.each(files, function (file) {
@@ -130,7 +172,7 @@
                 'Error': function (up, err, errTip) {
                     //上传出错时,处理相关的事情
                     console.log(err);
-                    alert('')
+                    alert(err.message);
                 },
                 'UploadComplete': function () {
                     //队列文件处理完毕后,处理相关的事情
