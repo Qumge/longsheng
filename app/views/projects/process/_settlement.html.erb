@@ -14,10 +14,12 @@
     <div class="timeline-body">
       <label for="exampleInputFile">结算款资料</label>
       <div >
+        <% if @project.can_do? :settlement %>
         <a class="btn btn-default " id="settlements" href="#" >
           <i class="fa fa-plus"></i>
           <span>选择文件</span>
         </a>
+          <% end %>
       </div>
 
       <% if @project.settlements.present? %>
@@ -26,11 +28,12 @@
           <a href="javascript:void(0)" onclick="show_file(this)" class="btn show-file" data-url="<%= settlement.preview_url%>" data-file-name="<%= settlement.file_name %>">
             <i class="fa fa-eye"></i><%= settlement.file_name %>
           </a>
-          <%= link_to 'JavaScript:void(0)', onclick: "delete_attachment(#{settlement.id}, '#{delete_attachment_project_path @project.id}')",class: 'btn  btn-sm ', style: 'color: red' do %>
-            删除
-          <% end %>
+          <%= link_to '删除', 'JavaScript:void(0)', onclick: "delete_attachment(#{settlement.id}, '#{delete_attachment_project_path @project.id}')",class: 'btn  btn-sm ', style: 'color: red' if @project.can_do? :settlement %>
           </div>
         <% end %>
+        <div style="text-align: right">
+          <%= link_to '下一步', 'JavaScript:void(0)', onclick: "step_event('done_settlement')",class: 'btn  btn-success btn-sm' if @project.can_do? :settlement %>
+        </div>
       <% end %>
     </div>
   </div>

@@ -9,10 +9,7 @@
     <div class="timeline-body">
       <div class="box box-default collapsed-box" style="margin-bottom: 5px;">
         <div class="box-header with-border">
-          <h4 class="box-title"> <%= link_to new_invoice_path(@project), 'data-toggle' => "modal", 'data-target' => "#global-modal", class: 'btn' do %>
-              开票申请
-            <% end %>
-
+          <h4 class="box-title"> <%= link_to '开票申请', new_invoice_path(@project), 'data-toggle' => "modal", 'data-target' => "#global-modal", class: 'btn'  if @project.can_do? :invoice %>
           </h4>
 
           <div class="box-tools pull-right">
@@ -32,10 +29,7 @@
   <% @project.invoices.each do |invoice| %>
       <div class="box box-default collapsed-box" style="margin-bottom: 5px;">
         <div class="box-header with-border">
-          <h4 class="box-title">票号<%= invoice.invoice_no %><%= link_to edit_invoice_path(@project, invoice_id: invoice.id), 'data-toggle' => "modal", 'data-target' => "#global-modal", class: 'btn' do %>
-              编辑
-            <% end %>
-
+          <h4 class="box-title">票号<%= invoice.invoice_no %><%= link_to '编辑', edit_invoice_path(@project, invoice_id: invoice.id), 'data-toggle' => "modal", 'data-target' => "#global-modal", class: 'btn' if invoice.can_edit? %>
           </h4>
 
           <div class="box-tools pull-right">
@@ -58,6 +52,7 @@
                   <th>价格</th>
                   <th>数量</th>
                   <th>总价</th>
+                  <th></th>
                 </tr>
                 <% order.order_products.each do |order_product| %>
                   <tr>
@@ -81,9 +76,9 @@
 
         <!-- /.box-body -->
       </div>
-
-
-
   <% end %>
+      <div style="text-align: right">
+        <%= link_to '下一步', 'JavaScript:void(0)', onclick: "step_event('done_invoice')",class: 'btn  btn-success btn-sm' if @project.can_do? :invoice %>
+      </div>
     </div>
   </div>

@@ -9,10 +9,8 @@
     <div class="timeline-body">
       <div class="box box-default collapsed-box" style="margin-bottom: 5px;">
         <div class="box-header with-border">
-          <h4 class="box-title"> <%= link_to new_order_path(@project), 'data-toggle' => "modal", 'data-target' => "#global-modal", class: 'btn' do %>
-              添加新订单
-            <% end %>
-
+          <h4 class="box-title">
+            <%= link_to '添加新订单', new_order_path(@project), 'data-toggle' => "modal", 'data-target' => "#global-modal", class: 'btn' if @project.can_do? :order %>
           </h4>
 
           <div class="box-tools pull-right">
@@ -32,10 +30,8 @@
   <% @project.orders.each do |order| %>
       <div class="box box-default collapsed-box" style="margin-bottom: 5px;">
         <div class="box-header with-border">
-          <h4 class="box-title">订单<%= order.no %><%= link_to new_order_path(@project, order_id: order.id), 'data-toggle' => "modal", 'data-target' => "#global-modal", class: 'btn' do %>
-              添加商品
-            <% end %>
-
+          <h4 class="box-title">订单<%= order.no %>
+            <%= link_to '添加商品', new_order_path(@project, order_id: order.id), 'data-toggle' => "modal", 'data-target' => "#global-modal", class: 'btn' if order.can_edit? %>
           </h4>
 
           <div class="box-tools pull-right">
@@ -64,12 +60,14 @@
                   <td> <%= order_product.real_price %></td>
                   <td> <%= order_product.number %></td>
                   <td> <%= order_product.real_total_price %></td>
-                  <td> <%= link_to edit_order_path(order_product), 'data-toggle' => "modal", 'data-target' => "#global-modal", class: 'btn' do %>
+                  <td>
+                    <% if order.can_edit? %>
+                    <%= link_to edit_order_path(order_product), 'data-toggle' => "modal", 'data-target' => "#global-modal", class: 'btn' do %>
                       编辑
                     <% end %>
-
                     <%= link_to order_path(order_product), method: :delete, data: {confirm: '确认删除吗？'}, class: 'btn', style: 'color: red;' do %>
                       删除
+                    <% end %>
                     <% end %>
                   </td>
                 </tr>
@@ -77,9 +75,7 @@
               <tr>
                 <td colspan="4">合计</td>
                 <td><%= order.real_total_price %></td>
-                <td><%= link_to 'JavaScript:void(0)', onclick: "place_order(#{order.id})",class: 'btn btn-success btn-sm' do %>
-                    下单
-                  <% end %>
+                <td><%= link_to '下单', 'JavaScript:void(0)', onclick: "place_order(#{order.id})",class: 'btn btn-success btn-sm' if order.can_edit? %>
                 </td>
               </tr>
               </tbody>
@@ -89,9 +85,9 @@
 
         <!-- /.box-body -->
       </div>
-
-
-
   <% end %>
+      <div style="text-align: right">
+        <%= link_to '下一步', 'JavaScript:void(0)', onclick: "step_event('done_order')",class: 'btn  btn-success btn-sm' if @project.can_do? :order %>
+      </div>
     </div>
   </div>

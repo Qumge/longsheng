@@ -120,7 +120,7 @@ Rails.application.routes.draw do
       patch :update_information
       post :delete_attachment
       post :payment
-      post :done
+      post :step_event
       resources :orders do
         collection do
           post :place_order

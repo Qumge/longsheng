@@ -72,22 +72,6 @@
 
     }
 
-    // 项目结清
-    function done(){
-        if(confirm('确认结清该项目吗？')){
-            showSpinner();
-            $.ajax({
-                type: 'POST',
-                url: '<%= done_project_path @project %>',
-                data: {},
-                dataType: 'script',
-                success: function (data) {
-
-                }
-            })
-        }
-    }
-
 
     //删除文件
     function delete_attachment(id, url){
@@ -105,8 +89,23 @@
         }
     }
     //下一步
-    function step_event(action){
-        
+    function step_event(event, message){
+        var confirm_message = '确认进入下一步吗（下一步后当前内容不可变更）？';
+        if(message){
+            confirm_message = message;
+        }
+        if(confirm(confirm_message)){
+            showSpinner();
+            $.ajax({
+                type: 'POST',
+                url: '<%= step_event_project_path %>',
+                data: {event: event},
+                dataType: 'script',
+                success: function (data) {
+
+                }
+            })
+        }
     }
 
 

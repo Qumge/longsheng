@@ -17,10 +17,17 @@ class Invoice < ActiveRecord::Base
 
   def can_invoice_orders
     project = self.project
-    project.orders.where('orders.id not in (?)', project.order_invoices.collect{|o| o.order_id} - self.order_invoices.collect{|o| o.order_id})
+    busy_order_invoices = self.project.order_invoices.where('invoice_id != ?', self.id)
+    free_orders = project.orders
+    free_orders = free_orders.where('orders.id not in (?)', busy_order_invoices.collect{|order_invoices| order_invoices.id}) if busy_order_invoices.present?
+    free_orders
   end
 
   def invoice_no
     '#NO.' + id.to_s.rjust(6, '0')
+  end
+
+  def can_edit?
+    project.can_do? :invoice
   end
 end

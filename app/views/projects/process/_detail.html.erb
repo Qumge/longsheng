@@ -13,9 +13,7 @@
       <div class="box box-default collapsed-box">
         <div class="box-header with-border">
           <h3 class="box-title">项目资料
-            <%= link_to edit_information_project_path(@project), 'data-toggle' => "modal", 'data-target' => "#global-modal", class: 'btn' do %>
-              编辑
-            <% end %>
+            <%= link_to '编辑', edit_information_project_path(@project), 'data-toggle' => "modal", 'data-target' => "#global-modal", class: 'btn' if @project.can_do? :detail %>
           </h3>
 
           <div class="box-tools pull-right">
@@ -92,7 +90,9 @@
 
         <!-- /.box-body -->
       </div>
-
+      <div style="text-align: right">
+        <%= link_to '下一步', 'JavaScript:void(0)', onclick: "step_event('done_detail')",class: 'btn  btn-success btn-sm' if @project.can_do? :detail %>
+      </div>
     </div>
   </div>
 </li>

@@ -1,6 +1,6 @@
 class ProjectsController < ApplicationController
-  before_action :set_project, only: [:show, :upload, :update_agency, :edit_information, :update_information, :delete_attachment, :payment, :done]
-  before_action :set_uptoken, only: [:show, :upload, :update_agency, :update_information, :delete_attachment, :payment, :done]
+  before_action :set_project, only: [:show, :upload, :update_agency, :edit_information, :update_information, :delete_attachment, :payment, :done, :step_event]
+  before_action :set_uptoken, only: [:show, :upload, :update_agency, :update_information, :delete_attachment, :payment, :done, :step_event]
   include ApplicationHelper
   def index
     @projects = current_user.view_projects.page(params[:page]).per(Settings.per_page)
@@ -67,13 +67,24 @@ class ProjectsController < ApplicationController
 
   # 回款金额确认
   def payment
+    @project.done_payment
     @project.update payment: params[:payment]
     render template: 'projects/reload_process'
   end
 
-  # 项目结清确认 todo
-  def done
-    render template: 'projects/reload_process'
+
+  # 下一步事件
+  def step_event
+    @flag = true
+    begin
+      if params[:event].present? && params[:event].include?('done')
+        @project.send(params[:event])
+        @flag = @project.save
+      end
+    rescue => e
+      @flag = false
+    end
+
   end
 
   private

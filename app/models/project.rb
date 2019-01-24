@@ -57,17 +57,23 @@ class Project < ActiveRecord::Base
   has_many :normal_orders, -> {where(order_type: 'normal')}, class_name: 'Order', foreign_key: :order_id
   belongs_to :contract
   has_many :invoices
+  # belongs_to :agency
 
   aasm :step_status do
     state :contract, :initial => true
     state :advance, :pattern, :plate, :detail, :order, :invoice, :process_payment, :settlement, :payment, :bond, :confirm, :done
 
     event :done_contract do
-      transitions :from => :contract, :to => :advance
+      transitions :from => :contract, :to => :advance do
+        guard do
+          project_contract.present?
+        end
+      end
     end
 
     event :done_advance do
-      transitions :from => :advance, :to => :pattern
+      transitions :from => :advance, :to => :pattern do
+      end
     end
 
     event :done_pattern do
@@ -81,32 +87,67 @@ class Project < ActiveRecord::Base
     event :done_detail do
       transitions :from => :detail, :to => :order
     end
+
     event :done_order do
-      transitions :from => :order, :to => :invoice
+      transitions :from => :order, :to => :invoice do
+        guard do
+          # 判断是否可以完结订单 TODO
+        end
+      end
     end
 
     event :done_invoice do
-      transitions :from => :invoice, :to => :process_payment
+      transitions :from => :invoice, :to => :process_payment do
+        guard do
+          # 判断是否可以完结开票款申请 TODO
+          true
+        end
+      end
     end
 
     event :done_process_payment do
-      transitions :from => :process_payment, :to => :settlement
+      transitions :from => :process_payment, :to => :settlement  do
+        guard do
+          # 判断是否可以完结进度款申请 TODO
+          true
+        end
+      end
     end
 
     event :done_settlement do
-      transitions :from => :settlement, :to => :payment
+      transitions :from => :settlement, :to => :payment  do
+        guard do
+          # 判断是否可以完结结算款申请 TODO
+          true
+        end
+      end
     end
 
     event :done_payment do
-      transitions :from => :payment, :to => :bond
+      transitions :from => :payment, :to => :bond  do
+        guard do
+          # 判断是否可以回款 TODO
+          true
+        end
+      end
     end
 
     event :done_bond do
-      transitions :from => :bond, :to => :confirm
+      transitions :from => :bond, :to => :confirm  do
+        guard do
+          # 判断是否可以完结保证金 TODO
+          true
+        end
+      end
     end
 
     event :done_confirm do
-      transitions :from => :confirm, :to => :done
+      transitions :from => :confirm, :to => :done  do
+        guard do
+          # 判断是否可以项目结清 TODO
+          true
+        end
+      end
     end
 
   end
@@ -114,6 +155,12 @@ class Project < ActiveRecord::Base
   # 根据审核表获取当前的审核状态
   def status
     ''
+  end
+
+  # TODO
+  def agency_name
+    '自营'
+    #agency.present? ? agency.name : '自营'
   end
 
   def order_invoices
@@ -146,7 +193,9 @@ class Project < ActiveRecord::Base
   def can_do? step
     self.step_status.to_sym == step
   end
-  
+
+
+
 
   private
   def create_audit

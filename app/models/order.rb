@@ -27,5 +27,10 @@ class Order < ActiveRecord::Base
     'LG#NO.' + id.to_s.rjust(6, '0')
   end
 
+  # TODO
+  def can_edit?
+    self.project.can_do? :order
+  end
+
 
 end
