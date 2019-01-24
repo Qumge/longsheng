@@ -91,6 +91,7 @@ class Project < ActiveRecord::Base
     event :done_order do
       transitions :from => :order, :to => :invoice do
         guard do
+          true
           # 判断是否可以完结订单 TODO
         end
       end
