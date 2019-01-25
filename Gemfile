@@ -55,9 +55,11 @@ gem 'bower-rails', '~> 0.10.0'
 gem 'aasm'
 
 
+
 group :development, :test do
   gem 'byebug',                         '9.0.6'               # Byebug is a Ruby 2 debugger.
   gem 'annotate'
+  gem 'mina',                           '0.3.8'
 end
 
 group :development do
