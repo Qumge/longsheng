@@ -26,7 +26,7 @@ task :environment do
 end
 
 # 中括号里的文件 会出现在服务器项目附录的shared文件夹中，这里加入了secrets.yml，环境密钥无需跟开发计算机一样
-set :shared_paths, ['config/database.yml', 'log', 'config/secrets.yml']
+set :shared_paths, ['config/database.yml', 'log', 'config/secrets.yml', 'config/puma.rb']
 
 # 这个块里面的代码表示运行 mina setup时运行的命令
 task :setup => :environment do
@@ -87,7 +87,7 @@ task :deploy => :environment do
       queue "mkdir -p #{deploy_to}/#{current_path}/tmp/"
       # queue "chown -R www-data #{deploy_to}"
       queue "touch #{deploy_to}/#{current_path}/tmp/restart.txt"
-      queue "pumactl -F  #{deploy_to}/#{current_path}/config/puma.rb  restart" #touch好像没有效果 所以直接使用的命令重启， 重启命令参考：
+      queue " #{deploy_to}/#{current_path}/config/puma.rb  restart" #touch好像没有效果 所以直接使用的命令重启， 重启命令参考：
     end
   end
 end
