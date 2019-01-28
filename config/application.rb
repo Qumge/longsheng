@@ -21,6 +21,7 @@ module AdminLteOnRails
     config.i18n.load_path += Dir[Rails.root.join('config', 'locales', 'zh-CN', '*.yml').to_s]
     config.i18n.available_locales = [:en, 'zh-CN']
     config.i18n.default_locale = 'zh-CN'
+    config.eager_load_paths += %W(#{Rails.root.join}/lib)
 
     # Do not swallow errors in after_commit/after_rollback callbacks.
     config.active_record.raise_in_transactional_callbacks = true

@@ -84,10 +84,45 @@ task :deploy => :environment do
     invoke :'deploy:cleanup'
 
     to :launch do
-      queue "mkdir -p #{deploy_to}/#{current_path}/tmp/"
+      queue "mkdir -p #{deploy_to}/current/tmp/"
       # queue "chown -R www-data #{deploy_to}"
-      queue "touch #{deploy_to}/#{current_path}/tmp/restart.txt"
-      queue " #{deploy_to}/#{current_path}/config/puma.rb  restart" #touch好像没有效果 所以直接使用的命令重启， 重启命令参考：
+      queue "touch #{deploy_to}/current/tmp/restart.txt"
+      invoke "puma:restart" #touch好像没有效果 所以直接使用的命令重启， 重启命令参考：
     end
+  end
+end
+
+namespace :puma do
+  set :puma_pid, "#{deploy_to}/shared/tmp/pids/puma.pid"
+  set :start_puma, %{
+    cd #{deploy_to}/current
+    bundle exec puma --config #{deploy_to}/current/config/puma.rb --environment #{rails_env}
+  }
+
+#                                                                    Start task
+# ------------------------------------------------------------------------------
+  desc "Start Puma"
+  task :start => :environment do
+    queue 'echo "-----> Start Puma"'
+    queue! start_puma
+  end
+
+#                                                                     Stop task
+# ------------------------------------------------------------------------------
+  desc "Stop Puma"
+  task :stop do
+    queue 'echo "-----> Stop Puma"'
+    queue! %{
+      test -s "#{puma_pid}" && kill -QUIT `cat "#{puma_pid}"` && echo "Stop Ok" && exit 0
+      echo >&2 "Not running"
+    }
+  end
+
+#                                                                  Restart task
+# ------------------------------------------------------------------------------
+  desc "Restart Puma using 'upgrade'"
+  task :restart => :environment do
+    invoke 'puma:stop'
+    invoke 'puma:start'
   end
 end
