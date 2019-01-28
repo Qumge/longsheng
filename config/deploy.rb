@@ -2,7 +2,6 @@ require 'mina/bundler'
 require 'mina/rails'
 require 'mina/git'
 require 'mina/rvm' #服务器上使用的是rvm
-require './lib/recepies/bower'
 
 #服务器地址,是使用ssh的方式登录服务器
 set :domain, 'heyen@120.79.28.184' #在服务器~/.ssh/authorized_keys 里面写入你的id_rsa.pub就不用密码登录
@@ -80,7 +79,6 @@ task :deploy => :environment do
     invoke :'deploy:link_shared_paths'
     invoke :'bundle:install'
     # invoke :'rails:db_create'
-    queue 'bower install'
     invoke :'rails:db_migrate' #首次执行可能会报错 需要我们手动先创建数据库 db:create
     invoke :'rails:assets_precompile'
     invoke :'deploy:cleanup'
