@@ -56,6 +56,7 @@ gem 'aasm'
 
 
 
+
 group :development, :test do
   gem 'byebug',                         '9.0.6'               # Byebug is a Ruby 2 debugger.
   gem 'annotate'
