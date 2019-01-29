@@ -6,6 +6,14 @@ class ApplicationController < ActionController::Base
   before_action :get_adminlte_config
   # before_action :set_layout
   before_action :authenticate_user!
+  before_action :get_notices
+
+
+
+  def get_notices
+    p current_user
+    @notices = current_user.active_notices if current_user.present?
+  end
 
 
   def authenticate_admin_user!

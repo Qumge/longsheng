@@ -23,6 +23,7 @@
 #  purchase_phone    :string(255)
 #  settling          :string(255)
 #  settling_phone    :string(255)
+#  status            :string(255)
 #  step              :integer          default(0)
 #  step_status       :string(255)
 #  strategic         :boolean
@@ -42,7 +43,7 @@ class Project < ActiveRecord::Base
   belongs_to :owner, class_name: 'User', foreign_key: :owner_id
   belongs_to :create_user, class_name: 'User', foreign_key: :create_id
   has_one :audit, -> {where(model_type: 'Project')}, foreign_key: :model_id
-  after_create :create_audit
+  after_create :create_audit_notice
   validates_presence_of :name, :a_name, :category, :address, :city, :supplier_type
   validates_numericality_of :estimate, if: Proc.new{|p| p.estimate.present?}
   has_one :project_contract, -> {where(model_type: 'contract')}, class_name: 'Attachment', foreign_key: :model_id
@@ -58,6 +59,31 @@ class Project < ActiveRecord::Base
   belongs_to :contract
   has_many :invoices
   # belongs_to :agency
+
+  aasm :project_status do
+    state :wait, :initial => true
+    state :regional_audit, :active, :finish, :overdue, :failed
+
+    event :do_regional_audit do
+      transitions :from => :wait, :to => :regional_audit, :after => Proc.new {create_admin_audit_notice }
+    end
+
+    event :do_normal_admin_audit do
+      transitions :from => :regional_audit, :to => :active, :after => Proc.new {create_active_notice }
+    end
+
+    event :do_finish do
+      transitions :from => :active, :to => :finish
+    end
+
+    event :do_overdue do
+      transitions :from => :active, :to => :overdue
+    end
+
+    event :do_failed do
+      transitions :from => [:wait, :regional_audit], :to => :failed, :after => Proc.new {create_failed_notice }
+    end
+  end
 
   aasm :step_status do
     state :contract, :initial => true
@@ -200,7 +226,25 @@ class Project < ActiveRecord::Base
 
 
   private
-  def create_audit
-    Audit.create model_id: self.id, model_type: self.class.name
+  def create_audit_notice
+    if owner.present? && owner.organization.present? && owner.organization.parent.present?
+      owner.organization.parent.users.joins(:role).where('roles.desc = ?', 'regional_manager').each do |user|
+        Notice.create_notice :project_need_audit, self.id, user.id
+      end
+    end
+  end
+
+  def create_admin_audit_notice
+    User.joins(:role).where('roles.desc = ?', 'normal_admin').each do |user|
+      Notice.create_notice :project_need_audit, self.id, user.id
+    end
+  end
+
+  def create_failed_notice
+    Notice.create_notice :project_failed_audit, self.id, owner_id
+  end
+
+  def create_active_notice
+    Notice.create_notice :project_audited, self.id, owner_id
   end
 end

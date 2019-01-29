@@ -9,12 +9,15 @@
     <div class="modal-body" >
       <%= f.input :product_id, label: '序号 / 产品型号', input_html: { class: 'select2 form-control', style: 'width:100%' }, collection: @project.sales.collect{|sale| ["#{sale.product.no} / #{sale.product.product_no}", sale.product.id, data: {price: sale.price, discount: sale.discount, discount_price: sale.discount_price}.to_json]} %>
       <%= f.input :number, label: '数量' %>
+      <% if @order.id.blank? %>
+      <%= f.input :desc, label: '备注' %>
       <div class="form-group row string optional ">
         <label class="col-sm-3 col-form-label string optional" >价格（元）</label>
         <div class="col-sm-9">
           <span id="price"></span>
         </div>
       </div>
+      <% end %>
       <div class="form-group row string optional ">
         <label class="col-sm-3 col-form-label string optional" >总价（元）</label>
         <div class="col-sm-9">

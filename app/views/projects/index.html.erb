@@ -5,7 +5,10 @@
     <div class="box">
       <div class="box-header with-border">
         <h3 class="box-title">负责项目</h3>
-          <%= create_link Project.new, '立项', class: 'font-a label pull-right bg-green', style: 'font-size: 100%' %>
+        <% if can? :new, :project %>
+          <%= link_to '立项', new_project_path , class: 'font-a label pull-right bg-green', style: 'font-size: 100%' %>
+        <% end %>
+
       </div>
       <!-- /.box-header -->
       <div class="box-body">

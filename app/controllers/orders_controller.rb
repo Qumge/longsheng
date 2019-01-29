@@ -42,7 +42,7 @@ class OrdersController < ApplicationController
     if params[:order_id].present?
       @order = Order.where(id: params[:order_id], project: current_user.view_projects).first
     else
-      @order = Order.new project_id: params[:id]
+      @order = Order.new project_id: params[:id], user_id: current_user.id
       if @project.plate?
         @order.order_type = 'sample'
       elsif @project.order?
@@ -60,7 +60,7 @@ class OrdersController < ApplicationController
   end
 
   def order_product_permit
-    params.require(:order_product).permit(:product_id, :number)
+    params.require(:order_product).permit(:product_id, :number, :desc)
   end
 
   def reload_project

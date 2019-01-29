@@ -34,6 +34,8 @@ class User < ActiveRecord::Base
 
   belongs_to :role
   belongs_to :organization
+  has_many :notices
+  has_many :active_notices, -> {where(readed: false)}, class_name: 'Notice', foreign_key: :user_id
   has_many :resources, through: :role
   def has_role? role
     self.role && self.role.desc == role
@@ -57,4 +59,5 @@ class User < ActiveRecord::Base
       projects.where('1 = -1')
     end
   end
+
 end
