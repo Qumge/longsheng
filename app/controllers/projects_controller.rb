@@ -43,16 +43,26 @@ class ProjectsController < ApplicationController
   # 上传各类文件资料
   def upload
     @flag = true
-    if ['project_contract', 'advance', 'plate', 'bond'].include? params[:name]
-      if @project.send(params[:name]).present?
-        @flag = @project.send(params[:name]).update file_name: params[:file_name], path: params[:path]
+    if params[:name].include?('order')
+      type, id, a_type = params[:name].split('_')
+      order = @project.orders.find_by id: id
+      if order.send(a_type).present?
+        @flag = order.send(a_type).update file_name: params[:file_name], path: params[:path]
       else
-        @flag = @project.send("create_#{params[:name]}", {file_name: params[:file_name], path: params[:path]})
+        @flag = order.send("create_#{a_type}", ({file_name: params[:file_name], path: params[:path]}))
       end
-    elsif ['payments', 'settlements'].include? params[:name]
-      @flag = @project.send(params[:name]).create(file_name: params[:file_name], path: params[:path])
     else
-      @flag = false
+      if ['project_contract', 'advance', 'bond'].include? params[:name]
+        if @project.send(params[:name]).present?
+          @flag = @project.send(params[:name]).update file_name: params[:file_name], path: params[:path]
+        else
+          @flag = @project.send("create_#{params[:name]}", {file_name: params[:file_name], path: params[:path]})
+        end
+      elsif ['payments', 'settlements'].include? params[:name]
+        @flag = @project.send(params[:name]).create(file_name: params[:file_name], path: params[:path])
+      else
+        @flag = false
+      end
     end
     render template: 'projects/reload_process'
   end

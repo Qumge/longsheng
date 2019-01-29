@@ -53,8 +53,8 @@ class Project < ActiveRecord::Base
   has_many :attachments, foreign_key: :model_id
   has_one :bond, -> {where(model_type: 'bond')}, class_name: 'Attachment', foreign_key: :model_id
   has_many :orders
-  has_many :sample_orders, -> {where(order_type: 'sample')}, class_name: 'Order', foreign_key: :order_id
-  has_many :normal_orders, -> {where(order_type: 'normal')}, class_name: 'Order', foreign_key: :order_id
+  has_many :sample_orders, -> {where(order_type: 'sample')}, class_name: 'Order', foreign_key: :project_id
+  has_many :normal_orders, -> {where(order_type: 'normal')}, class_name: 'Order', foreign_key: :project_id
   belongs_to :contract
   has_many :invoices
   # belongs_to :agency
@@ -192,6 +192,7 @@ class Project < ActiveRecord::Base
 
   # 判断是否可以操作
   def can_do? step
+    step = step.is_a?(String) ? step.to_sym : step
     self.step_status.to_sym == step
   end
 

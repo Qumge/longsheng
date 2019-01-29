@@ -1,6 +1,7 @@
 class OrdersController < ApplicationController
   before_action :set_default_order, only: [:new, :create]
   before_action :set_order, only: [:show, :edit, :update, :destroy]
+  after_action :reload_project, only: [:update, :create]
   def new
     @order_product = OrderProduct.new
     render layout: false
@@ -42,6 +43,11 @@ class OrdersController < ApplicationController
       @order = Order.where(id: params[:order_id], project: current_user.view_projects).first
     else
       @order = Order.new project_id: params[:id]
+      if @project.plate?
+        @order.order_type = 'sample'
+      elsif @project.order?
+        @order.order_type = 'normal'
+      end
     end
 
   end
@@ -55,5 +61,9 @@ class OrdersController < ApplicationController
 
   def order_product_permit
     params.require(:order_product).permit(:product_id, :number)
+  end
+
+  def reload_project
+    @project.reload
   end
 end

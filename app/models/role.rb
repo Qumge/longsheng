@@ -18,7 +18,7 @@ class Role < ActiveRecord::Base
   class << self
     def load_default_roles
       ROLES.each do |key, value|
-        Role.create name: key, desc: value unless Role.find_by(name: key).present?
+        Role.create name: value, desc: key unless Role.find_by(name: key).present?
       end
     end
   end

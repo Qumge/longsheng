@@ -1,7 +1,11 @@
 
 <% if @flag %>
-$('#orders_item').html('<%= j render(partial: 'projects/orders_item')%>')
-$('#global-modal').modal('hide')
+<% if @project.plate?  %>
+$('#plate_orders_item').html('<%= j render(partial: 'projects/orders_item', locals: {orders: @project.sample_orders, type: 'plate'})%>')
+<% else %>
+$('#normal_orders_item').html('<%= j render(partial: 'projects/orders_item', locals: {orders: @project.normal_orders, type: 'order'})%>')
+<% end %>
+$('#global-modal').modal('hide');
 $("[data-widget='collapse']").click(function() {
     //Find the box parent
     var box = $(this).parents(".box").first();

@@ -1,0 +1,57 @@
+<div class="col-md-4" id="order_<%= order.id %>_attachments">
+  <p class="text-muted ">
+    <% if @project.can_do? type %>
+      <a class="btn btn-xs bg-blue" id="order_<%= order.id %>_place" href="#" >
+        <i class="fa fa-plus"></i>
+        <span>订货清单</span>
+      </a>
+    <% end %>
+    <% if order.place.present? %>
+      <a href="javascript:void(0)" onclick="show_file(this)" class="btn show-file" data-url="<%= order.place.preview_url%>" data-file-name="<%= order.place.file_name %>">
+        <i class="fa fa-eye"></i><%= order.place.file_name %>
+      </a>
+    <% end %>
+  </p>
+  <p class="text-muted ">
+    <% if @project.can_do? type %>
+      <a class="btn btn-xs bg-blue" id="order_<%= order.id %>_deliver" href="#" >
+        <i class="fa fa-plus"></i>
+        <span>发货清单</span>
+      </a>
+    <% end %>
+    <% if order.deliver.present? %>
+      <a href="javascript:void(0)" onclick="show_file(this)" class="btn show-file" data-url="<%= order.deliver.preview_url%>" data-file-name="<%= order.deliver.file_name %>">
+        <i class="fa fa-eye"></i><%= order.deliver.file_name %>
+      </a>
+    <% end %>
+  </p>
+  <p class="text-muted ">
+    <% if @project.can_do? type %>
+      <a class="btn btn-xs bg-blue" id="order_<%= order.id %>_sign" href="#" >
+        <i class="fa fa-plus"></i>
+        <span>签收清单</span>
+      </a>
+    <% end %>
+    <% if order.sign.present? %>
+      <a href="javascript:void(0)" onclick="show_file(this)" class="btn show-file" data-url="<%= order.sign.preview_url%>" data-file-name="<%= order.sign.file_name %>">
+        <i class="fa fa-eye"></i><%= order.sign.file_name %>
+      </a>
+    <% end %>
+  </p>
+</div>
+
+<script type="text/javascript">
+    <% if @project.can_do? type%>
+      var place_qiniu = new QiniuJsSDK();
+      var place_option = set_option('order_<%= order.id %>_place');
+      var place_uploader = place_qiniu.uploader(place_option);
+
+      var deliver_qiniu = new QiniuJsSDK();
+      var deliver_option = set_option('order_<%= order.id %>_deliver');
+      var deliver_uploader = deliver_qiniu.uploader(deliver_option);
+
+      var sign_qiniu = new QiniuJsSDK();
+      var sign_option = set_option('order_<%= order.id %>_sign');
+      var sign_uploader = sign_qiniu.uploader(sign_option);
+    <% end %>
+</script>

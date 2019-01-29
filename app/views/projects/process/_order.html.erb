@@ -5,6 +5,36 @@
 </li>
 <!-- /.timeline-label -->
 <!-- timeline item -->
-<li id="orders_item">
-<%= render 'projects/orders_item'%>
+<li>
+  <style>
+    .table > tbody > tr > td{
+      padding: 2px;
+    }
+  </style>
+  <i class="fa fa-shopping-cart bg-orange"></i>
+
+  <div class="timeline-item">
+    <div class="timeline-body">
+      <div class="box box-default collapsed-box" style="margin-bottom: 5px;">
+        <div class="box-header with-border">
+          <h4 class="box-title">
+            <%= link_to '添加新订单', new_order_path(@project), 'data-toggle' => "modal", 'data-target' => "#global-modal", class: 'btn' if @project.can_do? :order %>
+          </h4>
+
+          <div class="box-tools pull-right">
+            <!--            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>-->
+            <!--            </button>-->
+          </div>
+          <!-- /.box-tools -->
+        </div>
+        <!-- /.box-header -->
+
+
+      </div>
+        <%= render partial: 'projects/orders_item', locals: {orders: @project.normal_orders, type: 'order'}%>
+      <div style="text-align: right">
+        <%= link_to '下一步', 'JavaScript:void(0)', onclick: "step_event('done_order')",class: 'btn  btn-success btn-sm' if @project.can_do? :order %>
+      </div>
+    </div>
+  </div>
 </li>

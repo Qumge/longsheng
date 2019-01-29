@@ -1,39 +1,3 @@
-<div class="row">
-  <div class="col-md-12">
-    <!-- The time line -->
-    <ul class="timeline" style=""><!--timeline item -->
-      <!--项目合同-->
-      <%= render 'projects/process/contract' if @project.can_view? :contract %>
-      <!--预付款-->
-      <%= render 'projects/process/advance' if @project.can_view? :advance %>
-      <!--操作模式-->
-      <%= render 'projects/process/pattern' if @project.can_view? :pattern %>
-      <!--做样板房-->
-      <%= render 'projects/process/plate' if @project.can_view? :plate %>
-      <!--完善项目资料-->
-      <%= render 'projects/process/detail' if @project.can_view? :detail %>
-      <!--批量订单-->
-      <%= render 'projects/process/order' if @project.can_view? :order %>
-      <!--开票申请-->
-      <%= render 'projects/process/invoice' if @project.can_view? :invoice %>
-      <!--进度款-->
-      <%= render 'projects/process/process_payment' if @project.can_view? :process_payment %>
-      <!--结算款-->
-      <%= render 'projects/process/settlement' if @project.can_view? :settlement  %>
-      <!--金额确认-->
-      <%= render 'projects/process/payment' if @project.can_view? :payment  %>
-      <!--保证金-->
-      <%= render 'projects/process/bond' if @project.can_view? :bond %>
-      <!--项目结清确认-->
-      <%= render 'projects/process/confirm' if @project.can_view? :confirm %>
-      <!-- END timeline item -->
-      <li>
-        <i class="fa fa-clock-o bg-gray"></i>
-      </li>
-    </ul>
-  </div>
-  <!-- /.col -->
-</div>
 <script type="text/javascript">
     //下单
     function place_order(order_id){
@@ -203,11 +167,7 @@
     var advance_uploader = advance_qiniu.uploader(advance_option);
     <% end %>
 
-    <% if @project.can_do? :plate %>
-    var plate_qiniu = new QiniuJsSDK();
-    var plate_option = set_option('plate');
-    var plate_uploader = plate_qiniu.uploader(plate_option);
-    <% end %>
+
 
     <% if @project.can_do? :process_payment %>
     var payments_qiniu = new QiniuJsSDK();
@@ -230,3 +190,39 @@
     $('.select2').select2();
 
 </script>
+<div class="row">
+  <div class="col-md-12">
+    <!-- The time line -->
+    <ul class="timeline" style=""><!--timeline item -->
+      <!--项目合同-->
+      <%= render 'projects/process/contract' if @project.can_view? :contract %>
+      <!--预付款-->
+      <%= render 'projects/process/advance' if @project.can_view? :advance %>
+      <!--操作模式-->
+      <%= render 'projects/process/pattern' if @project.can_view? :pattern %>
+      <!--做样板房-->
+      <%= render 'projects/process/plate' if @project.can_view? :plate %>
+      <!--完善项目资料-->
+      <%= render 'projects/process/detail' if @project.can_view? :detail %>
+      <!--批量订单-->
+      <%= render 'projects/process/order' if @project.can_view? :order %>
+      <!--开票申请-->
+      <%= render 'projects/process/invoice' if @project.can_view? :invoice %>
+      <!--进度款-->
+      <%= render 'projects/process/process_payment' if @project.can_view? :process_payment %>
+      <!--结算款-->
+      <%= render 'projects/process/settlement' if @project.can_view? :settlement  %>
+      <!--金额确认-->
+      <%= render 'projects/process/payment' if @project.can_view? :payment  %>
+      <!--保证金-->
+      <%= render 'projects/process/bond' if @project.can_view? :bond %>
+      <!--项目结清确认-->
+      <%= render 'projects/process/confirm' if @project.can_view? :confirm %>
+      <!-- END timeline item -->
+      <li>
+        <i class="fa fa-clock-o bg-gray"></i>
+      </li>
+    </ul>
+  </div>
+  <!-- /.col -->
+</div>

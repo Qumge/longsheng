@@ -4,34 +4,38 @@
                   </span>
 </li>
 <!-- /.timeline-label -->
-<!-- timeline item -->
+
 <li>
-  <i class="fa fa-file-pdf-o bg-green"></i>
+  <style>
+    .table > tbody > tr > td{
+      padding: 2px;
+    }
+  </style>
+  <i class="fa fa-shopping-cart bg-orange"></i>
 
   <div class="timeline-item">
-    <div class="form-group">
-
-    </div>
     <div class="timeline-body">
-      <label for="exampleInputFile">样品清单</label>
-      <div >
-        <% if @project.can_do? :plate %>
-        <a class="btn btn-default " id="plate" href="#" >
-          <i class="fa fa-plus"></i>
-          <span>选择文件</span>
-        </a>
-        <% end %>
-      </div>
+      <div class="box box-default collapsed-box" style="margin-bottom: 5px;">
 
-      <% if @project.plate.present? %>
-        <a href="javascript:void(0)" onclick="show_file(this)" class="btn show-file" data-url="<%= @project.plate.preview_url%>" data-file-name="<%= @project.plate.file_name %>">
-          <i class="fa fa-eye"></i><%= @project.plate.file_name %>
-        </a>
-        <%= link_to '删除','JavaScript:void(0)', onclick: "delete_attachment(#{@project.plate.id}, '#{delete_attachment_project_path @project.id}')",class: 'btn  btn-sm ', style: 'color: red' if @project.can_do? :plate  %>
-        <div style="text-align: right">
-          <%= link_to '下一步', 'JavaScript:void(0)', onclick: "step_event('done_plate')",class: 'btn  btn-success btn-sm' if @project.can_do? :plate %>
+        <div class="box-header with-border">
+          <h4 class="box-title">
+            <%= link_to '礼品/样品申请', new_order_path(@project), 'data-toggle' => "modal", 'data-target' => "#global-modal", class: 'btn' if @project.can_do? :plate %>
+          </h4>
+
+          <div class="box-tools pull-right">
+            <!--            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>-->
+            <!--            </button>-->
+          </div>
+          <!-- /.box-tools -->
         </div>
-      <% end %>
+        <!-- /.box-header -->
+
+
+      </div>
+      <%= render partial: 'projects/orders_item', locals: {orders: @project.sample_orders, type: 'plate'}%>
+      <div style="text-align: right">
+        <%= link_to '下一步', 'JavaScript:void(0)', onclick: "step_event('done_plate')",class: 'btn  btn-success btn-sm' if @project.can_do? :plate %>
+      </div>
     </div>
   </div>
 </li>
