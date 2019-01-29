@@ -4,7 +4,6 @@ class InvoicesController < ApplicationController
 
   def new
     @orders = @project.can_invoice_orders
-    p @orders, 1111
     render layout: false
   end
 

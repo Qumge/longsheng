@@ -19,7 +19,7 @@ class Invoice < ActiveRecord::Base
     project = self.project
     busy_order_invoices = self.project.order_invoices.where('invoice_id != ?', self.id)
     free_orders = project.orders
-    free_orders = free_orders.where('orders.id not in (?)', busy_order_invoices.collect{|order_invoices| order_invoices.id}) if busy_order_invoices.present?
+    free_orders = free_orders.where('orders.id not in (?)', busy_order_invoices.collect{|order_invoices| order_invoices.order_id}) if busy_order_invoices.present?
     free_orders
   end
 
