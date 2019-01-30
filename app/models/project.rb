@@ -19,11 +19,11 @@
 #  estimate          :integer
 #  name              :string(255)
 #  payment           :string(255)
+#  project_status    :string(255)
 #  purchase          :string(255)
 #  purchase_phone    :string(255)
 #  settling          :string(255)
 #  settling_phone    :string(255)
-#  status            :string(255)
 #  step              :integer          default(0)
 #  step_status       :string(255)
 #  strategic         :boolean
@@ -43,7 +43,7 @@ class Project < ActiveRecord::Base
   belongs_to :owner, class_name: 'User', foreign_key: :owner_id
   belongs_to :create_user, class_name: 'User', foreign_key: :create_id
   has_one :audit, -> {where(model_type: 'Project')}, foreign_key: :model_id
-  after_create :create_audit_notice
+  after_create :create_project_manager_notice
   validates_presence_of :name, :a_name, :category, :address, :city, :supplier_type
   validates_numericality_of :estimate, if: Proc.new{|p| p.estimate.present?}
   has_one :project_contract, -> {where(model_type: 'contract')}, class_name: 'Attachment', foreign_key: :model_id
@@ -59,19 +59,28 @@ class Project < ActiveRecord::Base
   belongs_to :contract
   has_many :invoices
   # belongs_to :agency
-
+  #
+  STATUS = {wait: '待审批', project_manager_aduit: '项目经理已审批', regional_audit: '大区经理已审批', active: '进行中', finish: '已完结', overdue: '逾期', failed: '审核失败'}
   aasm :project_status do
     state :wait, :initial => true
-    state :regional_audit, :active, :finish, :overdue, :failed
+    state :project_manager_aduit, :regional_audit, :active, :finish, :overdue, :failed
 
-    event :do_regional_audit do
-      transitions :from => :wait, :to => :regional_audit, :after => Proc.new {create_admin_audit_notice }
+
+    #项目经理审批
+    event :do_project_manager_audit do
+      transitions :from => :wait, :to => :project_manager_aduit, :after => Proc.new {create_audit_notice }
+    end
+    # 大区经理审批
+    event :do_regional_manager_audit do
+      transitions :from => :project_manager_aduit, :to => :regional_audit, :after => Proc.new {create_admin_audit_notice }
     end
 
+    # 后勤审批
     event :do_normal_admin_audit do
       transitions :from => :regional_audit, :to => :active, :after => Proc.new {create_active_notice }
     end
 
+    #
     event :do_finish do
       transitions :from => :active, :to => :finish
     end
@@ -81,7 +90,7 @@ class Project < ActiveRecord::Base
     end
 
     event :do_failed do
-      transitions :from => [:wait, :regional_audit], :to => :failed, :after => Proc.new {create_failed_notice }
+      transitions :from => [:wait, :project_manager_aduit, :regional_audit], :to => :failed, :after => Proc.new {create_failed_notice }
     end
   end
 
@@ -181,7 +190,7 @@ class Project < ActiveRecord::Base
 
   # 根据审核表获取当前的审核状态
   def status
-    ''
+    STATUS[self.project_status.to_sym]
   end
 
   # TODO
@@ -223,9 +232,18 @@ class Project < ActiveRecord::Base
   end
 
 
-
-
   private
+
+  # 通知项目经理审批
+  def create_project_manager_notice
+    if owner.present? && owner.organization.present?
+      owner.organization.users.joins(:role).where('roles.desc = ?', 'project_manager').each do |user|
+        Notice.create_notice :project_need_audit, self.id, user.id
+      end
+    end
+  end
+
+  # 通知大区总监审批
   def create_audit_notice
     if owner.present? && owner.organization.present? && owner.organization.parent.present?
       owner.organization.parent.users.joins(:role).where('roles.desc = ?', 'regional_manager').each do |user|
@@ -234,16 +252,19 @@ class Project < ActiveRecord::Base
     end
   end
 
+  # 通知后勤审批
   def create_admin_audit_notice
     User.joins(:role).where('roles.desc = ?', 'normal_admin').each do |user|
       Notice.create_notice :project_need_audit, self.id, user.id
     end
   end
 
+  # 通知立项失败
   def create_failed_notice
     Notice.create_notice :project_failed_audit, self.id, owner_id
   end
 
+  # 通知立项成功
   def create_active_notice
     Notice.create_notice :project_audited, self.id, owner_id
   end

@@ -10,6 +10,7 @@ class OrdersController < ApplicationController
 
   def create
     @order_product = @order.order_products.new order_product_permit
+    @order.desc = params[:desc]
     @flag = @order.save
 
   end

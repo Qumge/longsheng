@@ -2,7 +2,7 @@
   <div class="modal-header" style="padding:5px; padding-left: 15px;">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
     <h4 class="modal-title" id="file-modal-label">
-      添加商品
+      <%= @order.id.blank? ? '新订单' : '添加商品' %>
     </h4>
   </div>
   <%= simple_form_for(@order_product, url: url,html: {class: 'form-horizontal group_form', onkeydown: "if(event.keyCode==13)return false;"}, wrapper: :horizontal_form) do |f| %>
@@ -10,14 +10,19 @@
       <%= f.input :product_id, label: '序号 / 产品型号', input_html: { class: 'select2 form-control', style: 'width:100%' }, collection: @project.sales.collect{|sale| ["#{sale.product.no} / #{sale.product.product_no}", sale.product.id, data: {price: sale.price, discount: sale.discount, discount_price: sale.discount_price}.to_json]} %>
       <%= f.input :number, label: '数量' %>
       <% if @order.id.blank? %>
-      <%= f.input :desc, label: '备注' %>
+        <div class="form-group row string optional sale_desc">
+          <label class="col-sm-3 col-form-label string optional" for="sale_desc">备注</label>
+          <div class="col-sm-9">
+            <input class="form-control string optional" type="text" name="desc" id="desc" value="<%= @order.desc %>">
+          </div>
+        </div>
+      <% end %>
       <div class="form-group row string optional ">
         <label class="col-sm-3 col-form-label string optional" >价格（元）</label>
         <div class="col-sm-9">
           <span id="price"></span>
         </div>
       </div>
-      <% end %>
       <div class="form-group row string optional ">
         <label class="col-sm-3 col-form-label string optional" >总价（元）</label>
         <div class="col-sm-9">

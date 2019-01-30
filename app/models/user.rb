@@ -37,6 +37,7 @@ class User < ActiveRecord::Base
   has_many :notices
   has_many :active_notices, -> {where(readed: false)}, class_name: 'Notice', foreign_key: :user_id
   has_many :resources, through: :role
+  has_many :audits
   def has_role? role
     self.role && self.role.desc == role
   end
@@ -59,5 +60,39 @@ class User < ActiveRecord::Base
       projects.where('1 = -1')
     end
   end
+
+  def audit_projects
+    status = 'none'
+    case self.role.desc
+    when 'project_manager'
+      status = 'wait'
+    when 'regional_manager'
+      status = 'project_manager_aduit'
+    when 'normal_admin'
+      status = 'regional_audit'
+    end
+    view_projects.where(project_status: status)
+  end
+
+  # 查询优化
+  def view_orders
+    Order.where('project_id in (?)', view_projects.collect{|p| p.id})
+  end
+
+  def audit_orders
+    status = 'none'
+    case self.role.desc
+    when 'project_manager'
+      status = 'apply'
+    when 'regional_manager'
+      status = 'project_manager_audit'
+    when 'normal_admin'
+      status = 'regional_manager_audit'
+    when 'group_admin'
+      status = 'normal_admin_audit'
+    end
+    view_orders.where(order_status: status)
+  end
+
 
 end

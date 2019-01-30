@@ -51,7 +51,7 @@
                 </div>
 
               <% end %>
-              <%= render partial: 'order_attachments', locals: {order: order, type: type} %>
+              <%= render partial: '/projects/order_attachments', locals: {order: order, type: type} %>
               <div class="col-md-12" style="text-align: right">
                 <b>合计：</b><%= order.real_total_price %>
                 <%= link_to '下单', 'JavaScript:void(0)', onclick: "place_order(#{order.id})",class: 'btn btn-success btn-xs' if order.can_edit? %>

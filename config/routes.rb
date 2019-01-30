@@ -136,6 +136,22 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :audits do
+    collection do
+      get :orders
+      get :projects
+      get :sales
+      get :agency
+      get :audits
+    end
+
+    member do
+      get :success
+      get :failed_notice
+      post :failed
+    end
+  end
+
   match ':controller(/:action(/:id))', :via => :get
 
 end

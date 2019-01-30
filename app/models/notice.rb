@@ -17,9 +17,12 @@ class Notice < ActiveRecord::Base
   TYPES = {
       project_need_audit: '有一个新立项的项目需要审核',
       project_audited: '您立项的的项目已经通过审核',
-      project_failed_audit: '您立项的项目审核失败了',
-      order_need_audit: '有一个样品礼品订单需要审核',
-      order_audited: '您的样品、礼品申请已经通过审核'
+      project_failed_audit: '您立项的项目未通过审核',
+      order_need_audit: '有一个样品、礼品申请需要审核',
+      order_audited: '您的样品、礼品申请已经通过审核',
+      order_deliver: '有新的订单需要处理，请及时发货',
+      order_sign: '您的订单已经发货，请注意查收',
+      order_failed_audit: '您的样品、礼品申请未通过审核'
   }
 
 

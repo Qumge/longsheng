@@ -37,6 +37,12 @@ module ApplicationHelper
             show: '详情',
             edit: '合同编辑',
             update: '合同编辑'
+        },
+        audits: {
+            index: '我的审批',
+            orders: '订单审批',
+            sales: '特价审批',
+            agencies: '代理审批'
         }
     }
   end

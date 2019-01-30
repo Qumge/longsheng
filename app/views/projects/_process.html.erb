@@ -155,39 +155,42 @@
             }
         }
     }
-    <% if @project.can_do? :contract %>
-    var contract_qiniu = new QiniuJsSDK();
-    var contract_option = set_option('project_contract');
-    var contract_uploader = contract_qiniu.uploader(contract_option);
-    <% end %>
+    $(function(){
+        <% if @project.can_do? :contract %>
+        var contract_qiniu = new QiniuJsSDK();
+        var contract_option = set_option('project_contract');
+        var contract_uploader = contract_qiniu.uploader(contract_option);
+        <% end %>
 
-    <% if @project.can_do? :advance %>
-    var advance_qiniu = new QiniuJsSDK();
-    var advance_option = set_option('advance');
-    var advance_uploader = advance_qiniu.uploader(advance_option);
-    <% end %>
+        <% if @project.can_do? :advance %>
+        var advance_qiniu = new QiniuJsSDK();
+        var advance_option = set_option('advance');
+        var advance_uploader = advance_qiniu.uploader(advance_option);
+        <% end %>
 
 
 
-    <% if @project.can_do? :process_payment %>
-    var payments_qiniu = new QiniuJsSDK();
-    var payments_option = set_option('payments');
-    var payments_uploader = payments_qiniu.uploader(payments_option);
-    <% end %>
+        <% if @project.can_do? :process_payment %>
+        var payments_qiniu = new QiniuJsSDK();
+        var payments_option = set_option('payments');
+        var payments_uploader = payments_qiniu.uploader(payments_option);
+        <% end %>
 
-    <% if @project.can_do? :settlement %>
-    var settlements_qiniu = new QiniuJsSDK();
-    var settlements_option = set_option('settlements');
-    var settlements_uploader = settlements_qiniu.uploader(settlements_option);
-    <% end %>
+        <% if @project.can_do? :settlement %>
+        var settlements_qiniu = new QiniuJsSDK();
+        var settlements_option = set_option('settlements');
+        var settlements_uploader = settlements_qiniu.uploader(settlements_option);
+        <% end %>
 
-    <% if @project.can_do? :bond %>
-    var bond_qiniu = new QiniuJsSDK();
-    var bond_option = set_option('bond');
-    var bond_uploader = bond_qiniu.uploader(bond_option);
-    <% end %>
+        <% if @project.can_do? :bond %>
+        var bond_qiniu = new QiniuJsSDK();
+        var bond_option = set_option('bond');
+        var bond_uploader = bond_qiniu.uploader(bond_option);
+        <% end %>
 
-    $('.select2').select2();
+        $('.select2').select2();
+    });
+
 
 </script>
 <div class="row">
