@@ -1,8 +1,8 @@
 
 <% if @project.plate?  %>
-$('#plate_orders_item').html('<%= j render(partial: 'projects/orders_item', locals: {orders: @project.sample_orders})%>')
+$('#plate_orders_item').html('<%= j render(partial: 'projects/orders_item', locals: {orders: @project.sample_orders, type: 'plate'})%>')
 <% else %>
-$('#normal_orders_item').html('<%= j render(partial: 'projects/orders_item', locals: {orders: @project.normal_orders})%>')
+$('#normal_orders_item').html('<%= j render(partial: 'projects/orders_item', locals: {orders: @project.normal_orders, type: 'order'})%>')
 <% end %>
 $('#global-modal').modal('hide')
 $("[data-widget='collapse']").click(function() {

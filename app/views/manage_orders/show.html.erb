@@ -1,0 +1,48 @@
+<div class="modal-header" style="padding:5px; padding-left: 15px;">
+  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+  <h4 class="modal-title" id="file-modal-label">订单详情</h4>
+</div>
+
+<div class="modal-body" >
+  <div class="box-body" style="border: solid 1px #d2d6de;">
+    <% @order.order_products.each do |order_product| %>
+      <div class="col-md-4">
+        <!-- Profile Image -->
+        <div class="box box-primary">
+          <div class="box-body box-profile">
+            <p class="text-muted text-center"><%= order_product.product&.name %></p>
+
+            <ul class="list-group list-group-unbordered">
+              <li class="list-group-item">
+                <b>编号</b> <a class="pull-right"><%= order_product.product&.no %></a>
+              </li>
+              <li class="list-group-item">
+                <b>价格</b> <a class="pull-right"><%= order_product.real_price %></a>
+              </li>
+              <li class="list-group-item">
+                <b>数量</b> <a class="pull-right"><%= order_product.number %></a>
+              </li>
+              <li class="list-group-item">
+                <b>总价</b> <a class="pull-right"><%= order_product.real_total_price %></a>
+              </li>
+            </ul>
+          </div>
+          <!-- /.box-body -->
+        </div>
+        <!-- /.box -->
+      </div>
+    <% end %>
+    <div class="col-md-12">
+      <div class="col-md-6" style="text-align: left">
+        <b>状态：</b><%= @order.get_status %>
+      </div>
+      <div class="col-md-6">
+        <b>合计：</b><%= @order.real_total_price %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal-footer">
+  <button type="button" class="btn btn-default" data-dismiss="modal">返回</button>
+</div>

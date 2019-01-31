@@ -58,7 +58,7 @@ class Project < ActiveRecord::Base
   has_many :normal_orders, -> {where(order_type: 'normal')}, class_name: 'Order', foreign_key: :project_id
   belongs_to :contract
   has_many :invoices
-  # belongs_to :agency
+  belongs_to :agent, foreign_key: :agency_id
   #
   STATUS = {wait: '待审批', project_manager_aduit: '项目经理已审批', regional_audit: '大区经理已审批', active: '进行中', finish: '已完结', overdue: '逾期', failed: '审核失败'}
   aasm :project_status do

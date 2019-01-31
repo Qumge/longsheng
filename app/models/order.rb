@@ -4,6 +4,7 @@
 #
 #  id           :integer          not null, primary key
 #  desc         :string(255)
+#  no           :string(255)
 #  order_status :string(255)
 #  order_type   :string(255)
 #  created_at   :datetime         not null
@@ -18,18 +19,25 @@ class Order < ActiveRecord::Base
   has_many :order_products
   has_many :order_invoices
   belongs_to :user
+  after_create :set_no
   has_and_belongs_to_many :invoices, join_table: "order_invoices"
-  has_one :place, -> {where(model_type: 'place')}, class_name: 'Attachment', foreign_key: :model_id
-  has_one :deliver, -> {where(model_type: 'deliver')}, class_name: 'Attachment', foreign_key: :model_id
-  has_one :sign, -> {where(model_type: 'sign')}, class_name: 'Attachment', foreign_key: :model_id
+  has_one :place_file, -> {where(model_type: 'place')}, class_name: 'Attachment', foreign_key: :model_id
+  has_one :deliver_file, -> {where(model_type: 'deliver')}, class_name: 'Attachment', foreign_key: :model_id
+  has_one :sign_file, -> {where(model_type: 'sign')}, class_name: 'Attachment', foreign_key: :model_id
+
+  STATUS = {wait: '新订单', apply: '已申请', project_manager_audit: '项目经理已审核',
+            regional_manager_audit: '大区经理已审核', normal_admin_audit: '后勤已审核',
+            active: '已下单或申请成功', deliver: '已发货', sign: '已签收', failed: '审核失败' }
+
+  ORDER_TYPE = {sample: '样品、礼品', normal: '订单'}
 
   aasm :order_status do
     state :wait, :initial => true
-    state :apply, :project_manager_audit, :regional_manager_audit, :normal_admin_audit, :active, :deliver, :sign, :overdue, :failed
+    state :apply, :project_manager_audit, :regional_manager_audit, :normal_admin_audit, :active, :deliver, :sign, :failed
 
     #申请
     event :do_apply do
-      transitions :from => :wait, :to => :apply, :after => Proc.new {create_project_manager_audit_notice}
+      transitions :from => [:wait, :failed], :to => :apply, :after => Proc.new {create_project_manager_audit_notice}
     end
 
     # 下单
@@ -82,12 +90,13 @@ class Order < ActiveRecord::Base
     total_price
   end
 
-  def no
-    'LG#NO.' + id.to_s.rjust(6, '0')
+  def set_no
+    self.no = 'LG#NO.' + self.id.to_s.rjust(6, '0')
+    self.save
   end
 
   def can_edit?
-    self.project.can_do? :order &&  (self.wait? || self.failed?)
+     self.wait? || self.failed?
   end
 
   # 同住项目经理审批
@@ -144,6 +153,33 @@ class Order < ActiveRecord::Base
   def create_failed_notice
     Notice.create_notice :order_failed_audit, self.id, user_id
   end
+
+  # 获取当前订单状态
+  def get_status
+    STATUS[self.order_status.to_sym]
+  end
+
+  # 获取订单类别
+  def get_order_type
+    ORDER_TYPE[self.order_type.to_sym]
+  end
+
+  class << self
+    # 检索
+    def search_conn params
+      orders = Order.all
+      if params[:order_status].present?
+        orders = orders.where(order_status: params[:order_status])
+      end
+
+      if params[:table_search].present?
+        orders = orders.joins(:project, :user).where('projects.name like ? or orders.no like ? or users.name like ?', "%#{params[:table_search]}%", "%#{params[:table_search]}%", "%#{params[:table_search]}%")
+      end
+      orders
+    end
+  end
+
+
 
 
 

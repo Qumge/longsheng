@@ -1,57 +1,51 @@
 <div class="col-md-4" id="order_<%= order.id %>_attachments">
   <p class="text-muted ">
-    <% if @project.can_do? type && (order.wait? || order.failed? || order.deliver?) %>
+    <% if @project.can_do?(type) && (order.wait? || order.failed?) %>
       <a class="btn btn-xs bg-blue" id="order_<%= order.id %>_place" href="#" >
         <i class="fa fa-plus"></i>
         <span>订货清单</span>
       </a>
+      <% else %>
+      <span><b>订货清单:</b></span>
     <% end %>
-    <% if order.place.present? %>
-      <a href="javascript:void(0)" onclick="show_file(this)" class="btn show-file" data-url="<%= order.place.preview_url%>" data-file-name="<%= order.place.file_name %>">
-        <i class="fa fa-eye"></i><%= order.place.file_name %>
+    <% if order.place_file.present? %>
+      <a href="javascript:void(0)" onclick="show_file(this)" class="btn show-file" data-url="<%= order.place_file.preview_url%>" data-file-name="<%= order.place_file.file_name %>">
+        <i class="fa fa-eye"></i><%= order.place_file.file_name %>
       </a>
     <% end %>
   </p>
   <p class="text-muted ">
-    <% if @project.can_do? type && (order.apply? || order.deliver?)  %>
-      <a class="btn btn-xs bg-blue" id="order_<%= order.id %>_deliver" href="#" >
-        <i class="fa fa-plus"></i>
-        <span>发货清单</span>
-      </a>
-    <% end %>
-    <% if order.deliver.present? %>
-      <a href="javascript:void(0)" onclick="show_file(this)" class="btn show-file" data-url="<%= order.deliver.preview_url%>" data-file-name="<%= order.deliver.file_name %>">
-        <i class="fa fa-eye"></i><%= order.deliver.file_name %>
+    <span><b>发货清单:</b></span>
+    <% if order.deliver_file.present? %>
+      <a href="javascript:void(0)" onclick="show_file(this)" class="btn show-file" data-url="<%= order.deliver_file.preview_url%>" data-file-name="<%= order.deliver_file.file_name %>">
+        <i class="fa fa-eye"></i><%= order.deliver_file.file_name %>
       </a>
     <% end %>
   </p>
   <p class="text-muted ">
-    <% if @project.can_do? type && (order.deliver? || order.sign?) %>
+    <% if @project.can_do?(type) && (order.deliver? || order.sign?) %>
       <a class="btn btn-xs bg-blue" id="order_<%= order.id %>_sign" href="#" >
         <i class="fa fa-plus"></i>
         <span>签收清单</span>
       </a>
+    <% else %>
+      <span><b>签收清单:</b></span>
     <% end %>
-    <% if order.sign.present?  %>
-      <a href="javascript:void(0)" onclick="show_file(this)" class="btn show-file" data-url="<%= order.sign.preview_url%>" data-file-name="<%= order.sign.file_name %>">
-        <i class="fa fa-eye"></i><%= order.sign.file_name %>
+    <% if order.sign_file.present?  %>
+      <a href="javascript:void(0)" onclick="show_file(this)" class="btn show-file" data-url="<%= order.sign_file.preview_url%>" data-file-name="<%= order.sign_file.file_name %>">
+        <i class="fa fa-eye"></i><%= order.sign_file.file_name %>
       </a>
     <% end %>
   </p>
 </div>
 
 <script type="text/javascript">
-    <% if @project.can_do? type && (order.wait? || order.failed? || order.deliver?) %>
+    <% if @project.can_do?(type) && (order.wait? || order.failed?) %>
       var place_qiniu = new QiniuJsSDK();
       var place_option = set_option('order_<%= order.id %>_place');
       var place_uploader = place_qiniu.uploader(place_option);
     <% end %>
-    <% if @project.can_do? type && (order.apply? || order.deliver?)  %>
-      var deliver_qiniu = new QiniuJsSDK();
-      var deliver_option = set_option('order_<%= order.id %>_deliver');
-      var deliver_uploader = deliver_qiniu.uploader(deliver_option);
-    <% end %>
-    <% if @project.can_do? type && (order.sign? || order.deliver?)  %>
+    <% if @project.can_do?(type) && (order.sign? || order.deliver?)  %>
       var sign_qiniu = new QiniuJsSDK();
       var sign_option = set_option('order_<%= order.id %>_sign');
       var sign_uploader = sign_qiniu.uploader(sign_option);

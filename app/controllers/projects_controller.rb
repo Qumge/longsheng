@@ -45,6 +45,7 @@ class ProjectsController < ApplicationController
     @flag = true
     if params[:name].include?('order')
       type, id, a_type = params[:name].split('_')
+      a_type = "#{a_type}_file"
       order = @project.orders.find_by id: id
       if order.send(a_type).present?
         @flag = order.send(a_type).update file_name: params[:file_name], path: params[:path]

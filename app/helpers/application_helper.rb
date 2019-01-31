@@ -43,6 +43,9 @@ module ApplicationHelper
             orders: '订单审批',
             sales: '特价审批',
             agencies: '代理审批'
+        },
+        manage_orders: {
+            index: '订单列表'
         }
     }
   end

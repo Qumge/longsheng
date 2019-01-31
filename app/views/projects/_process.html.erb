@@ -15,6 +15,21 @@
         }
     }
 
+    function apply_order(order_id){
+        if(confirm('申请后不可变更，确认申请吗？')){
+            showSpinner();
+            $.ajax({
+                type: 'POST',
+                url: '<%= apply_order_orders_path %>',
+                data: {order_id: order_id},
+                dataType: 'script',
+                success: function (data) {
+
+                }
+            })
+        }
+    }
+
     //回款确认
     function payment(){
         if($('#payment').val()){

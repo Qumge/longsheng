@@ -3,7 +3,7 @@
       <div class="box box-default collapsed-box" style="margin-bottom: 5px;">
         <div class="box-header with-border">
           <h4 class="box-title">订单<%= order.no %>
-            <%= link_to '添加商品', new_order_path(@project, order_id: order.id), 'data-toggle' => "modal", 'data-target' => "#global-modal", class: 'btn' if order.can_edit? %>
+            <%= link_to '添加商品', new_order_path(@project, order_id: order.id), 'data-toggle' => "modal", 'data-target' => "#global-modal", class: 'btn' if @project.can_do?(type) && order.can_edit? %>
           </h4>
 
           <div class="box-tools pull-right">
@@ -36,7 +36,7 @@
                           <b>总价</b> <a class="pull-right"><%= order_product.real_total_price %></a>
                         </li>
                       </ul>
-                      <% if order.can_edit? %>
+                      <% if @project.can_do?(type) && order.can_edit? %>
                         <%= link_to edit_order_path(order_product), 'data-toggle' => "modal", 'data-target' => "#global-modal", class: 'btn btn-success btn-xs' do %>
                           编辑
                         <% end %>
@@ -52,11 +52,21 @@
 
               <% end %>
               <%= render partial: '/projects/order_attachments', locals: {order: order, type: type} %>
-              <div class="col-md-12" style="text-align: right">
-                <b>合计：</b><%= order.real_total_price %>
-                <%= link_to '下单', 'JavaScript:void(0)', onclick: "place_order(#{order.id})",class: 'btn btn-success btn-xs' if order.can_edit? %>
+            <div class="col-md-12">
+              <div class="col-md-6" style="text-align: left">
+                <b>状态：</b><%= order.get_status %>
               </div>
-
+              <div class="col-md-6">
+                <b>合计：</b><%= order.real_total_price %>
+                <span style="text-align: left">
+                <% if type == 'plate' %>
+                  <%= link_to '申请', 'JavaScript:void(0)', onclick: "apply_order(#{order.id})",class: 'btn btn-success btn-xs' if @project.can_do?(type) && order.can_edit? %>
+                <% elsif type == 'order'%>
+                  <%= link_to '下单', 'JavaScript:void(0)', onclick: "place_order(#{order.id})",class: 'btn btn-success btn-xs' if @project.can_do?(type) && order.can_edit? %>
+                <% end %>
+                </span>
+              </div>
+            </div>
           </div>
 
         <!-- /.box-body -->

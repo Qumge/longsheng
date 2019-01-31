@@ -124,6 +124,7 @@ Rails.application.routes.draw do
       resources :orders do
         collection do
           post :place_order
+          post :apply_order
         end
       end
       resources :invoices
@@ -149,6 +150,12 @@ Rails.application.routes.draw do
       get :success
       get :failed_notice
       post :failed
+    end
+  end
+
+  resources :manage_orders do
+    collection do
+      post :deliver
     end
   end
 

@@ -94,5 +94,15 @@ class User < ActiveRecord::Base
     view_orders.where(order_status: status)
   end
 
+  # 是否是业务员
+  def is_business?
+    ['agency', 'project_user', 'project_manager', 'regional_manager'].include? self.role.desc
+  end
+
+  # 是否是后勤管理人员
+  def is_rear?
+    ['normal_admin', 'group_admin', 'super_admin'].include? self.role.desc
+  end
+
 
 end

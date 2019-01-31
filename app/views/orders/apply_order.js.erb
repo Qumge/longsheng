@@ -1,10 +1,10 @@
-<% if @flag %>
-  <% if @project.plate?  %>
-  $('#plate_orders_item').html('<%= j render(partial: 'projects/orders_item', locals: {orders: @project.sample_orders, type: 'plate'})%>');
-  <% else %>
-  $('#normal_orders_item').html('<%= j render(partial: 'projects/orders_item', locals: {orders: @project.normal_orders, type: 'order'})%>');
-  <% end %>
-$('#global-modal').modal('hide');
+
+<% if @project.plate?  %>
+$('#plate_orders_item').html('<%= j render(partial: 'projects/orders_item', locals: {orders: @project.sample_orders, type: 'plate'})%>')
+<% else %>
+$('#normal_orders_item').html('<%= j render(partial: 'projects/orders_item', locals: {orders: @project.normal_orders, type: 'order'})%>')
+<% end %>
+$('#global-modal').modal('hide')
 $("[data-widget='collapse']").click(function() {
     //Find the box parent
     var box = $(this).parents(".box").first();
@@ -20,6 +20,4 @@ $("[data-widget='collapse']").click(function() {
         bf.slideDown(1000);
     }
 });
-<% else %>
-$('#form').html('<%= j render "orders/form"%>');
-<% end %>
+hideSpinner();

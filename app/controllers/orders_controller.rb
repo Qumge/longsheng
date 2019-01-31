@@ -29,10 +29,19 @@ class OrdersController < ApplicationController
     end
   end
 
-  # TODO
+  def apply_order
+    @order = Order.find_by id: params[:order_id]
+    redirect_to projects_path, alert: '找不到数据' unless @order.present?
+    @order.do_apply
+    @order.save
+    @project = @order.project
+  end
+
   def place_order
     @order = Order.find_by id: params[:order_id]
     redirect_to projects_path, alert: '找不到数据' unless @order.present?
+    @order.do_place
+    @order.save
     @project = @order.project
   end
 
@@ -50,12 +59,12 @@ class OrdersController < ApplicationController
         @order.order_type = 'normal'
       end
     end
-
   end
 
   def set_order
     @order_product = OrderProduct.find_by id: params[:id]
     redirect_to projects_path, alert: '找不到数据' unless @order_product.present?
+    @order = @order_product.order
     @project = @order_product.order.project
     redirect_to projects_path, alert: '找不到数据' unless current_user.view_projects.include? @project
   end
