@@ -23,7 +23,7 @@
 
 class Agent < ActiveRecord::Base
   belongs_to :user
-  belong_to :apply_user, class_name: 'User', foreign_key: :apply_id
+  belongs_to :apply_user, class_name: 'User', foreign_key: :apply_id
   include AASM
 
   after_create :create_project_manager_audit_notice
