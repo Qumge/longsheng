@@ -26,7 +26,7 @@ task :environment do
 end
 
 # 中括号里的文件 会出现在服务器项目附录的shared文件夹中，这里加入了secrets.yml，环境密钥无需跟开发计算机一样
-set :shared_paths, ['config/database.yml', 'log', 'config/secrets.yml', 'config/puma.rb']
+set :shared_paths, ['config/database.yml', 'log', 'config/secrets.yml', 'config/puma.rb', 'config/settings/production.yml', 'config/settings.yml']
 
 # 这个块里面的代码表示运行 mina setup时运行的命令
 task :setup => :environment do

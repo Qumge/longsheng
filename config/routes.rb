@@ -159,6 +159,8 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :agents
+
   match ':controller(/:action(/:id))', :via => :get
 
 end

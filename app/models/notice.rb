@@ -22,7 +22,10 @@ class Notice < ActiveRecord::Base
       order_audited: '您的样品、礼品申请已经通过审核',
       order_deliver: '有新的订单需要处理，请及时发货',
       order_sign: '您的订单已经发货，请注意查收',
-      order_failed_audit: '您的样品、礼品申请未通过审核'
+      order_failed_audit: '您的样品、礼品申请未通过审核',
+      agent_need_audit: '有一个代理商申请需要审核',
+      agent_audited: '您申请的代理商已经通过审核',
+      agent_failed_audit: '你申请的代理商未通过审核'
   }
 
 

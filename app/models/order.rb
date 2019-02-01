@@ -99,7 +99,7 @@ class Order < ActiveRecord::Base
      self.wait? || self.failed?
   end
 
-  # 同住项目经理审批
+  # 通知项目经理审批
   def create_project_manager_audit_notice
     if project.owner.present? && project.owner.organization.present?
       project.owner.organization.users.joins(:role).where('roles.desc = ?', 'project_manager').each do |user|

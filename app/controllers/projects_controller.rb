@@ -11,6 +11,7 @@ class ProjectsController < ApplicationController
   end
 
   def show
+
   end
 
   def create
@@ -111,6 +112,8 @@ class ProjectsController < ApplicationController
 
   def set_uptoken
     @uptoken = uptoken
+    p 111111
+    p @uptoken
   end
 
   def information_permit
