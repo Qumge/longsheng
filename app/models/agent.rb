@@ -27,8 +27,14 @@ class Agent < ActiveRecord::Base
   include AASM
 
   after_create :create_project_manager_audit_notice
+  validates_uniqueness_of :company, if: proc{|agent| agent.company.present?}
+  validates_presence_of :company, :city, :name, :phone
 
-  aasm :order_status do
+
+  STATUS = {apply: '申请中', project_manager_audit: '项目经理已审核', regional_manager_audit: '大区经理已审核',
+            normal_admin_audit: '后勤已审核', active: '申请成功', failed: '申请失败'}
+
+  aasm :agent_status do
     state :apply, :initial => true
     state :project_manager_audit, :regional_manager_audit, :normal_admin_audit, :active
 
@@ -92,7 +98,7 @@ class Agent < ActiveRecord::Base
     end
   end
 
-  # 通知申请成功 并通知发货
+  # 通知申请成功
   def create_active_notice
     Notice.create_notice :agent_audited, self.id, apply_id
   end
@@ -100,6 +106,29 @@ class Agent < ActiveRecord::Base
   # 通知审核失败
   def create_failed_notice
     Notice.create_notice :agent_failed_audit, self.id, apply_id
+  end
+
+  # 当前状态
+  def get_status
+    STATUS[self.agent_status.to_sym]
+  end
+
+
+
+
+  class << self
+    # 检索
+    def search_conn params
+      agents = Agent.all
+      if params[:agent_status].present?
+        agents = agents.where(agent_status: params[:agent_status])
+      end
+
+      if params[:table_search].present?
+        agents = agents.joins(:apply_user).where('users.name like ? or agents.company linke ?  or agents.name like ?', "%#{params[:table_search]}%", "%#{params[:table_search]}%", "%#{params[:table_search]}%")
+      end
+      agents
+    end
   end
 
 

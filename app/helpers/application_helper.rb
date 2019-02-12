@@ -28,7 +28,8 @@ module ApplicationHelper
             index: '项目列表',
             new: '立项',
             create: '立项',
-            show: '详情'
+            show: '详情',
+            agent: '代理商'
         },
         contracts: {
             index: '战略合同列表',
@@ -46,6 +47,11 @@ module ApplicationHelper
         },
         manage_orders: {
             index: '订单列表'
+        },
+        agents: {
+            index: '代理商列表',
+            new: '代理商申请',
+            create: '代理商申请'
         }
     }
   end

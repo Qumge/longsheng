@@ -1,0 +1,16 @@
+<%= simple_form_for agent do |f| %>
+  <div class="box-body">
+    <%= f.input :company, label: '代理公司名' %>
+    <%= f.input :city, label: '代理城市' %>
+    <%= f.input :name, label: '代理商姓名' %>
+    <%= f.input :phone, label: '电话'%>
+    <%= f.input :business, label: '主营业务' %>
+    <%= f.input :resources, label: '优势资源'%>
+    <%= f.input :scale, label: '目前生意规模'%>
+    <%= f.input :members, label: '团队人数' %>
+    <%= f.input :product, label: '意向代理超频' %>
+    <%= f.input :achievement, label: '年业绩预估' %>
+    <%= f.input :desc, label: '备注' %>
+    <%= f.button :submit, '提交', class: "btn btn-primary" %>
+  </div>
+<% end %>

@@ -1,0 +1,39 @@
+<div id="agents">
+  <div class="box-body">
+    <table class="table table-bordered">
+      <tr>
+        <th>公司名</th>
+        <th>代理商姓名</th>
+        <th>联系电话</th>
+        <th>申请人</th>
+        <th>状态</th>
+      </tr>
+      <% if @agents.present? %>
+        <% @agents.each do |agent| %>
+          <tr>
+            <td>
+              <%= link_to agent.company, agent_path(agent), 'data-toggle' => "modal", 'data-target' => "#global-modal"%>
+            </td>
+            <td><%= agent.name %></td>
+            <td><%= agent.phone %></td>
+            <td><%= agent.apply_user&.name %></td>
+            <td><%= agent.get_status %></td>
+          </tr>
+        <% end %>
+      <% else %>
+        <tr>
+          <td colspan="5" align="center">没有可显示的内容</td>
+        </tr>
+      <% end %>
+
+    </table>
+  </div>
+  <!-- /.box-body -->
+  <div class="box-footer clearfix">
+    <div class="pull-right pagination-sm no-margin">
+      <%= paginate @agents, remote: true, params: {agent_status: params[:agent_status], table_search: params[:table_search]} %>
+    </div>
+
+  </div>
+</div>
+

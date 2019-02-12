@@ -1,0 +1,15 @@
+<% content_for :content_header do %>
+  <h1>
+    代理商
+    <small><%= get_title params %></small>
+
+  </h1>
+  <ol class="breadcrumb">
+    <li>
+      <%=link_to projects_path do %>
+        <i class="fa fa-dashboard"></i> 代理商
+      <% end %>
+    </li>
+    <li class="active"><%= get_title params %></li>
+  </ol>
+<% end %>

@@ -67,7 +67,7 @@ class User < ActiveRecord::Base
     when 'project_manager'
       status = 'wait'
     when 'regional_manager'
-      status = 'project_manager_aduit'
+      status = 'project_manager_audit'
     when 'normal_admin'
       status = 'regional_audit'
     end

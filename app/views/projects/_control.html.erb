@@ -27,7 +27,9 @@
       <div class="icon">
         <i class="fa fa-user"></i>
       </div>
-      <a href="#" class="small-box-footer">详情 <i class="fa fa-arrow-circle-right"></i></a>
+      <%= link_to agent_project_path(@project), class: 'small-box-footer' do %>
+        <i class="fa fa-arrow-circle-right"></i>
+      <% end %>
     </div>
   </div>
 

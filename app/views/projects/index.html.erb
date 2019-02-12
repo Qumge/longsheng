@@ -4,10 +4,12 @@
   <div class="col-md-10">
     <div class="box">
       <div class="box-header with-border">
-        <h3 class="box-title">负责项目</h3>
-        <% if can? :new, :project %>
-          <%= link_to '立项', new_project_path , class: 'font-a label pull-right bg-green', style: 'font-size: 100%' %>
-        <% end %>
+        <h3 class="box-title">负责项目
+          <% if can? :new, :project %>
+            <small><%= link_to '立项', new_project_path , class: 'font-a label bg-green' %></small>
+          <% end %>
+        </h3>
+
 
       </div>
       <!-- /.box-header -->

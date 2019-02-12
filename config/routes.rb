@@ -121,6 +121,7 @@ Rails.application.routes.draw do
       post :delete_attachment
       post :payment
       post :step_event
+      get :agent
       resources :orders do
         collection do
           post :place_order

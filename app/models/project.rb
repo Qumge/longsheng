@@ -60,19 +60,19 @@ class Project < ActiveRecord::Base
   has_many :invoices
   belongs_to :agent, foreign_key: :agency_id
   #
-  STATUS = {wait: '待审批', project_manager_aduit: '项目经理已审批', regional_audit: '大区经理已审批', active: '进行中', finish: '已完结', overdue: '逾期', failed: '审核失败'}
+  STATUS = {wait: '待审批', project_manager_audit: '项目经理已审批', regional_audit: '大区经理已审批', active: '进行中', finish: '已完结', overdue: '逾期', failed: '审核失败'}
   aasm :project_status do
     state :wait, :initial => true
-    state :project_manager_aduit, :regional_audit, :active, :finish, :overdue, :failed
+    state :project_manager_audit, :regional_audit, :active, :finish, :overdue, :failed
 
 
     #项目经理审批
     event :do_project_manager_audit do
-      transitions :from => :wait, :to => :project_manager_aduit, :after => Proc.new {create_audit_notice }
+      transitions :from => :wait, :to => :project_manager_audit, :after => Proc.new {create_audit_notice }
     end
     # 大区经理审批
     event :do_regional_manager_audit do
-      transitions :from => :project_manager_aduit, :to => :regional_audit, :after => Proc.new {create_admin_audit_notice }
+      transitions :from => :project_manager_audit, :to => :regional_audit, :after => Proc.new {create_admin_audit_notice }
     end
 
     # 后勤审批
@@ -90,7 +90,7 @@ class Project < ActiveRecord::Base
     end
 
     event :do_failed do
-      transitions :from => [:wait, :project_manager_aduit, :regional_audit], :to => :failed, :after => Proc.new {create_failed_notice }
+      transitions :from => [:wait, :project_manager_audit, :regional_audit], :to => :failed, :after => Proc.new {create_failed_notice }
     end
   end
 

@@ -1,5 +1,5 @@
 class ProjectsController < ApplicationController
-  before_action :set_project, only: [:show, :upload, :update_agency, :edit_information, :update_information, :delete_attachment, :payment, :done, :step_event]
+  before_action :set_project, only: [:show, :upload, :update_agency, :edit_information, :update_information, :delete_attachment, :payment, :done, :step_event, :agent]
   before_action :set_uptoken, only: [:show, :upload, :update_agency, :update_information, :delete_attachment, :payment, :done, :step_event]
   include ApplicationHelper
   def index
@@ -99,6 +99,10 @@ class ProjectsController < ApplicationController
 
   end
 
+  def agent
+
+  end
+
   private
   def project_permit
     params.require(:project).permit(:name, :a_name, :category, :address, :city, :supplier_type, :strategic, :estimate,
@@ -112,8 +116,6 @@ class ProjectsController < ApplicationController
 
   def set_uptoken
     @uptoken = uptoken
-    p 111111
-    p @uptoken
   end
 
   def information_permit

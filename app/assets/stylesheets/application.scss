@@ -23,7 +23,7 @@
  */
 
 .devise{
-    background: url(bg.jpg) ;
+    background: image-url('bg2.jpg') ;
 }
 .font-a{
     color: #fff;
@@ -53,5 +53,5 @@
     background: rgba( 255, 255, 255, .8 )
     50% 50%
     no-repeat;
-    background-image: url('loading.gif');
+    background-image: image-url('loading.gif');
 }

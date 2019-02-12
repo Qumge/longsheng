@@ -1,0 +1,13 @@
+<%= render 'projects/header' %>
+<div class="row">
+  <div class="box">
+    <div class="box-body">
+      <% if @project.agent.present? %>
+        <%= render partial: '/agents/detail', locals: {agent: @project.agent}%>
+      <% else %>
+        未选择代理，选择或<%= link_to '【申请】', new_agent_path  %>一个新的代理商
+      <% end %>
+    </div>
+  </div>
+
+</div>
