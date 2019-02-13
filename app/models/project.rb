@@ -195,8 +195,7 @@ class Project < ActiveRecord::Base
 
   # TODO
   def agency_name
-    '自营'
-    #agency.present? ? agency.name : '自营'
+    agent.present? ? agent.name : '自营'
   end
 
   def order_invoices
@@ -211,10 +210,17 @@ class Project < ActiveRecord::Base
   end
 
   def sales
-    if contract
+    # 战略合同价格
+    if contract.present?
       contract.sales
     else
-      []
+      #代理商特价
+      if agent.present? && agent.sales.present?
+        agent.sales
+      else
+        #正常价格
+        Sale.default_sales
+      end
     end
   end
 

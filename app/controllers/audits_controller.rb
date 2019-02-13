@@ -18,8 +18,8 @@ class AuditsController < ApplicationController
 
   end
 
-  def agency
-
+  def agents
+    @agents = current_user.audit_agents.page(params[:page]).per(Settings.per_page)
   end
 
   def audits
@@ -32,10 +32,11 @@ class AuditsController < ApplicationController
       @model.send("do_#{current_user.role.desc}_audit")
       @model.save
       Audit.create model_id: @model.id, model_type: @model.class.name, from_status: from_status, to_status: @model.send(@status_column), user: current_user
+      redirect_to @url, notice: '已审批'
     rescue => e
       p  e
     end
-    redirect_to @url
+
   end
 
   def failed_notice
@@ -48,10 +49,13 @@ class AuditsController < ApplicationController
     begin
       @model.do_failed
       @model.save
-    rescue => e
       Audit.create model_id: @model.id, model_type: @model.class.name, from_status: from_status, to_status: @model.send(@status_column), content: params[:audit][:content], user: current_user
+      render json: {status: 'success'}
+    rescue => e
+      p '111111'
+      p e
     end
-    render json: {}
+
   end
 
   private
@@ -60,10 +64,14 @@ class AuditsController < ApplicationController
       @model = current_user.audit_projects.where(id: params[:id]).first
       @status_column = 'project_status'
       @url = projects_audits_path
-    else
+    elsif params[:type] == 'Order'
       @model = current_user.audit_orders.where(id: params[:id]).first
       @status_column = 'order_status'
       @url = orders_audits_path
+    elsif params[:type] == 'Agent'
+      @model = current_user.audit_agents.where(id: params[:id]).first
+      @status_column = 'agent_status'
+      @url = agents_audits_path
     end
     redirect_to audits_path, alert: '找不到数据' unless @model.present?
   end

@@ -43,7 +43,7 @@ module ApplicationHelper
             index: '我的审批',
             orders: '订单审批',
             sales: '特价审批',
-            agencies: '代理审批'
+            agents: '代理审批'
         },
         manage_orders: {
             index: '订单列表'

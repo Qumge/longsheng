@@ -27,7 +27,7 @@ class AgentsController < ApplicationController
 
   private
   def agent_permit
-    params.require(:agent).permit(:company, :city, :name, :phone, :business, :resources, :scale, :members, :product, :achievement, :desc)
+    params.require(:agent).permit(:username, :city, :name, :phone, :business, :resources, :scale, :members, :product, :achievement, :desc)
   end
 
   def set_agent

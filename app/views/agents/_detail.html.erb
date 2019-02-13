@@ -3,7 +3,7 @@
     <tbody>
     <tr>
       <th style="width:50%">代理公司名</th>
-      <td><%= agent.company %></td>
+      <td><%= agent.name %></td>
     </tr>
     <tr>
       <th>代理城市</th>
@@ -11,11 +11,11 @@
     </tr>
     <tr>
       <th>代理商姓名</th>
-      <td><%= agent.name %></td>
+      <td><%= agent.username %></td>
     </tr>
     <tr>
       <th>账号</th>
-      <td><%= agent.user&.name %></td>
+      <td><%= agent.users.collect{|user| user.login}.join ' / ' %></td>
     </tr>
     <tr>
       <th>联系电话</th>

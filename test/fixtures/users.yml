@@ -17,6 +17,7 @@
 #  sign_in_count          :integer          default(0), not null
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
+#  agent_id               :integer
 #  organization_id        :integer
 #  role_id                :integer
 #

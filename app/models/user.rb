@@ -17,6 +17,7 @@
 #  sign_in_count          :integer          default(0), not null
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
+#  agent_id               :integer
 #  organization_id        :integer
 #  role_id                :integer
 #
@@ -38,6 +39,20 @@ class User < ActiveRecord::Base
   has_many :active_notices, -> {where(readed: false)}, class_name: 'Notice', foreign_key: :user_id
   has_many :resources, through: :role
   has_many :audits
+  belongs_to :agent
+  validates_presence_of :role_id
+
+  validate do |user|
+    user.must_has_one_agent
+  end
+
+  def must_has_one_agent
+    errors.add(:agent_id, '角色为代理商时需要指定一个代理商') if self.role.present? && self.role.desc == 'agency' && self.agent_id.blank?
+    errors.add(:agent_id, '非代理商时，请勿指定代理商') if self.role.present? && self.role.desc != 'agency' && self.agent_id.present?
+  end
+
+
+
   def has_role? role
     self.role && self.role.desc == role
   end
@@ -92,6 +107,28 @@ class User < ActiveRecord::Base
       status = 'normal_admin_audit'
     end
     view_orders.where(order_status: status)
+  end
+
+  def audit_agents
+    agents = Agent.includes(:apply_user).order('created_at desc')
+    # 后台人员权限 审批所有代理商
+    # 大区经理和项目经理能审批当前架构所有的代理商
+    # 超级管理员查看所有
+    if ['regional_manager', 'project_manager'].include? self.role.desc
+      agents = agents.where('apply_id in (?)', self.organization.subtree.map(&:users).flatten.map(&:id))
+    end
+    status = 'none'
+    case self.role.desc
+    when 'project_manager'
+      status = 'apply'
+    when 'regional_manager'
+      status = 'project_manager_audit'
+    when 'normal_admin'
+      status = 'regional_manager_audit'
+    when 'group_admin'
+      status = 'normal_admin_audit'
+    end
+    agents.where(agent_status: status)
   end
 
   # 是否是业务员

@@ -18,6 +18,7 @@
     //ajax提交表单
     $(function(){
         $('.commit').click(function(){
+            showSpinner();
             $.ajax({
                 type: "POST",
                 url: '<%= failed_audit_path @model.id, type: @model.class.name %>',
@@ -29,7 +30,11 @@
                 },
                 success: function(data) {
                     //接收后台返回的结果
-                    location.reload();
+                    //location.reload();
+                    if(data['status'] == 'success'){
+                        hideSpinner();
+                        location.reload();
+                    }
                 }
             });
 

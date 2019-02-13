@@ -12,9 +12,9 @@
         <% @agents.each do |agent| %>
           <tr>
             <td>
-              <%= link_to agent.company, agent_path(agent), 'data-toggle' => "modal", 'data-target' => "#global-modal"%>
+              <%= link_to agent.name, agent_path(agent), 'data-toggle' => "modal", 'data-target' => "#global-modal"%>
             </td>
-            <td><%= agent.name %></td>
+            <td><%= agent.username %></td>
             <td><%= agent.phone %></td>
             <td><%= agent.apply_user&.name %></td>
             <td><%= agent.get_status %></td>

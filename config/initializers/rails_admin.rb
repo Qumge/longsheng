@@ -53,6 +53,10 @@ RailsAdmin.config do |config|
       associated_collection_cache_all true  # REQUIRED if you want to SORT the list as below
       label '角色'
     end
+    field :agent do
+      associated_collection_cache_all true  # REQUIRED if you want to SORT the list as below
+      label '代理商'
+    end
   end
 
   config.model 'Role' do

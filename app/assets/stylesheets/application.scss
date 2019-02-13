@@ -55,3 +55,40 @@
     no-repeat;
     background-image: image-url('loading.gif');
 }
+
+.page_tips {
+  width: 30%;
+  min-width: 180px;
+  height: 40px;
+  margin-left: 35%;
+  padding-left: 5px;
+  padding-right: 5px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  text-align: center;
+  z-index: 2000;
+  .success {
+    .inner {
+      background: darkseagreen;
+    }
+  }
+  .failed {
+    .inner {
+      background: lightcoral;
+    }
+  }
+  .inner {
+    padding: 0 15px;
+    display: inline-block;
+    font-size: 14px;
+    border-radius: 0 0 4px 4px;
+    color: #000000;
+    height: 36px;
+    line-height: 36px;
+    .close-tips {
+      margin-left: 5px;
+    }
+  }
+}

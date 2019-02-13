@@ -143,7 +143,7 @@ Rails.application.routes.draw do
       get :orders
       get :projects
       get :sales
-      get :agency
+      get :agents
       get :audits
     end
 

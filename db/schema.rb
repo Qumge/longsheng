@@ -11,10 +11,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190131101027) do
+ActiveRecord::Schema.define(version: 20190213065927) do
 
   create_table "agents", force: :cascade do |t|
-    t.string   "company",      limit: 255
+    t.string   "username",     limit: 255
     t.string   "city",         limit: 255
     t.string   "name",         limit: 255
     t.string   "phone",        limit: 255
@@ -212,6 +212,7 @@ ActiveRecord::Schema.define(version: 20190131101027) do
     t.datetime "updated_at",                 null: false
     t.float    "discount",       limit: 24
     t.float    "discount_price", limit: 24
+    t.integer  "agent_id",       limit: 4
   end
 
   create_table "users", force: :cascade do |t|
@@ -231,6 +232,7 @@ ActiveRecord::Schema.define(version: 20190131101027) do
     t.datetime "created_at",                                      null: false
     t.datetime "updated_at",                                      null: false
     t.integer  "organization_id",        limit: 4
+    t.integer  "agent_id",               limit: 4
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree

@@ -13,7 +13,7 @@
       <div class="form-group">
         <label>代理商</label>
         <% if @project.can_do? :pattern %>
-        <%= select_tag :agency_id, options_for_select([['工程队1', 1], ['工程队2', 2]], @project.agency_id), include_blank: '自营', class: "form-control select2", style: "width: 100%;"%>
+        <%= select_tag :agency_id, options_for_select(Agent.active_agent.collect{|agent| [agent.name, agent.id]}, @project.agency_id), include_blank: '自营', class: "form-control select2", style: "width: 100%;"%>
         <% else %>
           <div>
         <%= @project.agency_name %>
