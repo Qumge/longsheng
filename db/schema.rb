@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190213065927) do
+ActiveRecord::Schema.define(version: 20190214033019) do
 
   create_table "agents", force: :cascade do |t|
     t.string   "username",     limit: 255
@@ -30,7 +30,10 @@ ActiveRecord::Schema.define(version: 20190213065927) do
     t.integer  "apply_id",     limit: 4
     t.datetime "created_at",               null: false
     t.datetime "updated_at",               null: false
+    t.datetime "deleted_at"
   end
+
+  add_index "agents", ["deleted_at"], name: "index_agents_on_deleted_at", using: :btree
 
   create_table "attachments", force: :cascade do |t|
     t.integer  "model_id",   limit: 4
@@ -39,7 +42,10 @@ ActiveRecord::Schema.define(version: 20190213065927) do
     t.string   "file_name",  limit: 255
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
+    t.datetime "deleted_at"
   end
+
+  add_index "attachments", ["deleted_at"], name: "index_attachments_on_deleted_at", using: :btree
 
   create_table "audit_details", force: :cascade do |t|
     t.integer  "audit_id",   limit: 4
@@ -75,7 +81,10 @@ ActiveRecord::Schema.define(version: 20190213065927) do
     t.integer  "tail_time",       limit: 4
     t.datetime "created_at",                    null: false
     t.datetime "updated_at",                    null: false
+    t.datetime "deleted_at"
   end
+
+  add_index "contracts", ["deleted_at"], name: "index_contracts_on_deleted_at", using: :btree
 
   create_table "invoices", force: :cascade do |t|
     t.integer  "project_id", limit: 4
@@ -108,12 +117,15 @@ ActiveRecord::Schema.define(version: 20190213065927) do
     t.integer  "number",               limit: 4
     t.float    "price",                limit: 24
     t.float    "total_price",          limit: 24
-    t.float    "discount",             limit: 24
+    t.float    "discount",             limit: 24, default: 1.0
     t.float    "discount_price",       limit: 24
     t.float    "discount_total_price", limit: 24
-    t.datetime "created_at",                      null: false
-    t.datetime "updated_at",                      null: false
+    t.datetime "created_at",                                    null: false
+    t.datetime "updated_at",                                    null: false
+    t.datetime "deleted_at"
   end
+
+  add_index "order_products", ["deleted_at"], name: "index_order_products_on_deleted_at", using: :btree
 
   create_table "orders", force: :cascade do |t|
     t.integer  "project_id",   limit: 4
@@ -124,16 +136,21 @@ ActiveRecord::Schema.define(version: 20190213065927) do
     t.string   "desc",         limit: 255
     t.string   "order_status", limit: 255
     t.string   "no",           limit: 255
+    t.datetime "deleted_at"
   end
+
+  add_index "orders", ["deleted_at"], name: "index_orders_on_deleted_at", using: :btree
 
   create_table "organizations", force: :cascade do |t|
     t.string   "name",       limit: 255
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
     t.string   "ancestry",   limit: 255
+    t.datetime "deleted_at"
   end
 
   add_index "organizations", ["ancestry"], name: "index_organizations_on_ancestry", using: :btree
+  add_index "organizations", ["deleted_at"], name: "index_organizations_on_deleted_at", using: :btree
 
   create_table "products", force: :cascade do |t|
     t.string   "no",              limit: 255
@@ -143,7 +160,10 @@ ActiveRecord::Schema.define(version: 20190213065927) do
     t.datetime "created_at",                  null: false
     t.datetime "updated_at",                  null: false
     t.string   "name",            limit: 255
+    t.datetime "deleted_at"
   end
+
+  add_index "products", ["deleted_at"], name: "index_products_on_deleted_at", using: :btree
 
   create_table "projects", force: :cascade do |t|
     t.string   "city",              limit: 255
@@ -179,7 +199,10 @@ ActiveRecord::Schema.define(version: 20190213065927) do
     t.string   "supervisor_phone",  limit: 255
     t.string   "payment",           limit: 255
     t.string   "project_status",    limit: 255
+    t.datetime "deleted_at"
   end
+
+  add_index "projects", ["deleted_at"], name: "index_projects_on_deleted_at", using: :btree
 
   create_table "resources", force: :cascade do |t|
     t.string   "action",     limit: 255
@@ -187,7 +210,10 @@ ActiveRecord::Schema.define(version: 20190213065927) do
     t.string   "name",       limit: 255
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
+    t.datetime "deleted_at"
   end
+
+  add_index "resources", ["deleted_at"], name: "index_resources_on_deleted_at", using: :btree
 
   create_table "role_resources", force: :cascade do |t|
     t.integer  "role_id",     limit: 4
@@ -201,7 +227,10 @@ ActiveRecord::Schema.define(version: 20190213065927) do
     t.string   "name",       limit: 255
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
+    t.datetime "deleted_at"
   end
+
+  add_index "roles", ["deleted_at"], name: "index_roles_on_deleted_at", using: :btree
 
   create_table "sales", force: :cascade do |t|
     t.integer  "product_id",     limit: 4
@@ -213,7 +242,10 @@ ActiveRecord::Schema.define(version: 20190213065927) do
     t.float    "discount",       limit: 24
     t.float    "discount_price", limit: 24
     t.integer  "agent_id",       limit: 4
+    t.datetime "deleted_at"
   end
+
+  add_index "sales", ["deleted_at"], name: "index_sales_on_deleted_at", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  limit: 255, default: "", null: false
@@ -233,8 +265,10 @@ ActiveRecord::Schema.define(version: 20190213065927) do
     t.datetime "updated_at",                                      null: false
     t.integer  "organization_id",        limit: 4
     t.integer  "agent_id",               limit: 4
+    t.datetime "deleted_at"
   end
 
+  add_index "users", ["deleted_at"], name: "index_users_on_deleted_at", using: :btree
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 

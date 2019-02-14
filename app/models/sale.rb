@@ -3,6 +3,7 @@
 # Table name: sales
 #
 #  id             :integer          not null, primary key
+#  deleted_at     :datetime
 #  desc           :string(255)
 #  discount       :float(24)
 #  discount_price :float(24)
@@ -12,6 +13,10 @@
 #  agent_id       :integer
 #  contract_id    :integer
 #  product_id     :integer
+#
+# Indexes
+#
+#  index_sales_on_deleted_at  (deleted_at)
 #
 
 class Sale < ActiveRecord::Base

@@ -138,6 +138,8 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :products
+
   resources :audits do
     collection do
       get :orders

@@ -3,7 +3,7 @@
 <% if @project.plate?  %>
 $('#plate_orders_item').html('<%= j render(partial: 'projects/orders_item', locals: {orders: @project.sample_orders, type: 'plate'})%>')
 <% else %>
-$('#normal_orders_item').html('<%= j render(partial: 'projects/orders_item', locals: {orders: @project.normal_orders, type: 'order'})%>')
+$('#normal_orders_item').html('<%= j render(partial: 'projects/orders_item', locals: {orders: @project.default_orders, type: 'order'})%>')
 <% end %>
 $('#global-modal').modal('hide');
 $("[data-widget='collapse']").click(function() {
@@ -22,5 +22,5 @@ $("[data-widget='collapse']").click(function() {
     }
 });
 <% else %>
-$('#form').html('<%= j render(partial: "orders/form", locals: {url: orders_path(@project.id, order_id: @order.id)}) %>');
+$('#form').html('<%= j render(partial: "orders/form", locals: {url: orders_path(@project.id, order_id: @order.id), type: params[:type]}) %>');
 <% end %>

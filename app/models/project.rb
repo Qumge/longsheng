@@ -14,6 +14,7 @@
 #  constructor_phone :string(255)
 #  cost              :string(255)
 #  cost_phone        :string(255)
+#  deleted_at        :datetime
 #  design            :string(255)
 #  design_phone      :string(255)
 #  estimate          :integer
@@ -37,6 +38,10 @@
 #  create_id         :integer
 #  owner_id          :integer
 #
+# Indexes
+#
+#  index_projects_on_deleted_at  (deleted_at)
+#
 
 class Project < ActiveRecord::Base
   include AASM
@@ -56,6 +61,8 @@ class Project < ActiveRecord::Base
   has_many :orders
   has_many :sample_orders, -> {where(order_type: 'sample')}, class_name: 'Order', foreign_key: :project_id
   has_many :normal_orders, -> {where(order_type: 'normal')}, class_name: 'Order', foreign_key: :project_id
+  has_many :bargains_orders, -> {where(order_type: 'bargains')}, class_name: 'Order', foreign_key: :project_id
+  has_many :default_orders, -> {where(order_type: ['normal', 'bargains'])}, class_name: 'Order', foreign_key: :project_id
   belongs_to :contract
   has_many :invoices
   belongs_to :agent, foreign_key: :agency_id

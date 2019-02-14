@@ -64,11 +64,18 @@ zh-CN:
       order_product:
         product_id: '产品'
         number: '数量'
+        discount: '折扣'
       agent:
         name: '代理公司名'
         city: '代理城市'
         username: '代理商姓名'
         phone: '电话'
+      product:
+        no: '序号'
+        product_no: '产品序号'
+        name: '产品名'
+        reference_price: '单价'
+        unit: '单位'
 
 
 

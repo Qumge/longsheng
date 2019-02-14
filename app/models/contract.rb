@@ -5,6 +5,7 @@
 #  id              :integer          not null, primary key
 #  advance_time    :integer
 #  cycle           :string(255)
+#  deleted_at      :datetime
 #  name            :string(255)
 #  no              :string(255)
 #  others          :text(65535)
@@ -16,6 +17,10 @@
 #  valid_date      :datetime
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
+#
+# Indexes
+#
+#  index_contracts_on_deleted_at  (deleted_at)
 #
 
 class Contract < ActiveRecord::Base

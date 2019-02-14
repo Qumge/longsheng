@@ -9,6 +9,7 @@ class OrdersController < ApplicationController
 
 
   def create
+    @order.order_type = params[:type]
     @order_product = @order.order_products.new order_product_permit
     @order.desc = params[:desc]
     @flag = @order.save
@@ -40,7 +41,11 @@ class OrdersController < ApplicationController
   def place_order
     @order = Order.find_by id: params[:order_id]
     redirect_to projects_path, alert: '找不到数据' unless @order.present?
-    @order.do_place
+    if @order.order_type == 'normal'
+      @order.do_place
+    elsif @order.order_type == 'bargains'
+      @order.do_apply
+    end
     @order.save
     @project = @order.project
   end
@@ -70,7 +75,7 @@ class OrdersController < ApplicationController
   end
 
   def order_product_permit
-    params.require(:order_product).permit(:product_id, :number, :desc)
+    params.require(:order_product).permit(:product_id, :number, :desc, :discount)
   end
 
   def reload_project

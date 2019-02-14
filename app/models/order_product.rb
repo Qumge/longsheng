@@ -3,7 +3,8 @@
 # Table name: order_products
 #
 #  id                   :integer          not null, primary key
-#  discount             :float(24)
+#  deleted_at           :datetime
+#  discount             :float(24)        default(1.0)
 #  discount_price       :float(24)
 #  discount_total_price :float(24)
 #  number               :integer
@@ -14,13 +15,19 @@
 #  order_id             :integer
 #  product_id           :integer
 #
+# Indexes
+#
+#  index_order_products_on_deleted_at  (deleted_at)
+#
 
 class OrderProduct < ActiveRecord::Base
   belongs_to :product
   belongs_to :order
-  validates_presence_of :number, :product_id
+  validates_presence_of :number, :product_id, :discount
   before_save :set_price
   validates_numericality_of :number, only_integer: true, greater_than: 0, if: ->(order_project) { order_project.number.present? }
+  validates_numericality_of :discount, greater_than: 0, if: ->(order_project) { order_project.discount.present? }
+
 
   def real_price
     discount_price.present? ? discount_price : price
@@ -30,17 +37,15 @@ class OrderProduct < ActiveRecord::Base
     discount_total_price.present? ? discount_total_price : total_price
   end
 
-  def sale
-    self.product.sale self.order.project
-  end
+  # def sale
+  #   self.product.sale self.order.project
+  # end
 
   def set_price
-    self.price = sale.price
-    p sale.price
-    self.total_price = sale.price * number
-    self.discount = sale.discount
-    self.discount_price = sale.discount_price
-    self.discount_total_price = sale.discount_price * number if sale.discount_price.present?
+    self.price = product.default_price self.order.project
+    self.total_price = price * number
+    self.discount_price = discount * price
+    self.discount_total_price = discount_price * number
   end
 
 end

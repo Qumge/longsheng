@@ -49,10 +49,11 @@ gem 'rails_admin_nestable',             '~> 0.3.2'            # railsadmin 树�
 gem 'simple_form'                                             # form表单
 gem 'kaminari'                                                # 分页
 gem 'kaminari-bootstrap', '~> 3.0.1'                          # 分页 bootstrap样式
-gem "rails_config", "~> 0.4.2"
-gem 'qiniu', '>= 6.9.0'
-gem 'bower-rails', '~> 0.10.0'
-gem 'aasm'
+gem "rails_config", "~> 0.4.2"                                # 配置文件
+gem 'qiniu', '>= 6.9.0'                                       # 七牛云
+gem 'bower-rails', '~> 0.10.0'                                # node 包管理
+gem 'aasm'                                                    # 状态管理
+gem "paranoia", "~> 2.2"                                      # 软删除
 
 
 

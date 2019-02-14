@@ -52,6 +52,13 @@ module ApplicationHelper
             index: '代理商列表',
             new: '代理商申请',
             create: '代理商申请'
+        },
+        products: {
+            index: '产品列表',
+            new: '添加产品',
+            create: '添加产品',
+            edit: '修改产品',
+            update: '修改产品'
         }
     }
   end
@@ -71,7 +78,6 @@ module ApplicationHelper
     else
       params[:controller] == controller ? 'active' : ''
     end
-
   end
 
 end

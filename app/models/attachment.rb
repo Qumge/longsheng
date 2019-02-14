@@ -3,12 +3,17 @@
 # Table name: attachments
 #
 #  id         :integer          not null, primary key
+#  deleted_at :datetime
 #  file_name  :string(255)
 #  model_type :string(255)
 #  path       :string(255)
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #  model_id   :integer
+#
+# Indexes
+#
+#  index_attachments_on_deleted_at  (deleted_at)
 #
 
 class Attachment < ActiveRecord::Base

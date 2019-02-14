@@ -1,5 +1,5 @@
 class ProjectsController < ApplicationController
-  before_action :set_project, only: [:show, :upload, :update_agency, :edit_information, :update_information, :delete_attachment, :payment, :done, :step_event, :agent]
+  before_action :set_project, only: [:show, :upload, :update_agency, :edit_information, :update_information, :delete_attachment, :payment, :done, :step_event, :agent, :sales]
   before_action :set_uptoken, only: [:show, :upload, :update_agency, :update_information, :delete_attachment, :payment, :done, :step_event]
   include ApplicationHelper
   def index
@@ -101,6 +101,10 @@ class ProjectsController < ApplicationController
 
   def agent
 
+  end
+
+  def sales
+    @products = Product.includes().page(params[:page]).per(Settings.per_page)
   end
 
   private

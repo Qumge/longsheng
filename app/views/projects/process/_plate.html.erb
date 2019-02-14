@@ -19,7 +19,7 @@
 
         <div class="box-header with-border">
           <h4 class="box-title">
-            <%= link_to '礼品/样品申请', new_order_path(@project), 'data-toggle' => "modal", 'data-target' => "#global-modal", class: 'btn' if @project.can_do? :plate %>
+            <%= link_to '礼品/样品申请', new_order_path(@project, type: 'sample'), 'data-toggle' => "modal", 'data-target' => "#global-modal", class: 'btn' if @project.can_do? :plate %>
           </h4>
 
           <div class="box-tools pull-right">

@@ -2,7 +2,7 @@
   <% if @project.plate?  %>
   $('#plate_orders_item').html('<%= j render(partial: 'projects/orders_item', locals: {orders: @project.sample_orders, type: 'plate'})%>');
   <% else %>
-  $('#normal_orders_item').html('<%= j render(partial: 'projects/orders_item', locals: {orders: @project.normal_orders, type: 'order'})%>');
+  $('#normal_orders_item').html('<%= j render(partial: 'projects/orders_item', locals: {orders: @project.default_orders, type: 'order'})%>');
   <% end %>
 $('#global-modal').modal('hide');
 $("[data-widget='collapse']").click(function() {

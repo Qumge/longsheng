@@ -3,6 +3,7 @@
 # Table name: orders
 #
 #  id           :integer          not null, primary key
+#  deleted_at   :datetime
 #  desc         :string(255)
 #  no           :string(255)
 #  order_status :string(255)
@@ -11,6 +12,10 @@
 #  updated_at   :datetime         not null
 #  project_id   :integer
 #  user_id      :integer
+#
+# Indexes
+#
+#  index_orders_on_deleted_at  (deleted_at)
 #
 
 class Order < ActiveRecord::Base
@@ -29,7 +34,7 @@ class Order < ActiveRecord::Base
             regional_manager_audit: '大区经理已审核', normal_admin_audit: '后勤已审核',
             active: '已下单或申请成功', deliver: '已发货', sign: '已签收', failed: '审核失败' }
 
-  ORDER_TYPE = {sample: '样品、礼品', normal: '订单'}
+  ORDER_TYPE = {sample: '样品、礼品', normal: '订单', bargains: '特价订单'}
 
   aasm :order_status do
     state :wait, :initial => true
@@ -103,7 +108,7 @@ class Order < ActiveRecord::Base
   def create_project_manager_audit_notice
     if project.owner.present? && project.owner.organization.present?
       project.owner.organization.users.joins(:role).where('roles.desc = ?', 'project_manager').each do |user|
-        Notice.create_notice :order_need_audit, self.id, user.id
+        Notice.create_notice "#{order_type}_order_need_audit".to_sym, self.id, user.id
       end
     end
   end
@@ -112,7 +117,7 @@ class Order < ActiveRecord::Base
   def create_regional_manager_audit_notice
     if project.owner.present? && project.owner.organization.present? && project.owner.organization.parent.present?
       project.owner.organization.parent.users.joins(:role).where('roles.desc = ?', 'regional_manager').each do |user|
-        Notice.create_notice :order_need_audit, self.id, user.id
+        Notice.create_notice "#{order_type}_order_need_audit".to_sym, self.id, user.id
       end
     end
   end
@@ -120,14 +125,14 @@ class Order < ActiveRecord::Base
   # 通知后勤审批
   def create_normal_admin_audit_notice
     User.joins(:role).where('roles.desc = ?', 'normal_admin').each do |user|
-      Notice.create_notice :order_need_audit, self.id, user.id
+      Notice.create_notice "#{order_type}_order_need_audit".to_sym, self.id, user.id
     end
   end
 
   # 通知管理审批
   def create_group_admin_audit_notice
     User.joins(:role).where('roles.desc = ?', 'group_admin').each do |user|
-      Notice.create_notice :order_need_audit, self.id, user.id
+      Notice.create_notice "#{order_type}_order_need_audit".to_sym, self.id, user.id
     end
   end
 
@@ -151,7 +156,7 @@ class Order < ActiveRecord::Base
 
   # 通知审核失败
   def create_failed_notice
-    Notice.create_notice :order_failed_audit, self.id, user_id
+    Notice.create_notice "#{order_type}_order_failed_audit".to_sym, self.id, user_id
   end
 
   # 获取当前订单状态
@@ -162,6 +167,10 @@ class Order < ActiveRecord::Base
   # 获取订单类别
   def get_order_type
     ORDER_TYPE[self.order_type.to_sym]
+  end
+
+  def get_place_name
+    order_type == 'normal' ? '下单' : '申请'
   end
 
   class << self

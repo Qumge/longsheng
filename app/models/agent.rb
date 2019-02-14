@@ -7,6 +7,7 @@
 #  agent_status :string(255)
 #  business     :string(255)
 #  city         :string(255)
+#  deleted_at   :datetime
 #  desc         :string(255)
 #  members      :integer
 #  name         :string(255)
@@ -19,6 +20,10 @@
 #  updated_at   :datetime         not null
 #  apply_id     :integer
 #  user_id      :integer
+#
+# Indexes
+#
+#  index_agents_on_deleted_at  (deleted_at)
 #
 
 class Agent < ActiveRecord::Base
