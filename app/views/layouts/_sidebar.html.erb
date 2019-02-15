@@ -23,74 +23,41 @@
         <% end %>
       </li>
 
-      <li>
+      <li class="<%= active_class params, 'audits' %>">
         <%= link_to audits_path do %>
           <i class="fa fa-pencil"></i> <span>审批流程</span>
           <span class="pull-right-container">
-              <small class="label pull-right bg-red">3</small>
             </span>
         <% end %>
       </li>
 
-      <li>
+      <li class="<%= active_class params, 'manage_orders' %>">
         <%= link_to manage_orders_path do %>
-          <i class="fa fa-pencil"></i> <span>订单管理</span>
+          <i class="fa fa-shopping-cart"></i> <span>订单管理</span>
           <span class="pull-right-container">
-              <small class="label pull-right bg-red">3</small>
+              <small class="label pull-right bg-red"></small>
             </span>
         <% end %>
       </li>
 
-      <li>
+      <li class="<%= active_class params, 'agents' %>">
         <%= link_to agents_path do %>
           <i class="fa fa-users"></i> <span>代理商</span>
         <% end %>
       </li>
 
-
-      <li class="treeview">
-        <a href="#">
-          <i class="fa fa-file-text-o"></i>
-          <span>战略合同</span>
-          <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-        </a>
-        <ul class="treeview-menu">
-          <li>
-            <%= link_to contracts_path do %>
-              <i class="fa fa-list"></i> <span>战略合同列表</span>
-            <% end %>
-          </li>
-          <li>
-            <%= link_to new_contract_path do %>
-              <i class="fa fa-plus"></i> <span>添加合同</span>
-            <% end %>
-          </li>
-        </ul>
+      <li class="<%= active_class params, 'contracts' %>">
+        <%= link_to contracts_path do %>
+          <i class="fa fa-file-text-o"></i> <span>战略合同</span>
+        <% end %>
       </li>
 
-      <li class="treeview">
-        <a href="#">
-          <i class="fa fa-money"></i>
-          <span>产品管理</span>
-          <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-        </a>
-        <ul class="treeview-menu">
-          <li>
-            <%= link_to products_path do %>
-              <i class="fa fa-list"></i> <span>产品列表</span>
-            <% end %>
-          </li>
-          <li>
-            <%= link_to new_product_path do %>
-              <i class="fa fa-plus"></i> <span>添加产品</span>
-            <% end %>
-          </li>
-        </ul>
+      <li class="<%= active_class params, 'products' %>">
+        <%= link_to products_path do %>
+          <i class="fa fa-leaf"></i> <span>产品管理</span>
+        <% end %>
       </li>
+
 
       <li class="treeview">
         <a href="#">

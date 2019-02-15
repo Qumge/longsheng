@@ -144,7 +144,7 @@ Rails.application.routes.draw do
     collection do
       get :orders
       get :projects
-      get :sales
+      get :bargains
       get :agents
       get :audits
     end

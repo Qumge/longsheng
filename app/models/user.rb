@@ -111,6 +111,14 @@ class User < ActiveRecord::Base
     view_orders.where(order_status: status)
   end
 
+  def audit_sample_orders
+    audit_orders.where(order_type: 'sample')
+  end
+
+  def audit_bargains_orders
+    audit_orders.where(order_type: 'bargains')
+  end
+
   def audit_agents
     agents = Agent.includes(:apply_user).order('created_at desc')
     # 后台人员权限 审批所有代理商

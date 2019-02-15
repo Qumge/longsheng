@@ -11,11 +11,12 @@ class AuditsController < ApplicationController
   end
 
   def orders
-    @orders = current_user.audit_orders.page(params[:page]).per(Settings.per_page)
+    @orders = current_user.audit_sample_orders.page(params[:page]).per(Settings.per_page)
   end
 
-  def sales
 
+  def bargains
+    @orders = current_user.audit_bargains_orders.page(params[:page]).per(Settings.per_page)
   end
 
   def agents
@@ -23,7 +24,7 @@ class AuditsController < ApplicationController
   end
 
   def audits
-
+    @audits = current_user.audits.order('created_at desc').page(params[:page]).per(Settings.per_page)
   end
 
   def success
@@ -52,7 +53,6 @@ class AuditsController < ApplicationController
       Audit.create model_id: @model.id, model_type: @model.class.name, from_status: from_status, to_status: @model.send(@status_column), content: params[:audit][:content], user: current_user
       render json: {status: 'success'}
     rescue => e
-      p '111111'
       p e
     end
 
@@ -67,7 +67,7 @@ class AuditsController < ApplicationController
     elsif params[:type] == 'Order'
       @model = current_user.audit_orders.where(id: params[:id]).first
       @status_column = 'order_status'
-      @url = orders_audits_path
+      @url = @model.order_type == 'sample' ? orders_audits_path : bargains_audits_path
     elsif params[:type] == 'Agent'
       @model = current_user.audit_agents.where(id: params[:id]).first
       @status_column = 'agent_status'

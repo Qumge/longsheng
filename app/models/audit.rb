@@ -17,13 +17,35 @@
 class Audit < ActiveRecord::Base
   belongs_to :project, foreign_key: :model_id
   scope :project_audit, -> {where(model_type: 'Project')}
-  after_save :send_notify
   belongs_to :user
 
   PROJECT = []
 
-  # 发送通知
-  def send_notify
+  MODEL_TYPES = {
+      Project: '立项',
+      Order: '订单(特价、礼品、样品)',
+      Agent: '代理商'
+  }
 
+
+  def model
+    model_type.constantize.find_by id: model_id
   end
+
+  def model_show_name
+    case model.class.name
+    when 'Project'
+      model.name
+    when 'Order'
+      model.no
+    when 'Agent'
+      model.name
+    end
+  end
+
+
+  def get_model_type
+    model_type == 'Order' ? (model.order_type == 'bargains' ? '特价' : '样品、礼品') : MODEL_TYPES[model_type.to_sym]
+  end
+
 end
