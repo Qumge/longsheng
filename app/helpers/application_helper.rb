@@ -29,7 +29,9 @@ module ApplicationHelper
             new: '立项',
             create: '立项',
             show: '详情',
-            agent: '代理商'
+            agent: '代理商',
+            report: '项目报备',
+            sales: '价格体系'
         },
         contracts: {
             index: '战略合同列表',

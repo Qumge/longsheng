@@ -66,6 +66,7 @@ class Project < ActiveRecord::Base
   belongs_to :contract
   has_many :invoices
   belongs_to :agent, foreign_key: :agency_id
+  has_one :report
   #
   STATUS = {wait: '待审批', project_manager_audit: '项目经理已审批', regional_audit: '大区经理已审批', active: '进行中', finish: '已完结', overdue: '逾期', failed: '审核失败'}
   aasm :project_status do

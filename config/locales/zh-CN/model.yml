@@ -76,6 +76,21 @@ zh-CN:
         name: '产品名'
         reference_price: '单价'
         unit: '单位'
+      report:
+        project_id: '项目名'
+        name: '工程名'
+        address: '项目地址'
+        builder: '施工单位'
+        project_type: '项目类型'
+        project_step: '工程进度'
+        purchase_type: '采购模式'
+        scale: '工程规模'
+        product: '需求产品'
+        supply_time: '预计供货时间'
+        source: '项目来源'
+        desc: '其他信息'
+        user_id: '报备人'
+        phone: '联系电话'
 
 
 

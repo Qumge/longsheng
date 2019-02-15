@@ -19,7 +19,7 @@
             <% if products.present? %>
               <% products.each do |product| %>
               <tr>
-                <td><%= product.no %></td>
+                <td><%= link_to product.no, product_path(product), 'data-toggle' => "modal", 'data-target' => "#global-modal" %></td>
                 <td><%= product.name %></td>
                 <td><%= product.product_no %></td>
                 <td><%= product.reference_price %></td>

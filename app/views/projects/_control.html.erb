@@ -4,14 +4,16 @@
     <!-- small box -->
     <div class="small-box bg-aqua">
       <div class="inner">
-        <h4>项目动态</h4>
+        <h4>项目报备</h4>
 
         <p style="height: 13px;"></p>
       </div>
       <div class="icon">
-        <i class="fa  fa-clock-o"></i>
+        <i class="fa  fa-building-o"></i>
       </div>
-      <a href="#" class="small-box-footer">详情 <i class="fa fa-arrow-circle-right"></i></a>
+      <%= link_to report_project_path(@project), class: 'small-box-footer' do %>
+        <i class="fa fa-arrow-circle-right"></i>
+      <% end %>
     </div>
   </div>
 
@@ -45,58 +47,13 @@
       <div class="icon">
         <i class="fa fa-money"></i>
       </div>
-      <a href="#" class="small-box-footer">详情 <i class="fa fa-arrow-circle-right"></i></a>
-    </div>
-  </div>
-
-  <!-- ./col -->
-  <div class="col-lg-3 col-xs-6">
-    <!-- small box -->
-    <div class="small-box bg-red">
-      <div class="inner">
-        <h4>样品、礼品</h4>
-
-        <p style="height: 13px;"></p>
-      </div>
-      <div class="icon">
-        <i class="fa fa-gift"></i>
-      </div>
-      <a href="#" class="small-box-footer">详情 <i class="fa fa-arrow-circle-right"></i></a>
+      <%= link_to sales_project_path(@project), class: 'small-box-footer' do %>
+        详情 <i class="fa fa-arrow-circle-right"></i>
+        <% end %>
     </div>
   </div>
 
 
-  <!-- ./col -->
-  <div class="col-lg-3 col-xs-6">
-    <!-- small box -->
-    <div class="small-box bg-purple">
-      <div class="inner">
-        <h4>特价申请</h4>
-
-        <p style="height: 13px;"></p>
-      </div>
-      <div class="icon">
-        <i class="fa fa-file-text-o"></i>
-      </div>
-      <a href="#" class="small-box-footer">详情 <i class="fa fa-arrow-circle-right"></i></a>
-    </div>
-  </div>
-
-  <!-- ./col -->
-  <div class="col-lg-3 col-xs-6">
-    <!-- small box -->
-    <div class="small-box bg-light-blue">
-      <div class="inner">
-        <h4>订单</h4>
-
-        <p style="height: 13px;"></p>
-      </div>
-      <div class="icon">
-        <i class="fa fa-shopping-cart"></i>
-      </div>
-      <a href="#" class="small-box-footer">详情 <i class="fa fa-arrow-circle-right"></i></a>
-    </div>
-  </div>
 
 </div>
 

@@ -8,23 +8,23 @@
     <tbody>
     <tr>
       <th>序号</th>
-      <td><%= @sale.product&.no %></td>
+      <td><%= @product&.no %></td>
+    </tr>
+    <tr>
+      <th>产品名</th>
+      <td><%= @product&.name %></td>
     </tr>
     <tr>
       <th>产品型号</th>
-      <td><%= @sale.product&.product_no %></td>
+      <td><%= @product&.product_no %></td>
     </tr>
     <tr>
       <th>价格</th>
-      <td><%= @sale.price %>元</td>
+      <td><%= @product.reference_price %>元</td>
     </tr>
     <tr>
       <th>单位</th>
-      <td><%= @sale.product&.unit %></td>
-    </tr>
-    <tr>
-      <th>备注</th>
-      <td><%= @sale.desc %></td>
+      <td><%= @product&.unit %></td>
     </tr>
     </tbody>
   </table>

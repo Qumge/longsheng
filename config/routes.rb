@@ -122,6 +122,9 @@ Rails.application.routes.draw do
       post :payment
       post :step_event
       get :agent
+      get :sales
+      get :report
+      resources :reports
       resources :orders do
         collection do
           post :place_order

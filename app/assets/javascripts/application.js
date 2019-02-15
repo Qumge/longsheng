@@ -39,7 +39,8 @@ var initPage = function () {
     $(".modal").on("hidden.bs.modal", function() {
         $(this).removeData("bs.modal");
     });
-}
+    textToImg();
+};
 
 $('.datepicker').datepicker({
     autoclose: true,
@@ -64,6 +65,28 @@ function show_file(e){
     }
     $('#file-modal').modal();
 }
+
+function textToImg() {
+    var fontSize = 500;
+    var fontWeight = 'bold';
+    var canvases = document.getElementsByClassName('canvas');
+    for (var i = 0; i < canvases.length; i++) {
+        var canvas = canvases[i];
+        canvas.width = 1000;
+        canvas.height = 1000;
+        var context = canvas.getContext('2d');
+        context.fillStyle = '#F7F7F9';
+        context.fillRect(0, 0, canvas.width, canvas.height);
+        context.fillStyle = '#605CA8';
+        context.font = fontWeight + ' ' + fontSize + 'px sans-serif';
+        context.textAlign = 'center';
+        context.textBaseline = "middle";
+        var name = $(canvas).attr('first_name');
+        context.fillText(name, fontSize, fontSize);
+        $(canvas).siblings('img').attr('src', canvas.toDataURL("image/png"));
+    }
+
+};
 
 
 

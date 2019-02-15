@@ -1,3 +1,4 @@
+<%= render 'projects/header' %>
 <div class="row" id="sale-list">
   <div class="col-md-10">
     <div class="box">
@@ -10,9 +11,9 @@
           <tr>
             <th>序号</th>
             <th>产品型号</th>
-            <th>原价</th>
+            <th>产品名</th>
+            <th>单位</th>
             <th>价格</th>
-            <th></th>
           </tr>
           <tr>
             <% if @products.present? %>
@@ -20,18 +21,14 @@
               <tr>
                 <td><%= link_to product.no, product_path(product), 'data-toggle' => "modal", 'data-target' => "#global-modal" %></td>
                 <td><%= product.product_no %></td>
-                <td><%= product.reference_price %></td>
-                <td><%= product.real_price %></td>
-                <td>
-                  <%= link_to  edit_sale_path(sale), class: 'label label-success', 'data-toggle' => "modal", 'data-target' => "#global-modal" do %>
-                    <i class="fa fa-edit"></i>编辑
-                  <% end %>
-                </td>
+                <td><%= product.name %></td>
+                <td><%= product.unit %></td>
+                <td><%= product.default_price(@project) %></td>
               </tr>
             <% end %>
           <% else %>
             <tr>
-              <td colspan="6" align="center">没有可显示的内容</td>
+              <td colspan="4" align="center">没有可显示的内容</td>
             </tr>
           <% end %>
           </tr>

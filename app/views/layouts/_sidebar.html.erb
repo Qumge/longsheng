@@ -5,7 +5,8 @@
     <!-- Sidebar user panel -->
     <div class="user-panel">
       <div class="pull-left image">
-        <img src="/assets/dist/user2-160x160.jpg" class="img-circle" alt="User Image">
+        <img src="" class="img-circle" alt="User Image">
+        <canvas class='canvas' style="display:none" first_name="<%= current_user.name.present? ? current_user.name[0].upcase : 'D' %>"></canvas>
       </div>
       <div class="pull-left info">
         <p><%= current_user.name %></p>
@@ -16,10 +17,10 @@
     <!-- /.search form -->
     <!-- sidebar menu: : style can be found in sidebar.less -->
     <ul class="sidebar-menu" data-widget="tree">
-      <li class="header">控制台</li>
+      <li class="header"><i class="fa fa-dashboard"></i><span>控制台</span></li>
       <li class="<%= active_class params, 'projects' %>">
         <%= link_to projects_path do %>
-          <i class="fa fa-dashboard"></i> <span>项目</span>
+          <i class="fa fa-building-o"></i> <span>项目</span>
         <% end %>
       </li>
 

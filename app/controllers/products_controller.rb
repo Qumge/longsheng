@@ -17,7 +17,7 @@ class ProductsController < ApplicationController
   end
 
   def show
-
+    render layout: false
   end
 
   def destroy
