@@ -12,7 +12,11 @@
           <%= render 'projects/control' %>
         </div>
         <div class="tab-pane" id="tab_2">
-          <%= render 'projects/process' %>
+          <% if @project.active? %>
+            <%= render 'projects/process' %>
+          <% else %>
+            <p style="color: red">项目未通过审核</p>
+          <% end %>
         </div>
         <!-- /.tab-pane -->
         <div class="tab-pane" id="tab_3">
