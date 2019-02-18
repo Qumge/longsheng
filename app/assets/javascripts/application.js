@@ -41,6 +41,14 @@ var initPage = function () {
     });
     textToImg();
     $.fn.modal.Constructor.prototype.enforceFocus = function () { };
+    $('.todo-list').todoList({
+        onCheck  : function () {
+            window.console.log($(this), '2222222222');
+        },
+        onUnCheck: function () {
+            window.console.log($(this), 'The element has been unchecked');
+        }
+    });
 };
 
 $('.datepicker').datepicker({

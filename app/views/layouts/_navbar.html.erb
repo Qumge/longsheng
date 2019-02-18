@@ -17,16 +17,15 @@
       <ul class="nav navbar-nav">
 
         <!-- Notifications: style can be found in dropdown.less -->
-        <% if @notices.present? %>
-        <li class="dropdown notifications-menu">
+        <li class="notifications-menu">
 <!--          <a href="#" class="dropdown-toggle" data-toggle="dropdown">-->
-          <a href="#">
+          <%= link_to notices_path do %>
             <i class="fa fa-bell-o"></i>
-            <span class="label label-warning"><%= @notices.size%></span>
-          </a>
-
+            <% if @active_notices.present? %>
+            <span class="label label-warning"><%= @active_notices.size%></span>
+            <% end %>
+          <% end %>
         </li>
-        <% end %>
 
         <li class="dropdown">
             <%= link_to "注销", destroy_user_session_path, method: :delete, class: "dropdown-toggle" %>

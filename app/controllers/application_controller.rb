@@ -11,8 +11,7 @@ class ApplicationController < ActionController::Base
 
 
   def get_notices
-    p current_user
-    @notices = current_user.active_notices if current_user.present?
+    @active_notices = current_user.active_notices if current_user.present?
   end
 
 

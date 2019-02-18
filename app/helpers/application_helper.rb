@@ -17,6 +17,10 @@ module ApplicationHelper
     datetime.strftime('%Y-%m-%d')if datetime.present?
   end
 
+  def simple_time_mini datetime
+    datetime.strftime('%Y-%m-%d %H:%M:%S')if datetime.present?
+  end
+
 
   def get_title params
     title_config[params[:controller].to_sym].present? ? title_config[params[:controller].to_sym][params[:action].to_sym] : ''
@@ -68,6 +72,9 @@ module ApplicationHelper
             create: '添加费用',
             edit: '修改费用',
             update: '修改费用'
+        },
+        notices: {
+            index: '消息列表'
         }
     }
   end
@@ -86,6 +93,40 @@ module ApplicationHelper
       params[:controller] == controller && params[:action] == action ? 'active' : ''
     else
       params[:controller] == controller ? 'active' : ''
+    end
+  end
+
+
+  def redirect_path notice
+    case notice.model_type
+    when 'project_need_audit'
+      projects_audits_path
+    when 'project_audited'
+      project_path notice.model_id
+    when 'project_failed_audit'
+      project_path notice.model_id
+    when 'normal_order_need_audit'
+      orders_audits_path
+    when 'normal_order_audited'
+      project_path notice.order.project
+    when 'normal_order_failed_audit'
+      project_path notice.order.project
+    when 'bargains_order_need_audit'
+      bargains_audits_path
+    when 'bargains_order_audited'
+      project_path notice.order.project
+    when 'bargains_order_failed_audit'
+      project_path notice.order.project
+    when 'order_deliver'
+      manage_orders_path
+    when 'order_sign'
+      project_path notice.order.project
+    when 'agent_need_audit'
+      agents_audits_path
+    when 'agent_audited'
+      agents_path
+    when 'agent_failed_audit'
+      agents_path
     end
   end
 

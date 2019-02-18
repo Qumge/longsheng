@@ -13,7 +13,9 @@
 #
 
 class Notice < ActiveRecord::Base
-
+  belongs_to :order, foreign_key: 'model_id'
+  belongs_to :project, foreign_key: 'model_id'
+  belongs_to :agent, foreign_key: 'model_id'
   TYPES = {
       project_need_audit: '有一个新立项的项目需要审核',
       project_audited: '您立项的的项目已经通过审核',
@@ -37,5 +39,6 @@ class Notice < ActiveRecord::Base
       Notice.create model_type: type, model_id: id, content: TYPES[type], user_id: user_id
     end
   end
+
 
 end

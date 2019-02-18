@@ -169,6 +169,11 @@ Rails.application.routes.draw do
   resources :costs
   resources :trains
   resources :competitors
+  resources :notices do
+    collection do
+      post :check
+    end
+  end
 
   match ':controller(/:action(/:id))', :via => :get
 
