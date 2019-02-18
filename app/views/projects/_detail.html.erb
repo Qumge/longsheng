@@ -11,6 +11,10 @@
         <td><%= @project.status %></td>
       </tr>
       <tr>
+        <th>立项时间</th>
+        <td><%= simple_time @project.approval_time %></td>
+      </tr>
+      <tr>
         <th>甲方名称</th>
         <td><%= @project.a_name %></td>
       </tr>

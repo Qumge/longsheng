@@ -1,0 +1,68 @@
+<%= render 'trains/header' %>
+
+<div class="row">
+  <div class="col-md-10">
+    <div class="box">
+      <%= form_tag trains_path, method: :get do%>
+      <div class="box-header with-border">
+        <h3 class="box-title">培训资料列表
+          <% if can? :new, :trains %>
+            <small><%= link_to '上传资料', new_train_path , class: 'font-a label bg-green', 'data-toggle' => "modal", 'data-target' => "#global-modal" %></small>
+          <% end %>
+        </h3>
+        <div class="box-tools">
+          <div class="input-group input-group-sm" style="width: 150px;">
+
+            <input type="text" name="table_search" class="form-control pull-right" placeholder="检索" value="<%= params[:table_search] %>">
+
+            <div class="input-group-btn">
+              <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <% end %>
+      <!-- /.box-header -->
+      <div class="box-body">
+        <table class="table table-bordered">
+          <tr>
+            <th>资料名字</th>
+            <th>上传时间</th>
+            <th>上传人</th>
+            <th></th>
+          </tr>
+          <% if @trains.present? %>
+            <% @trains.each do |train| %>
+              <tr>
+                <td>
+                  <a href="javascript:void(0)" onclick="show_file(this)" class="btn show-file" data-url="<%= train.attachment&.preview_url%>" data-file-name="<%= train.attachment&.file_name %>">
+                    <i class="fa fa-eye"></i><%= train.attachment&.file_name %>
+                  </a>
+                </td>
+                <td><%= simple_time train.updated_at %></td>
+                <td><%= train.user&.name %></td>
+                <td>
+                    <%= link_to '编辑', edit_train_path(train), class: 'font-a label bg-green', 'data-toggle' => "modal", 'data-target' => "#global-modal" %>
+                    <%= link_to '删除', train_path(train), class: 'font-a label btn-danger', method: 'delete', data: {confirm: '确定删除吗？'} %>
+                </td>
+              </tr>
+            <% end %>
+          <% else %>
+            <tr>
+              <td colspan="4" align="center">没有可显示的内容</td>
+            </tr>
+          <% end %>
+
+        </table>
+      </div>
+      <!-- /.box-body -->
+      <div class="box-footer clearfix">
+        <div class="pull-right pagination-sm no-margin">
+          <%= paginate @trains, params: {table_search: params[:table_search]}%>
+        </div>
+
+      </div>
+    </div>
+    <!-- /.box -->
+  </div>
+</div>

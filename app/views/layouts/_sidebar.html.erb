@@ -60,72 +60,23 @@
       </li>
 
 
-      <li class="treeview">
-        <a href="#">
-          <i class="fa fa-money"></i>
-          <span>费用</span>
-          <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-        </a>
-        <ul class="treeview-menu">
-          <li>
-            <%= link_to '/' do %>
-              <i class="fa fa-list"></i> <span>所有费用</span>
-            <% end %>
-          </li>
-          <li>
-            <%= link_to '/' do %>
-              <i class="fa fa-plus"></i> <span>录入费用</span>
-            <% end %>
-          </li>
-        </ul>
+      <li class="<%= active_class params, 'costs' %>">
+        <%= link_to costs_path do %>
+          <i class="fa fa-money"></i> <span>费用</span>
+        <% end %>
       </li>
 
-      <li class="treeview">
-        <a href="#">
-          <i class="fa fa-file-pdf-o"></i>
-          <span>资料</span>
-          <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-        </a>
-        <ul class="treeview-menu">
-          <li>
-            <%= link_to '/' do %>
-              <i class="fa fa-list"></i> <span>资料查阅</span>
-            <% end %>
-          </li>
-          <li>
-            <%= link_to '/' do %>
-              <i class="fa fa-plus"></i> <span>上传资料</span>
-            <% end %>
-          </li>
-        </ul>
+      <li class="<%= active_class params, 'trains' %>">
+        <%= link_to trains_path do %>
+          <i class="fa  fa-file-text-o"></i> <span>培训资料</span>
+        <% end %>
       </li>
 
-      <li class="treeview">
-        <a href="#">
-          <i class="fa fa-bomb"></i>
-          <span>竞品信息</span>
-          <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-        </a>
-        <ul class="treeview-menu">
-          <li>
-            <%= link_to '/' do %>
-              <i class="fa fa-list"></i> <span>信息查询</span>
-            <% end %>
-          </li>
-          <li>
-            <%= link_to '/' do %>
-              <i class="fa fa-plus"></i> <span>信息上传</span>
-            <% end %>
-          </li>
-        </ul>
+      <li class="<%= active_class params, 'competitors' %>">
+        <%= link_to competitors_path do %>
+          <i class="fa fa-bomb"></i> <span>竞品信息</span>
+        <% end %>
       </li>
-
 
       <li>
         <%= link_to rails_admin_path do %>

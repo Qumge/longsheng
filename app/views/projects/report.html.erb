@@ -10,7 +10,10 @@
     </div>
     <div class="box-footer">
       <div class="pull-right no-margin">
-        <%= link_to '修改', edit_report_path(@project),'data-toggle' => "modal", 'data-target' => "#global-modal", class: 'btn btn-success'  %> <%= link_to '返回', project_path(@project), class: 'btn btn-primary', style: 'margin-left:20px;' %>
+        <% if @project.report.present? %>
+        <%= link_to '修改', edit_report_path(@project),'data-toggle' => "modal", 'data-target' => "#global-modal", class: 'btn btn-success'  %>
+        <% end %>
+        <%= link_to '返回', project_path(@project), class: 'btn btn-primary', style: 'margin-left:20px;' %>
       </div>
     </div>
   </div>

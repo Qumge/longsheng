@@ -29,7 +29,7 @@ RailsAdmin.config do |config|
   # config.show_gravatar = true
   #
   config.main_app_name = ["龙胜", "工程"]
-  config.included_models = ["Resource", 'Role', 'User', 'Organization', 'Product']
+  config.included_models = ["Resource", 'Role', 'User', 'Organization']
 
   config.model 'User' do
     label_plural "用户"
@@ -98,24 +98,6 @@ RailsAdmin.config do |config|
 
   end
 
-  config.model 'Product' do
-    label_plural "产品类型"
-    field :no do
-      label '序号'
-    end
-    field :name do
-      label '产品名'
-    end
-    field :product_no do
-      label '产品型号'
-    end
-    field :unit do
-      label '单位'
-    end
-    field :reference_price do
-      label '参考价（元）'
-    end
-  end
 
 
 

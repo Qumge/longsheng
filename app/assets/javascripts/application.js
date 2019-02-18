@@ -40,6 +40,7 @@ var initPage = function () {
         $(this).removeData("bs.modal");
     });
     textToImg();
+    $.fn.modal.Constructor.prototype.enforceFocus = function () { };
 };
 
 $('.datepicker').datepicker({

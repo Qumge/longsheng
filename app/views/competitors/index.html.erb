@@ -1,0 +1,68 @@
+<%= render 'competitors/header' %>
+
+<div class="row">
+  <div class="col-md-10">
+    <div class="box">
+      <%= form_tag competitors_path, method: :get do%>
+      <div class="box-header with-border">
+        <h3 class="box-title">竞品信息列表
+          <% if can? :new, :competitors %>
+            <small><%= link_to '上传竞品信息', new_competitor_path , class: 'font-a label bg-green', 'data-toggle' => "modal", 'data-target' => "#global-modal" %></small>
+          <% end %>
+        </h3>
+        <div class="box-tools">
+          <div class="input-group input-group-sm" style="width: 150px;">
+
+            <input type="text" name="table_search" class="form-control pull-right" placeholder="检索" value="<%= params[:table_search] %>">
+
+            <div class="input-group-btn">
+              <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <% end %>
+      <!-- /.box-header -->
+      <div class="box-body">
+        <table class="table table-bordered">
+          <tr>
+            <th>资料名字</th>
+            <th>上传时间</th>
+            <th>上传人</th>
+            <th></th>
+          </tr>
+          <% if @competitors.present? %>
+            <% @competitors.each do |competitor| %>
+              <tr>
+                <td>
+                  <a href="javascript:void(0)" onclick="show_file(this)" class="btn show-file" data-url="<%= competitor.attachment&.preview_url%>" data-file-name="<%= competitor.attachment&.file_name %>">
+                    <i class="fa fa-eye"></i><%= competitor.attachment&.file_name %>
+                  </a>
+                </td>
+                <td><%= simple_time competitor.updated_at %></td>
+                <td><%= competitor.user&.name %></td>
+                <td>
+                    <%= link_to '编辑', edit_competitor_path(competitor), class: 'font-a label bg-green', 'data-toggle' => "modal", 'data-target' => "#global-modal" %>
+                    <%= link_to '删除', competitor_path(competitor), class: 'font-a label btn-danger', method: 'delete', data: {confirm: '确定删除吗？'} %>
+                </td>
+              </tr>
+            <% end %>
+          <% else %>
+            <tr>
+              <td colspan="4" align="center">没有可显示的内容</td>
+            </tr>
+          <% end %>
+
+        </table>
+      </div>
+      <!-- /.box-body -->
+      <div class="box-footer clearfix">
+        <div class="pull-right pagination-sm no-margin">
+          <%= paginate @competitors, params: {table_search: params[:table_search]}%>
+        </div>
+
+      </div>
+    </div>
+    <!-- /.box -->
+  </div>
+</div>

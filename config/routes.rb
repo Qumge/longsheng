@@ -166,6 +166,9 @@ Rails.application.routes.draw do
   end
 
   resources :agents
+  resources :costs
+  resources :trains
+  resources :competitors
 
   match ':controller(/:action(/:id))', :via => :get
 

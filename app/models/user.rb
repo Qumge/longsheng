@@ -73,6 +73,7 @@ class User < ActiveRecord::Base
       projects.where(owner_id: self.id)
     elsif 'agency' == self.role.desc
       #todo
+      projects.where(agent_id: self.agent.id)
     else
       projects.where('1 = -1')
     end
@@ -91,10 +92,26 @@ class User < ActiveRecord::Base
     view_projects.where(project_status: status)
   end
 
-  # 查询优化
+  # todo查询待优化
   def view_orders
     Order.where('project_id in (?)', view_projects.collect{|p| p.id})
   end
+
+
+  # 可查看的费用
+  def view_costs
+    costs = Cost.all
+    if ['regional_manager', 'project_manager'].include? self.role.desc
+      costs.where('user_id in (?)', self.organization.subtree.map(&:users).flatten.map(&:id))
+    elsif ['super_admin', 'group_admin', 'normal_admin'].include? self.role.desc
+      costs
+    elsif 'project_user' == self.role.desc
+      costs.where(user_id: self.id)
+    else
+      costs.where('1 = -1')
+    end
+  end
+
 
   def audit_orders
     status = 'none'
@@ -149,6 +166,13 @@ class User < ActiveRecord::Base
   # 是否是后勤管理人员
   def is_rear?
     ['normal_admin', 'group_admin', 'super_admin'].include? self.role.desc
+  end
+
+  class << self
+    # 业务人员
+    def service_users
+      joins(:role).where('roles.desc in (?)', ['regional_manager', 'project_manager', 'project_user'])
+    end
   end
 
 

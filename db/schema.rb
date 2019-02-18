@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190215065909) do
+ActiveRecord::Schema.define(version: 20190218061235) do
 
   create_table "agents", force: :cascade do |t|
     t.string   "username",     limit: 255
@@ -67,6 +67,14 @@ ActiveRecord::Schema.define(version: 20190215065909) do
     t.string   "content",     limit: 255
   end
 
+  create_table "competitors", force: :cascade do |t|
+    t.string   "name",       limit: 255
+    t.string   "desc",       limit: 255
+    t.integer  "user_id",    limit: 4
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
   create_table "contracts", force: :cascade do |t|
     t.string   "name",            limit: 255
     t.string   "partner",         limit: 255
@@ -85,6 +93,15 @@ ActiveRecord::Schema.define(version: 20190215065909) do
   end
 
   add_index "contracts", ["deleted_at"], name: "index_contracts_on_deleted_at", using: :btree
+
+  create_table "costs", force: :cascade do |t|
+    t.integer  "user_id",    limit: 4
+    t.float    "amount",     limit: 24
+    t.string   "purpose",    limit: 255
+    t.datetime "occur_time"
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
 
   create_table "invoices", force: :cascade do |t|
     t.integer  "project_id", limit: 4
@@ -200,6 +217,7 @@ ActiveRecord::Schema.define(version: 20190215065909) do
     t.string   "payment",           limit: 255
     t.string   "project_status",    limit: 255
     t.datetime "deleted_at"
+    t.datetime "approval_time"
   end
 
   add_index "projects", ["deleted_at"], name: "index_projects_on_deleted_at", using: :btree
@@ -265,6 +283,14 @@ ActiveRecord::Schema.define(version: 20190215065909) do
   end
 
   add_index "sales", ["deleted_at"], name: "index_sales_on_deleted_at", using: :btree
+
+  create_table "trains", force: :cascade do |t|
+    t.string   "name",       limit: 255
+    t.string   "desc",       limit: 255
+    t.integer  "user_id",    limit: 4
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  limit: 255, default: "", null: false

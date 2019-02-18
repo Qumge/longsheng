@@ -61,6 +61,13 @@ module ApplicationHelper
             create: '添加产品',
             edit: '修改产品',
             update: '修改产品'
+        },
+        costs: {
+            index: '费用列表',
+            new: '添加费用',
+            create: '添加费用',
+            edit: '修改费用',
+            update: '修改费用'
         }
     }
   end

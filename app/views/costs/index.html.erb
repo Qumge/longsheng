@@ -1,0 +1,68 @@
+<%= render 'costs/header' %>
+
+<div class="row">
+  <div class="col-md-10">
+    <div class="box">
+      <%= form_tag costs_path, method: :get do%>
+      <div class="box-header with-border">
+        <h3 class="box-title">项目列表
+          <% if can? :new, :costs %>
+            <small><%= link_to '添加费用', new_cost_path , class: 'font-a label bg-green', 'data-toggle' => "modal", 'data-target' => "#global-modal" %></small>
+          <% end %>
+        </h3>
+        <div class="box-tools">
+          <div class="input-group input-group-sm" style="width: 150px;">
+
+            <input type="text" name="table_search" class="form-control pull-right" placeholder="检索" value="<%= params[:table_search] %>">
+
+            <div class="input-group-btn">
+              <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <% end %>
+      <!-- /.box-header -->
+      <div class="box-body">
+        <table class="table table-bordered">
+          <tr>
+            <th>销售人员</th>
+            <th>费用金额（元）</th>
+            <th>费用用途</th>
+            <th>产生时间</th>
+            <th></th>
+          </tr>
+          <% if @costs.present? %>
+            <% @costs.each do |cost| %>
+              <tr>
+                <td><%= cost.user&.name %></td>
+                <td><%= cost.amount%></td>
+                <td><%= cost.purpose %></td>
+                <td><%= simple_time cost.occur_time %></td>
+                <td>
+                  <% if can? :new, :costs %>
+                    <%= link_to '编辑', edit_cost_path(cost), class: 'font-a label bg-green', 'data-toggle' => "modal", 'data-target' => "#global-modal" %>
+                    <%= link_to '删除', cost_path(cost), class: 'font-a label btn-danger', method: 'delete', data: {confirm: '确定删除吗？'} %>
+                  <% end %>
+                </td>
+              </tr>
+            <% end %>
+          <% else %>
+            <tr>
+              <td colspan="5" align="center">没有可显示的内容</td>
+            </tr>
+          <% end %>
+
+        </table>
+      </div>
+      <!-- /.box-body -->
+      <div class="box-footer clearfix">
+        <div class="pull-right pagination-sm no-margin">
+          <%= paginate @costs, params: {table_search: params[:table_search]}%>
+        </div>
+
+      </div>
+    </div>
+    <!-- /.box -->
+  </div>
+</div>

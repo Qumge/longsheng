@@ -1,0 +1,15 @@
+<% content_for :content_header do %>
+  <h1>
+    费用管理
+    <small><%= get_title params %></small>
+
+  </h1>
+  <ol class="breadcrumb">
+    <li>
+      <%=link_to costs_path do %>
+        <i class="fa fa-dashboard"></i> 费用管理
+      <% end %>
+    </li>
+    <li class="active"><%= get_title params %></li>
+  </ol>
+<% end %>

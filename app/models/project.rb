@@ -5,6 +5,7 @@
 #  id                :integer          not null, primary key
 #  a_name            :string(255)
 #  address           :string(255)
+#  approval_time     :datetime
 #  butt_name         :string(255)
 #  butt_phone        :string(255)
 #  butt_title        :string(255)
@@ -98,7 +99,7 @@ class Project < ActiveRecord::Base
     end
 
     event :do_failed do
-      transitions :from => [:wait, :project_manager_audit, :regional_audit], :to => :failed, :after => Proc.new {create_failed_notice }
+      transitions :from => [:wait, :project_manager_audit, :regional_audit], :to => :failed, :after => Proc.new {create_failed_notice; set_approval_time }
     end
   end
 
@@ -248,6 +249,11 @@ class Project < ActiveRecord::Base
 
   private
 
+  # 审批成功生成审批时间
+  def set_approval_time
+    self.update approval_time: DateTime.now
+  end
+
   # 通知项目经理审批
   def create_project_manager_notice
     if owner.present? && owner.organization.present?
@@ -282,4 +288,6 @@ class Project < ActiveRecord::Base
   def create_active_notice
     Notice.create_notice :project_audited, self.id, owner_id
   end
+
+
 end
