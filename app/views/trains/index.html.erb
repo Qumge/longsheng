@@ -42,8 +42,12 @@
                 <td><%= simple_time train.updated_at %></td>
                 <td><%= train.user&.name %></td>
                 <td>
+                  <% if can? :edit, :trains %>
                     <%= link_to '编辑', edit_train_path(train), class: 'font-a label bg-green', 'data-toggle' => "modal", 'data-target' => "#global-modal" %>
+                  <% end %>
+                  <% if can? :destroy, :trains %>
                     <%= link_to '删除', train_path(train), class: 'font-a label btn-danger', method: 'delete', data: {confirm: '确定删除吗？'} %>
+                  <% end %>
                 </td>
               </tr>
             <% end %>

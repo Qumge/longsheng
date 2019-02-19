@@ -42,8 +42,12 @@
                 <td><%= simple_time competitor.updated_at %></td>
                 <td><%= competitor.user&.name %></td>
                 <td>
+                  <% if can? :edit, :competitors %>
                     <%= link_to '编辑', edit_competitor_path(competitor), class: 'font-a label bg-green', 'data-toggle' => "modal", 'data-target' => "#global-modal" %>
+                    <%end %>
+                  <% if can? :destroy, :competitors %>
                     <%= link_to '删除', competitor_path(competitor), class: 'font-a label btn-danger', method: 'delete', data: {confirm: '确定删除吗？'} %>
+                  <% end %>
                 </td>
               </tr>
             <% end %>

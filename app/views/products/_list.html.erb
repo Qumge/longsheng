@@ -3,7 +3,9 @@
     <div class="box">
       <div class="box-header with-border">
         <h3 class="box-title">产品列表</h3>
+        <% if can? :new, :products %>
         <%= link_to '添加产品', new_product_path,'data-toggle' => "modal", 'data-target' => "#global-modal", class: 'font-a label pull-right bg-green', style: 'font-size: 100%' %>
+        <% end %>
       </div>
       <!-- /.box-header -->
       <div class="box-body">
@@ -24,12 +26,15 @@
                 <td><%= product.product_no %></td>
                 <td><%= product.reference_price %></td>
                 <td>
-                  <%= link_to  edit_product_path(product), class: 'label label-success', 'data-toggle' => "modal", 'data-target' => "#global-modal" do %>
-                    <i class="fa fa-edit"></i>编辑
+                  <% if can? :edit, :products %>
+                    <%= link_to  edit_product_path(product), class: 'label label-success', 'data-toggle' => "modal", 'data-target' => "#global-modal" do %>
+                      <i class="fa fa-edit"></i>编辑
+                    <% end %>
                   <% end %>
-
-                  <%= link_to product_path(product), method: :delete, data: {confirm: '确定删除吗？'}, class: 'label label-danger left-20' do %>
-                                      <i class="fa fa-close"></i>删除
+                  <% if can? :destroy, :products %>
+                    <%= link_to product_path(product), method: :delete, data: {confirm: '确定删除吗？'}, class: 'label label-danger left-20' do %>
+                                        <i class="fa fa-close"></i>删除
+                    <% end %>
                   <% end %>
                 </td>
               </tr>

@@ -18,12 +18,15 @@
     <!-- sidebar menu: : style can be found in sidebar.less -->
     <ul class="sidebar-menu" data-widget="tree">
       <li class="header"><i class="fa fa-dashboard"></i><span>控制台</span></li>
+      <% if can? :index, :projects %>
       <li class="<%= active_class params, 'projects' %>">
         <%= link_to projects_path do %>
           <i class="fa fa-building-o"></i> <span>项目</span>
         <% end %>
       </li>
+      <%end %>
 
+      <% if can? :index, :audits %>
       <li class="<%= active_class params, 'audits' %>">
         <%= link_to audits_path do %>
           <i class="fa fa-pencil"></i> <span>审批流程</span>
@@ -31,7 +34,9 @@
             </span>
         <% end %>
       </li>
+      <% end %>
 
+      <% if can? :index, :manage_orders %>
       <li class="<%= active_class params, 'manage_orders' %>">
         <%= link_to manage_orders_path do %>
           <i class="fa fa-shopping-cart"></i> <span>订单管理</span>
@@ -40,49 +45,63 @@
             </span>
         <% end %>
       </li>
+      <%end %>
 
+      <% if can? :index, :agents %>
       <li class="<%= active_class params, 'agents' %>">
         <%= link_to agents_path do %>
           <i class="fa fa-users"></i> <span>代理商</span>
         <% end %>
       </li>
+      <%end %>
 
+      <% if can? :index, :contracts %>
       <li class="<%= active_class params, 'contracts' %>">
         <%= link_to contracts_path do %>
           <i class="fa fa-file-text-o"></i> <span>战略合同</span>
         <% end %>
       </li>
+      <%end %>
 
+      <% if can? :index, :products %>
       <li class="<%= active_class params, 'products' %>">
         <%= link_to products_path do %>
           <i class="fa fa-leaf"></i> <span>产品管理</span>
         <% end %>
       </li>
+      <% end %>
 
-
+      <% if can? :index, :costs %>
       <li class="<%= active_class params, 'costs' %>">
         <%= link_to costs_path do %>
           <i class="fa fa-money"></i> <span>费用</span>
         <% end %>
       </li>
+      <% end %>
 
+      <% if can? :index, :trains %>
       <li class="<%= active_class params, 'trains' %>">
         <%= link_to trains_path do %>
           <i class="fa  fa-file-text-o"></i> <span>培训资料</span>
         <% end %>
       </li>
+      <%end %>
 
+      <% if can? :index, :competitors %>
       <li class="<%= active_class params, 'competitors' %>">
         <%= link_to competitors_path do %>
           <i class="fa fa-bomb"></i> <span>竞品信息</span>
         <% end %>
       </li>
+      <% end %>
 
+      <% if current_user.has_role? 'super_admin' %>
       <li>
         <%= link_to rails_admin_path do %>
           <i class="fa fa-gear"></i> <span>后台管理</span>
         <% end %>
       </li>
+      <%end %>
     </ul>
   </section>
   <!-- /.sidebar -->

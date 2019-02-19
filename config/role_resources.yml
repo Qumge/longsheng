@@ -1,0 +1,341 @@
+group_admin:
+  sales:
+    destroy: 价格体系-删除
+    update: 价格体系-编辑
+    edit: 价格体系-编辑界面
+    create: 价格体系-新建
+    new: 价格体系-新建界面
+  projects:
+    sales: 项目-价格体系
+    agent: 项目-代理商
+    payment: 项目动态-回款金额确认
+    index: 项目-列表
+  products:
+    show: 产品-详情
+    update: 产品-编辑
+    edit: 产品-编辑界面
+    create: 产品-新建
+    new: 产品-新建界面
+    index: 产品-列表
+  notices:
+    check: 消息通知-标记
+    index: 消息通知-列表
+  manage_orders:
+    show: 订单管理-详情
+    deliver: 订单管理-发货
+    index: 订单管理-列表
+  costs:
+    destroy: 费用-删除
+    update: 费用-编辑
+    edit: 费用-编辑界面
+    create: 费用-添加费用
+    new: 费用-添加费用界面
+    index: 费用-列表
+  contracts:
+    show: 战略合同-详情
+    update: 战略合同-编辑
+    edit: 战略合同-编辑界面
+    create: 战略合同-新建
+    new: 战略合同-新建界面
+    index: 战略合同-列表
+  trains:
+    destroy: 培训资料-删除
+    update: 培训资料-编辑
+    edit: 培训资料-编辑界面
+    index: 培训资料-列表
+    create: 培训资料-上传
+    new: 培训资料-上传界面
+  competitors:
+    destroy: 竞品信息-删除
+    update: 竞品信息-编辑
+    edit: 竞品信息-编辑界面
+    index: 竞品信息-列表
+    create: 竞品信息-上传
+    new: 竞品信息-上传界面
+  audits:
+    failed: 审批-打回
+    failed_notice: 审批-打回界面
+    success: 审批-通过
+    audits: 审批-我的审批记录
+    agents: 审批-代理商
+    bargains: 审批-特价
+    orders: 审批-样品礼品
+    projects: 审批-立项
+    index: 审批-操作台
+  agents:
+    show: 代理商-详情
+    index: 代理商-列表
+normal_admin:
+  sales:
+    destroy: 价格体系-删除
+    update: 价格体系-编辑
+    edit: 价格体系-编辑界面
+    create: 价格体系-新建
+    new: 价格体系-新建界面
+  projects:
+    sales: 项目-价格体系
+    agent: 项目-代理商
+    payment: 项目动态-回款金额确认
+    index: 项目-列表
+  products:
+    show: 产品-详情
+    update: 产品-编辑
+    edit: 产品-编辑界面
+    create: 产品-新建
+    new: 产品-新建界面
+    index: 产品-列表
+  notices:
+    check: 消息通知-标记
+    index: 消息通知-列表
+  manage_orders:
+    show: 订单管理-详情
+    deliver: 订单管理-发货
+    index: 订单管理-列表
+  costs:
+    destroy: 费用-删除
+    update: 费用-编辑
+    edit: 费用-编辑界面
+    create: 费用-添加费用
+    new: 费用-添加费用界面
+    index: 费用-列表
+  contracts:
+    show: 战略合同-详情
+    update: 战略合同-编辑
+    edit: 战略合同-编辑界面
+    create: 战略合同-新建
+    new: 战略合同-新建界面
+    index: 战略合同-列表
+  trains:
+    destroy: 培训资料-删除
+    update: 培训资料-编辑
+    edit: 培训资料-编辑界面
+    index: 培训资料-列表
+    create: 培训资料-上传
+    new: 培训资料-上传界面
+  competitors:
+    destroy: 竞品信息-删除
+    update: 竞品信息-编辑
+    edit: 竞品信息-编辑界面
+    index: 竞品信息-列表
+    create: 竞品信息-上传
+    new: 竞品信息-上传界面
+  audits:
+    failed: 审批-打回
+    failed_notice: 审批-打回界面
+    success: 审批-通过
+    audits: 审批-我的审批记录
+    agents: 审批-代理商
+    bargains: 审批-特价
+    orders: 审批-样品礼品
+    projects: 审批-立项
+    index: 审批-操作台
+  agents:
+    show: 代理商-详情
+    index: 代理商-列表
+regional_manager:
+  costs:
+    create: 费用-添加费用
+    new: 费用-添加费用界面
+    index: 费用-列表
+  trains:
+    create: 培训资料-上传
+    new: 培训资料-上传界面
+    index: 培训资料-列表
+  competitors:
+    create: 竞品信息-上传
+    new: 竞品信息-上传界面
+    index: 竞品信息-列表
+  projects:
+    sales: 项目-价格体系
+    agent: 项目-代理商
+    step_event: 项目动态-下一步
+    payment: 项目动态-回款金额确认
+    delete_attachment: 项目动态-删除项目资料
+    upload: 项目动态-上传文件资料
+    update_information: 项目-添加项目资料
+    edit_information: 项目-添加项目资料界面
+    update_agency: 项目动态-选择操作模式
+    create: 项目-立项
+    new: 项目-立项界面
+    index: 项目-列表
+  products:
+    show: 产品-详情
+    index: 产品-列表
+  orders:
+    place_order: 订单-下单
+    apply_order: 订单-申请
+    destroy: 订单-删除商品
+    update: 订单-编辑商品
+    edit: 订单-编辑商品界面
+    create: 订单-添加商品
+    new: 订单-添加商品界面
+  notices:
+    check: 消息通知-标记
+    index: 消息通知-列表
+  invoices:
+    update: 开票-编辑
+    edit: 开票-编辑界面
+    create: 开票-申请
+    new: 开票-申请界面
+  contracts:
+    show: 战略合同-详情
+    index: 战略合同-列表
+  audits:
+    failed: 审批-打回
+    failed_notice: 审批-打回界面
+    success: 审批-通过
+    audits: 审批-我的审批记录
+    agents: 审批-代理商
+    bargains: 审批-特价
+    orders: 审批-样品礼品
+    projects: 审批-立项
+    index: 审批-操作台
+  agents:
+    show: 代理商-详情
+    create: 代理商-申请
+    new: 代理商-申请界面
+    index: 代理商-列表
+project_manager:
+  costs:
+    create: 费用-添加费用
+    new: 费用-添加费用界面
+    index: 费用-列表
+  trains:
+    create: 培训资料-上传
+    new: 培训资料-上传界面
+    index: 培训资料-列表
+  competitors:
+    create: 竞品信息-上传
+    new: 竞品信息-上传界面
+    index: 竞品信息-列表
+  projects:
+    sales: 项目-价格体系
+    agent: 项目-代理商
+    step_event: 项目动态-下一步
+    payment: 项目动态-回款金额确认
+    delete_attachment: 项目动态-删除项目资料
+    upload: 项目动态-上传文件资料
+    update_information: 项目-添加项目资料
+    edit_information: 项目-添加项目资料界面
+    update_agency: 项目动态-选择操作模式
+    create: 项目-立项
+    new: 项目-立项界面
+    index: 项目-列表
+  products:
+    show: 产品-详情
+    index: 产品-列表
+  orders:
+    place_order: 订单-下单
+    apply_order: 订单-申请
+    destroy: 订单-删除商品
+    update: 订单-编辑商品
+    edit: 订单-编辑商品界面
+    create: 订单-添加商品
+    new: 订单-添加商品界面
+  notices:
+    check: 消息通知-标记
+    index: 消息通知-列表
+  invoices:
+    update: 开票-编辑
+    edit: 开票-编辑界面
+    create: 开票-申请
+    new: 开票-申请界面
+  contracts:
+    show: 战略合同-详情
+    index: 战略合同-列表
+  audits:
+    failed: 审批-打回
+    failed_notice: 审批-打回界面
+    success: 审批-通过
+    audits: 审批-我的审批记录
+    agents: 审批-代理商
+    bargains: 审批-特价
+    orders: 审批-样品礼品
+    projects: 审批-立项
+    index: 审批-操作台
+  agents:
+    show: 代理商-详情
+    create: 代理商-申请
+    new: 代理商-申请界面
+    index: 代理商-列表
+project_user:
+  projects:
+    sales: 项目-价格体系
+    agent: 项目-代理商
+    step_event: 项目动态-下一步
+    delete_attachment: 项目动态-删除项目资料
+    upload: 项目动态-上传文件资料
+    update_information: 项目-添加项目资料
+    edit_information: 项目-添加项目资料界面
+    update_agency: 项目动态-选择操作模式
+    create: 项目-立项
+    new: 项目-立项界面
+    index: 项目-列表
+  products:
+    show: 产品-详情
+    index: 产品-列表
+  orders:
+    place_order: 订单-下单
+    apply_order: 订单-申请
+    destroy: 订单-删除商品
+    update: 订单-编辑商品
+    edit: 订单-编辑商品界面
+    create: 订单-添加商品
+    new: 订单-添加商品界面
+  notices:
+    check: 消息通知-标记
+    index: 消息通知-列表
+  invoices:
+    update: 开票-编辑
+    edit: 开票-编辑界面
+    create: 开票-申请
+    new: 开票-申请界面
+  costs:
+    index: 费用-列表
+  contracts:
+    show: 战略合同-详情
+    index: 战略合同-列表
+  trains:
+    index: 培训资料-列表
+  competitors:
+    index: 竞品信息-列表
+  agents:
+    show: 代理商-详情
+    create: 代理商-申请
+    new: 代理商-申请界面
+    index: 代理商-列表
+agency:
+  reports:
+    update: 项目报备-编辑
+    edit: 项目报备-编辑界面
+    create: 项目报备-新建
+    new: 项目报备-新建界面
+  projects:
+    sales: 项目-价格体系
+    report: 项目-报备
+    agent: 项目-代理商
+    step_event: 项目动态-下一步
+    payment: 项目动态-回款金额确认
+    delete_attachment: 项目动态-删除项目资料
+    upload: 项目动态-上传文件资料
+  products:
+    show: 产品-详情
+    index: 产品-列表
+  orders:
+    place_order: 订单-下单
+    apply_order: 订单-申请
+    destroy: 订单-删除商品
+    update: 订单-编辑商品
+    edit: 订单-编辑商品界面
+    create: 订单-添加商品
+    new: 订单-添加商品界面
+  notices:
+    check: 消息通知-标记
+    index: 消息通知-列表
+  invoices:
+    update: 开票-编辑
+    edit: 开票-编辑界面
+    create: 开票-申请
+    new: 开票-申请界面
+  trains:
+    index: 培训资料-列表

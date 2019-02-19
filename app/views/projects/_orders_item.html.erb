@@ -3,7 +3,9 @@
       <div class="box box-default collapsed-box" style="margin-bottom: 5px;">
         <div class="box-header with-border">
           <h4 class="box-title"><%= order.get_order_type %><%= order.no %>
+            <% if can? :new, :orders %>
             <%= link_to '添加商品', new_order_path(@project, order_id: order.id, type: order.order_type), 'data-toggle' => "modal", 'data-target' => "#global-modal", class: 'btn' if @project.can_do?(type) && order.can_edit? %>
+            <%end %>
           </h4>
 
           <div class="box-tools pull-right">
@@ -37,11 +39,15 @@
                         </li>
                       </ul>
                       <% if @project.can_do?(type) && order.can_edit? %>
+                        <% if can? :edit, :orders %>
                         <%= link_to edit_order_path(order_product, type: order.order_type), 'data-toggle' => "modal", 'data-target' => "#global-modal", class: 'btn btn-success btn-xs' do %>
                           编辑
                         <% end %>
+                          <%end %>
+                        <% if can? :destroy, :orders %>
                         <%= link_to order_path(order_product), method: :delete, data: {confirm: '确认删除吗？'}, class: 'btn btn-danger btn-xs' do %>
                           删除
+                        <% end %>
                         <% end %>
                       <% end %>
                     </div>
@@ -58,12 +64,16 @@
               </div>
               <div class="col-md-6">
                 <b>合计：</b><%= order.real_total_price %>
-                <span style="text-align: left">
+                <span style="text-align: right; float: right">
                 <% if type == 'plate' %>
-                  <%= link_to order.get_place_name, 'JavaScript:void(0)', onclick: "apply_order(#{order.id})",class: 'btn btn-success btn-xs' if @project.can_do?(type) && order.can_edit? %>
-                <% elsif type == 'order'%>
-                  <%= link_to order.get_place_name, 'JavaScript:void(0)', onclick: "place_order(#{order.id})",class: 'btn btn-success btn-xs' if @project.can_do?(type) && order.can_edit? %>
-                <% end %>
+                    <% if can? :apply_order, :orders %>
+                    <%= link_to order.get_place_name, 'JavaScript:void(0)', onclick: "apply_order(#{order.id})",class: 'btn btn-success btn-xs' if @project.can_do?(type) && order.can_edit? %>
+                    <%end %>
+                  <% elsif type == 'order'%>
+                    <% if can? :place_order, :orders %>
+                    <%= link_to order.get_place_name, 'JavaScript:void(0)', onclick: "place_order(#{order.id})",class: 'btn btn-success btn-xs' if @project.can_do?(type) && order.can_edit? %>
+                    <%end %>
+                  <% end %>
                 </span>
               </div>
             </div>

@@ -18,4 +18,15 @@
 class Resource < ActiveRecord::Base
   has_and_belongs_to_many :roles, join_table: 'role_resources'
   validates_presence_of :target, :action
+
+
+  def self.load!
+    config = YAML.load_file("#{Rails.root}/config/resources.yml")
+    config.each do |target, value|
+      value.each do |action, name|
+        Resource.find_or_create_by action: action, name: name, target: target
+      end
+    end
+  end
+
 end

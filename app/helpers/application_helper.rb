@@ -46,8 +46,8 @@ module ApplicationHelper
             update: '合同编辑'
         },
         audits: {
-            index: '我的审批',
-            orders: '订单审批',
+            index: '审批操作台',
+            orders: '样品、礼品审批',
             sales: '特价审批',
             agents: '代理审批'
         },
@@ -75,6 +75,12 @@ module ApplicationHelper
         },
         notices: {
             index: '消息列表'
+        },
+        trains: {
+            index: '培训资料列表'
+        },
+        competitors: {
+            index: '竞品信息列表'
         }
     }
   end

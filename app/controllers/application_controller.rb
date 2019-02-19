@@ -7,11 +7,19 @@ class ApplicationController < ActionController::Base
   # before_action :set_layout
   before_action :authenticate_user!
   before_action :get_notices
+  before_action :check_authorization_for_action
 
 
 
   def get_notices
     @active_notices = current_user.active_notices if current_user.present?
+  end
+
+  def check_authorization_for_action
+    if params[:controller].present?
+      return true if params[:controller].match('sessions') || params[:controller].match('devise') || params[:controller].match('omniauth_callbacks')
+    end
+    redirect_to root_path, :alert => "无权限" unless can?(params[:action].to_sym, params[:controller].to_sym)
   end
 
 

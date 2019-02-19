@@ -24,11 +24,30 @@ class Role < ActiveRecord::Base
 
 
   class << self
-    def load_default_roles
+    def load!
       ROLES.each do |key, value|
         Role.create name: value, desc: key unless Role.find_by(name: key).present?
       end
     end
+
+    def write_config file_path
+      hash_roles = {}
+      self.all.each do |role|
+        hash_target = {}
+        role.resources.group_by{|r| r.target}.each do |target, resources|
+          hash_resources = {}
+          resources.each do |resource|
+            hash_resources[resource.action] = resource.name
+          end
+          hash_target[target] = hash_resources
+        end
+        hash_roles[role.desc] = hash_target
+      end
+      File.open file_path, 'a+' do |file|
+        file.puts hash_roles.to_yaml
+      end
+    end
+
   end
 
 

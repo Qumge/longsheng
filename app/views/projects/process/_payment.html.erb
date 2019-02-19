@@ -11,9 +11,11 @@
   <div class="timeline-item">
     <div class="timeline-body">
         <input class="form-control string optional" type="text" name="payment" id="payment" style="max-width: 250px;" placeholder="录入付款形式" value="<%=@project.payment %>">
+      <% if can? :payment, :projects %>
       <a data-toggle="modal" class="btn btn-xs bg-blue" onclick="payment()">
         回款金额确认
       </a>
+      <%end %>
     </div>
   </div>
 </li>

@@ -40,8 +40,10 @@
                 <td><%= cost.purpose %></td>
                 <td><%= simple_time cost.occur_time %></td>
                 <td>
-                  <% if can? :new, :costs %>
+                  <% if can? :edit, :costs %>
                     <%= link_to '编辑', edit_cost_path(cost), class: 'font-a label bg-green', 'data-toggle' => "modal", 'data-target' => "#global-modal" %>
+                  <% end %>
+                  <% if can? :destroy, :costs %>
                     <%= link_to '删除', cost_path(cost), class: 'font-a label btn-danger', method: 'delete', data: {confirm: '确定删除吗？'} %>
                   <% end %>
                 </td>

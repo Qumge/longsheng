@@ -5,7 +5,9 @@
     <div class="box">
       <div class="box-header with-border">
         <h3 class="box-title">代理商列表
+          <% if can? :new, :agents %>
             <small><%= link_to '申请', new_agent_path , class: 'font-a label bg-green' %></small>
+          <% end %>
         </h3>
       </div>
       <!-- /.box-header -->

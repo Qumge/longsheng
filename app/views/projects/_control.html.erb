@@ -1,5 +1,6 @@
 
 <div class="row">
+  <% if can? :report, :projects %>
   <div class="col-lg-3 col-xs-6">
     <!-- small box -->
     <div class="small-box bg-aqua">
@@ -16,9 +17,10 @@
       <% end %>
     </div>
   </div>
+  <% end %>
 
   <!-- ./col -->
-  <% if @project.agent.present? %>
+  <% if @project.agent.present? && can?(:agent, :projects) %>
   <div class="col-lg-3 col-xs-6">
     <!-- small box -->
     <div class="small-box bg-green">
@@ -38,6 +40,7 @@
   <% end %>
 
   <!-- ./col -->
+  <% if can? :sales, :projects %>
   <div class="col-lg-3 col-xs-6">
     <!-- small box -->
     <div class="small-box bg-yellow">
@@ -54,6 +57,7 @@
         <% end %>
     </div>
   </div>
+  <%end %>
 
 
 

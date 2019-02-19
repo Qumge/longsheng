@@ -3,7 +3,9 @@
     <div class="box">
       <div class="box-header with-border">
         <h3 class="box-title">价格体系</h3>
-        <%= create_link Sale.new, '添加价格', 'data-toggle' => "modal", 'data-target' => "#global-modal", class: 'font-a label pull-right bg-green', style: 'font-size: 100%' %>
+        <% if can? :new, :sales %>
+          <%= create_link Sale.new, '添加价格', 'data-toggle' => "modal", 'data-target' => "#global-modal", class: 'font-a label pull-right bg-green', style: 'font-size: 100%' %>
+        <% end %>
       </div>
       <!-- /.box-header -->
       <div class="box-body">
@@ -22,12 +24,15 @@
                 <td><%= sale.product&.product_no %></td>
                 <td><%= sale.price %></td>
                 <td>
+                  <% if can? :edit, :sales %>
                   <%= link_to  edit_sale_path(sale), class: 'label label-success', 'data-toggle' => "modal", 'data-target' => "#global-modal" do %>
                     <i class="fa fa-edit"></i>编辑
                   <% end %>
-
+                  <% end %>
+                  <% if can? :destroy, :sales %>
                   <%= link_to sale_path(sale), method: :delete, data: {confirm: '确定删除吗？'}, class: 'label label-danger left-20' do %>
                                       <i class="fa fa-close"></i>删除
+                  <% end %>
                   <% end %>
                 </td>
               </tr>
