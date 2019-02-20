@@ -2,25 +2,53 @@
 #
 # Table name: invoices
 #
-#  id         :integer          not null, primary key
-#  no         :string(255)
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
-#  project_id :integer
-#  user_id    :integer
+#  id             :integer          not null, primary key
+#  invoice_status :string(255)
+#  no             :string(255)
+#  created_at     :datetime         not null
+#  updated_at     :datetime         not null
+#  project_id     :integer
+#  user_id        :integer
 #
 
 class Invoice < ActiveRecord::Base
+  include AASM
   has_and_belongs_to_many :orders, join_table: "order_invoices"
   has_many :order_invoices
   belongs_to :project
+  belongs_to :user
+  has_many :audits, -> {where(model_type: 'Invoice')}, foreign_key: :model_id
+
+  STATUS = {wait: '新建', apply: '已申请', applied: '已通过申请', failed: '审核失败', sended: '已发送快递'}
+  aasm :invoice_status do
+    state :wait, :initial => true
+    state :apply, :applied, :failed, :sended
+    #申请
+    event :do_apply do
+      transitions :from => [:wait, :failed], :to => :apply, :after => Proc.new {create_apply_notice}
+    end
+
+    event :do_failed do
+      transitions :from => [:apply], :to => :failed, :after => Proc.new {create_failed_notice}
+    end
+
+    event :do_applied do
+      transitions :from => [:apply], :to => :applied, :after => Proc.new {create_applied_notice}
+    end
+
+    event :do_sended do
+      transitions :from => [:applied], :to => :sended, :after => Proc.new {create_sended_notice}
+    end
+
+  end
 
   def can_invoice_orders
     project = self.project
-    busy_order_invoices = self.project.order_invoices.where('invoice_id != ?', self.id)
-    free_orders = project.orders
-    free_orders = free_orders.where('orders.id not in (?)', busy_order_invoices.collect{|order_invoices| order_invoices.order_id}) if busy_order_invoices.present?
-    free_orders
+    invoice_orders = project.orders.where(order_status: 'sign')
+    if project.order_invoices.present? && (project.order_invoices.collect{|o| o.order_id} - self.order_invoices.collect{|o| o.order_id}).present?
+      invoice_orders = invoice_orders.where('orders.id not in (?)', (project.order_invoices.collect{|o| o.order_id} - self.order_invoices.collect{|o| o.order_id}))
+    end
+    invoice_orders
   end
 
   def invoice_no
@@ -29,5 +57,43 @@ class Invoice < ActiveRecord::Base
 
   def can_edit?
     project.can_do? :invoice
+  end
+
+  def create_apply_notice
+    User.joins(:role).where('roles.desc in (?)', ['normal_admin', 'group_admin']).each do |user|
+      Notice.create_notice "invoice_need_audit".to_sym, self.id, user.id
+    end
+  end
+
+  def create_failed_notice
+    Notice.create_notice "invoice_failed".to_sym, self.id, self.user_id
+  end
+
+  def create_applied_notice
+    Notice.create_notice "invoice_applied".to_sym, self.id, self.user_id
+    User.joins(:role).where('roles.desc in (?)', ['normal_admin', 'group_admin']).each do |user|
+      Notice.create_notice "invoice_need_send".to_sym, self.id, user.id
+    end
+  end
+
+  def create_sended_notice
+    Notice.create_notice "invoice_sended".to_sym, self.id, self.user_id
+  end
+
+  def total_price
+    total_price = 0
+    self.orders.each do |order|
+      total_price += order.real_total_price
+    end
+    total_price.ceil 2
+  end
+
+  def get_status
+    Invoice::STATUS[self.invoice_status.to_sym]
+  end
+
+  def audit_failed_reason
+    audit = self.audits.where(to_status: 'failed').last
+    audit&.content
   end
 end

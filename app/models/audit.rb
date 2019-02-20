@@ -15,7 +15,7 @@
 #
 
 class Audit < ActiveRecord::Base
-  belongs_to :project, foreign_key: :model_id
+  belongs_to :project,  foreign_key: :model_id
   scope :project_audit, -> {where(model_type: 'Project')}
   belongs_to :user
 
@@ -24,7 +24,8 @@ class Audit < ActiveRecord::Base
   MODEL_TYPES = {
       Project: '立项',
       Order: '订单(特价、礼品、样品)',
-      Agent: '代理商'
+      Agent: '代理商',
+      Invoice: '开票'
   }
 
 
@@ -40,6 +41,8 @@ class Audit < ActiveRecord::Base
       model.no
     when 'Agent'
       model.name
+    when 'Invoice'
+      model.invoice_no
     end
   end
 

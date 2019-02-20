@@ -61,6 +61,8 @@
             <div class="col-md-12">
               <div class="col-md-6" style="text-align: left">
                 <b>状态：</b><%= order.get_status %>
+                <% if order.failed? %><span style="color: red"><%= order.audit_failed_reason %></span>
+                  <% end %>
               </div>
               <div class="col-md-6">
                 <b>合计：</b><%= order.real_total_price %>

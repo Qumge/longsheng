@@ -1,6 +1,6 @@
 <div class="col-md-4" id="order_<%= order.id %>_attachments">
   <p class="text-muted ">
-    <% if @project.can_do?(type) && (order.wait? || order.failed?) %>
+    <% if @project.can_do?(type) && (order.wait? || order.failed?) && can?(:upload, :projects) %>
       <a class="btn btn-xs bg-blue" id="order_<%= order.id %>_place" href="#" >
         <i class="fa fa-plus"></i>
         <span>订货清单</span>
@@ -23,7 +23,7 @@
     <% end %>
   </p>
   <p class="text-muted ">
-    <% if @project.can_do?(type) && (order.deliver? || order.sign?) %>
+    <% if can?(:upload, :projects) && (order.deliver? || order.sign?) %>
       <a class="btn btn-xs bg-blue" id="order_<%= order.id %>_sign" href="#" >
         <i class="fa fa-plus"></i>
         <span>签收清单</span>

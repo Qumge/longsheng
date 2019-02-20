@@ -128,6 +128,7 @@ class User < ActiveRecord::Base
     view_orders.where(order_status: status)
   end
 
+
   def audit_sample_orders
     audit_orders.where(order_type: 'sample')
   end

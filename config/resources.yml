@@ -13,6 +13,9 @@ audits:
   success: '审批-通过'
   failed_notice: '审批-打回界面'
   failed: '审批-打回'
+  invoices: '审批-开票'
+  invoice_success: '审批-开票确认'
+  invoice_sended: '审批-发开票快递'
 competitors:
   index: '竞品信息-列表'
   new: '竞品信息-上传界面'
@@ -42,14 +45,16 @@ costs:
   update: '费用-编辑'
   destroy: '费用-删除'
 invoices:
-  new: '开票-申请界面'
-  create: '开票-申请'
+  new: '开票-新建界面'
+  create: '开票-新建'
   edit: '开票-编辑界面'
   update: '开票-编辑'
+  show: '开票-详情'
+  invoice_apply: '开票-申请'
 manage_orders:
   index: '订单管理-列表'
   deliver: '订单管理-发货'
-  show: '订单管理-详情'
+  show: '订单-详情'
 notices:
   index: '消息通知-列表'
   check: '消息通知-标记'
@@ -72,6 +77,7 @@ projects:
   index: '项目-列表'
   new: '项目-立项界面'
   create: '项目-立项'
+  show: '项目-详情'
   update_agency: '项目动态-选择操作模式'
   edit_information: '项目-添加项目资料界面'
   update_information: '项目-添加项目资料'

@@ -1,6 +1,7 @@
 class AuditsController < ApplicationController
 
   before_action :set_model, only: [:success, :failed, :failed_notice]
+  before_action :set_invoice, only: [:invoice_success, :invoice_sended]
 
   def index
 
@@ -58,6 +59,24 @@ class AuditsController < ApplicationController
 
   end
 
+  def invoices
+    @invoices = Invoice.where(invoice_status: ['apply', 'applied']).page(params[:page]).per(Settings.per_page)
+  end
+
+  def invoice_success
+    from_status = @invoice.invoice_status
+    @invoice.do_applied!
+    Audit.create model_id: @invoice.id, model_type: Invoice, from_status: from_status, to_status: @invoice.invoice_status, user: current_user
+    redirect_to invoices_audits_path, notice: '已审批'
+  end
+
+  def invoice_sended
+    from_status = @invoice.invoice_status
+    @invoice.do_sended!
+    Audit.create model_id: @invoice.id, model_type: Invoice, from_status: from_status, to_status: @invoice.invoice_status, user: current_user
+    redirect_to invoices_audits_path, notice: '已寄送'
+  end
+
   private
   def set_model
     if params[:type] == 'Project'
@@ -72,8 +91,17 @@ class AuditsController < ApplicationController
       @model = current_user.audit_agents.where(id: params[:id]).first
       @status_column = 'agent_status'
       @url = agents_audits_path
+    elsif params[:type] == 'Invoice'
+      @model = Invoice.where(invoice_status: ['apply', 'applied']).where(id: params[:id]).first
+      @status_column = 'invoice_status'
+      @url = invoices_audits_path
     end
     redirect_to audits_path, alert: '找不到数据' unless @model.present?
+  end
+
+  def set_invoice
+    @invoice = Invoice.find_by id: params[:id]
+    redirect_to invoices_audits_path, alert: '找不到数据' unless @invoice.present?
   end
 
 

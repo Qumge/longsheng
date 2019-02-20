@@ -2,6 +2,7 @@
 <div class="row">
   <div class="box-body">
     <div class="row">
+      <% if can? :projects, :audits %>
       <div class="col-lg-3 col-xs-6">
         <!-- small box -->
         <div class="small-box bg-aqua">
@@ -18,8 +19,9 @@
           <% end %>
         </div>
       </div>
-
+      <% end %>
       <!-- ./col -->
+      <% if can? :orders, :audits %>
       <div class="col-lg-3 col-xs-6">
         <!-- small box -->
         <div class="small-box bg-green">
@@ -36,7 +38,9 @@
           <% end %>
         </div>
       </div>
+      <% end %>
 
+      <% if can? :bargains, :audits %>
       <!-- ./col -->
       <div class="col-lg-3 col-xs-6">
         <!-- small box -->
@@ -54,11 +58,33 @@
           <% end %>
         </div>
       </div>
+      <% end %>
 
+      <% if can? :invoices, :audits %>
+        <!-- ./col -->
+        <div class="col-lg-3 col-xs-6">
+          <!-- small box -->
+          <div class="small-box bg-red">
+            <div class="inner">
+              <h4>开票审批</h4>
+
+              <p style="height: 13px;"></p>
+            </div>
+            <div class="icon">
+              <i class="fa   fa-ticket"></i>
+            </div>
+            <%= link_to  invoices_audits_path, class: 'small-box-footer' do %>
+              详情 <i class="fa fa-arrow-circle-right"></i>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+
+      <% if can? :agents, :audits %>
       <!-- ./col -->
       <div class="col-lg-3 col-xs-6">
         <!-- small box -->
-        <div class="small-box bg-red">
+        <div class="small-box bg-olive">
           <div class="inner">
             <h4>代理商审批</h4>
 
@@ -72,7 +98,9 @@
           <% end %>
         </div>
       </div>
+      <% end %>
 
+      <% if can? :audits, :audits %>
       <div class="col-lg-3 col-xs-6">
         <!-- small box -->
         <div class="small-box bg-purple">
@@ -89,7 +117,7 @@
           <% end %>
         </div>
       </div>
-
+      <% end %>
     </div>
 
 

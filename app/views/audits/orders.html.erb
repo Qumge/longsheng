@@ -20,7 +20,7 @@
             <% @orders.each do |order| %>
               <tr>
                 <td><%= link_to order.project.name, project_path(order.project) %></td>
-                <td><%= order.no%></td>
+                <td><%= link_to order.no, manage_order_path(order), 'data-toggle' => "modal", 'data-target' => "#global-modal"%></td>
                 <td><%= order.user&.name %></td>
                 <td><%= order.project&.owner&.name %></td>
                 <td><%= simple_time order.created_at %></td>
@@ -44,7 +44,6 @@
         <div class="pull-right pagination-sm no-margin">
           <%= paginate @orders%>
         </div>
-
       </div>
     </div>
     <!-- /.box -->

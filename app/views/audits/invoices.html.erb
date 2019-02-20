@@ -1,0 +1,56 @@
+<%= render 'audits/header' %>
+<div class="row">
+  <div class="col-md-10">
+    <div class="box">
+      <div class="box-header with-border">
+        <h3 class="box-title">待审批开票申请</h3>
+      </div>
+      <!-- /.box-header -->
+      <div class="box-body">
+        <table class="table table-bordered">
+          <tr>
+            <th>申请编号</th>
+            <th>总金额</th>
+            <th>申请人</th>
+            <th>申请时间</th>
+            <th></th>
+          </tr>
+          <% if @invoices.present? %>
+            <% @invoices.each do |invoice| %>
+              <tr>
+                <td><%= link_to invoice.invoice_no, invoice_path(invoice, invoice_id: invoice.id), 'data-toggle' => "modal", 'data-target' => "#global-modal" %></td>
+                <td><%= invoice.total_price %></td>
+                <td><%= invoice.user&.name %></td>
+                <td><%= simple_time invoice.created_at %></td>
+                <td>
+                  <% if invoice.may_do_applied? %>
+                  <%= link_to '通过', invoice_success_audit_path(invoice), class: 'btn btn-success btn-xs', data: {confirm: '确认通过该审核吗？'} %>
+                  <% end %>
+                  <% if invoice.may_do_failed? %>
+                    <%= link_to '打回', failed_notice_audit_path(invoice, type: invoice.class.name), 'data-toggle' => "modal", 'data-target' => "#global-modal", class: 'btn btn-danger btn-xs' %>
+                  <% end %>
+                  <% if invoice.may_do_sended? %>
+                    <%= link_to '发快递', invoice_sended_audit_path(invoice), class: 'btn btn-success btn-xs'%>
+                  <% end %>
+                </td>
+              </tr>
+            <% end %>
+          <% else %>
+            <tr>
+              <td colspan="5" align="center">暂无开票需要审批</td>
+            </tr>
+          <% end %>
+
+        </table>
+      </div>
+      <!-- /.box-body -->
+      <div class="box-footer clearfix">
+        <div class="pull-right pagination-sm no-margin">
+          <%= paginate @invoices%>
+        </div>
+
+      </div>
+    </div>
+    <!-- /.box -->
+  </div>
+</div>

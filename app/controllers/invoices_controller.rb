@@ -1,6 +1,6 @@
 class InvoicesController < ApplicationController
   before_action :set_default_invoice, only: [:new, :create]
-  before_action :set_invoice, only: [:edit, :update]
+  before_action :set_invoice, only: [:edit, :update, :invoice_apply]
 
   def new
     @orders = @project.can_invoice_orders
@@ -14,9 +14,15 @@ class InvoicesController < ApplicationController
         order = Order.find_by id: key
         orders << order if order.present? && order.invoices.blank?
       end
+      @invoice.user = current_user
       @invoice.orders = orders
       @invoice.save
     end
+  end
+
+  def show
+    @invoice = Invoice.find_by id: params[:id]
+    render layout: false
   end
 
   def edit
@@ -25,12 +31,18 @@ class InvoicesController < ApplicationController
 
   def update
     orders = []
-    params[:order].each do |key, val|
-      order = Order.find_by id: key
-      orders << order if order.present? && (order.invoices.blank? || order.invoices.include?(@invoice))
+    if params[:order].present?
+      params[:order].each do |key, val|
+        order = Order.find_by id: key
+        orders << order if order.present? && (order.invoices.blank? || order.invoices.include?(@invoice))
+      end
     end
     @invoice.orders = orders
     @invoice.save
+  end
+
+  def invoice_apply
+    @invoice.do_apply!
   end
 
   private

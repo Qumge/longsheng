@@ -52,6 +52,7 @@ class Project < ActiveRecord::Base
   after_create :create_project_manager_notice
   validates_presence_of :name, :a_name, :category, :address, :city, :supplier_type
   validates_numericality_of :estimate, if: Proc.new{|p| p.estimate.present?}
+  validates_uniqueness_of :name
   has_one :project_contract, -> {where(model_type: 'contract')}, class_name: 'Attachment', foreign_key: :model_id
   has_one :advance, -> {where(model_type: 'advance')}, class_name: 'Attachment', foreign_key: :model_id
   has_one :plate, -> {where(model_type: 'plate')}, class_name: 'Attachment', foreign_key: :model_id
@@ -86,7 +87,7 @@ class Project < ActiveRecord::Base
 
     # 后勤审批
     event :do_normal_admin_audit do
-      transitions :from => :regional_audit, :to => :active, :after => Proc.new {create_active_notice }
+      transitions :from => :regional_audit, :to => :active, :after => Proc.new {create_active_notice; set_approval_time }
     end
 
     #
@@ -99,7 +100,7 @@ class Project < ActiveRecord::Base
     end
 
     event :do_failed do
-      transitions :from => [:wait, :project_manager_audit, :regional_audit], :to => :failed, :after => Proc.new {create_failed_notice; set_approval_time }
+      transitions :from => [:wait, :project_manager_audit, :regional_audit], :to => :failed, :after => Proc.new {create_failed_notice }
     end
   end
 
@@ -202,18 +203,20 @@ class Project < ActiveRecord::Base
     STATUS[self.project_status.to_sym]
   end
 
-  # TODO
+  #
   def agency_name
     agent.present? ? agent.name : '自营'
   end
 
+  #已经申请的order
   def order_invoices
     OrderInvoice.includes(:order).where('orders.project_id = ?', self.id).references(:order)
   end
 
 
   def can_invoice_orders
-    invoice_orders = self.orders
+    # 已签收的订单可以申请开票
+    invoice_orders = self.orders.where(order_status: 'sign')
     invoice_orders = invoice_orders.where('orders.id not in (?)', self.order_invoices.collect{|o| o.order_id}) if self.order_invoices.present?
     invoice_orders
   end

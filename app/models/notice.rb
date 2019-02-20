@@ -30,7 +30,12 @@ class Notice < ActiveRecord::Base
       order_sign: '您的订单已经发货，请注意查收',
       agent_need_audit: '有一个代理商申请需要审核',
       agent_audited: '您申请的代理商已经通过审核',
-      agent_failed_audit: '你申请的代理商未通过审核'
+      agent_failed_audit: '你申请的代理商未通过审核',
+      invoice_need_audit: '新的开票申请需要审批',
+      invoice_failed: '开票申请审核未通过',
+      invoice_applied: '开票申请已通过审核',
+      invoice_need_send: '开票申请需要安排开票快递',
+      invoice_sended: '开票快递已发出'
   }
 
 

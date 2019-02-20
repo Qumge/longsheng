@@ -29,6 +29,7 @@ class Order < ActiveRecord::Base
   has_one :place_file, -> {where(model_type: 'place')}, class_name: 'Attachment', foreign_key: :model_id
   has_one :deliver_file, -> {where(model_type: 'deliver')}, class_name: 'Attachment', foreign_key: :model_id
   has_one :sign_file, -> {where(model_type: 'sign')}, class_name: 'Attachment', foreign_key: :model_id
+  has_many :audits, -> {where(model_type: 'Order')}, foreign_key: :model_id
 
   STATUS = {wait: '新订单', apply: '已申请', project_manager_audit: '项目经理已审核',
             regional_manager_audit: '大区经理已审核', normal_admin_audit: '后勤已审核',
@@ -171,6 +172,11 @@ class Order < ActiveRecord::Base
 
   def get_place_name
     order_type == 'normal' ? '下单' : '申请'
+  end
+
+  def audit_failed_reason
+    audit = self.audits.where(to_status: 'failed').last
+    audit&.content
   end
 
   class << self

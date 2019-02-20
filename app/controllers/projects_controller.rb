@@ -94,6 +94,7 @@ class ProjectsController < ApplicationController
         @flag = @project.save
       end
     rescue => e
+      p e
       @flag = false
     end
 

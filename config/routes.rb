@@ -131,7 +131,11 @@ Rails.application.routes.draw do
           post :apply_order
         end
       end
-      resources :invoices
+      resources :invoices do
+        collection do
+          post :apply_invoice
+        end
+      end
     end
   end
 
@@ -150,12 +154,15 @@ Rails.application.routes.draw do
       get :bargains
       get :agents
       get :audits
+      get :invoices
     end
 
     member do
       get :success
       get :failed_notice
       post :failed
+      get :invoice_success
+      get :invoice_sended
     end
   end
 
