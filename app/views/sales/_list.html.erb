@@ -20,7 +20,7 @@
             <% if sales.present? %>
               <% sales.each do |sale| %>
               <tr>
-                <td><%= link_to sale.product&.no, sale_path(sale), 'data-toggle' => "modal", 'data-target' => "#global-modal" %></td>
+                <td><%= link_to (sale.product&.no).to_s, sale_path(sale), 'data-toggle' => "modal", 'data-target' => "#global-modal" %></td>
                 <td><%= sale.product&.product_no %></td>
                 <td><%= sale.price %></td>
                 <td>

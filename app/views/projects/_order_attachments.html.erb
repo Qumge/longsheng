@@ -1,7 +1,7 @@
 <div class="col-md-4" id="order_<%= order.id %>_attachments">
   <p class="text-muted ">
     <% if @project.can_do?(type) && (order.wait? || order.failed?) && can?(:upload, :projects) %>
-      <a class="btn btn-xs bg-blue" id="order_<%= order.id %>_place" href="#" >
+      <a class="btn btn-xs bg-blue upload-file" id="order_<%= order.id %>_place" href="javascript:void(0)" >
         <i class="fa fa-plus"></i>
         <span>订货清单</span>
       </a>
@@ -10,7 +10,7 @@
     <% end %>
     <% if order.place_file.present? %>
       <a href="javascript:void(0)" onclick="show_file(this)" class="btn show-file" data-url="<%= order.place_file.preview_url%>" data-file-name="<%= order.place_file.file_name %>">
-        <i class="fa fa-eye"></i><%= order.place_file.file_name %>
+        <i class="fa fa-eye"></i><%= show_file_name '订货清单', order.place_file %>
       </a>
     <% end %>
   </p>
@@ -18,13 +18,13 @@
     <span><b>发货清单:</b></span>
     <% if order.deliver_file.present? %>
       <a href="javascript:void(0)" onclick="show_file(this)" class="btn show-file" data-url="<%= order.deliver_file.preview_url%>" data-file-name="<%= order.deliver_file.file_name %>">
-        <i class="fa fa-eye"></i><%= order.deliver_file.file_name %>
+        <i class="fa fa-eye"></i><%= show_file_name '发货清单', order.deliver_file %>
       </a>
     <% end %>
   </p>
   <p class="text-muted ">
     <% if can?(:upload, :projects) && (order.deliver? || order.sign?) %>
-      <a class="btn btn-xs bg-blue" id="order_<%= order.id %>_sign" href="#" >
+      <a class="btn btn-xs bg-blue upload-file" id="order_<%= order.id %>_sign" href="javascript:void(0)" >
         <i class="fa fa-plus"></i>
         <span>签收清单</span>
       </a>
@@ -33,21 +33,32 @@
     <% end %>
     <% if order.sign_file.present?  %>
       <a href="javascript:void(0)" onclick="show_file(this)" class="btn show-file" data-url="<%= order.sign_file.preview_url%>" data-file-name="<%= order.sign_file.file_name %>">
-        <i class="fa fa-eye"></i><%= order.sign_file.file_name %>
+        <i class="fa fa-eye"></i><%= show_file_name '签收清单', order.sign_file %>
       </a>
     <% end %>
   </p>
 </div>
 
 <script type="text/javascript">
-    <% if @project.can_do?(type) && (order.wait? || order.failed?) %>
+  var sign_<%= order.id %>_uploader;
+  var place_<%= order.id %>_uploader;
+  $(function(){
+      <% if @project.can_do?(type) && (order.wait? || order.failed?) && can?(:upload, :projects) %>
       var place_qiniu = new QiniuJsSDK();
       var place_option = set_option('order_<%= order.id %>_place');
-      var place_uploader = place_qiniu.uploader(place_option);
-    <% end %>
-    <% if @project.can_do?(type) && (order.sign? || order.deliver?)  %>
+      place_<%= order.id %>_uploader = place_qiniu.uploader(place_option);
+      $('.btn-box-tool').click(function(){
+          setTimeout(function(){ place_<%= order.id %>_uploader.refresh(); }, 1000);
+      });
+      <% end %>
+      <% if can?(:upload, :projects) && (order.deliver? || order.sign?) %>
       var sign_qiniu = new QiniuJsSDK();
       var sign_option = set_option('order_<%= order.id %>_sign');
-      var sign_uploader = sign_qiniu.uploader(sign_option);
-    <% end %>
+      sign_<%= order.id %>_uploader = sign_qiniu.uploader(sign_option);
+      $('.btn-box-tool').click(function(){
+          setTimeout(function(){ sign_<%= order.id %>_uploader.refresh(); }, 1000);
+      });
+      <% end %>
+  })
+
 </script>

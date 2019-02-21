@@ -2,7 +2,7 @@
   <% orders.each do |order| %>
       <div class="box box-default collapsed-box" style="margin-bottom: 5px;">
         <div class="box-header with-border">
-          <h4 class="box-title"><%= order.get_order_type %><%= order.no %>
+          <h4 class="box-title" style="font-size: 16px;"><%= order.get_order_type %><%= order.no %>
             <% if can? :new, :orders %>
             <%= link_to '添加商品', new_order_path(@project, order_id: order.id, type: order.order_type), 'data-toggle' => "modal", 'data-target' => "#global-modal", class: 'btn' if @project.can_do?(type) && order.can_edit? %>
             <%end %>

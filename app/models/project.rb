@@ -69,6 +69,7 @@ class Project < ActiveRecord::Base
   has_many :invoices
   belongs_to :agent, foreign_key: :agency_id
   has_one :report
+  has_many :audits, -> {where(model_type: 'Project')}, foreign_key: :model_id
   #
   STATUS = {wait: '待审批', project_manager_audit: '项目经理已审批', regional_audit: '大区经理已审批', active: '进行中', finish: '已完结', overdue: '逾期', failed: '审核失败'}
   aasm :project_status do
@@ -249,6 +250,11 @@ class Project < ActiveRecord::Base
     self.step_status.to_sym == step
   end
 
+  def audit_failed_reason
+    audit = self.audits.where(to_status: 'failed').last
+    audit&.content
+  end
+
 
   private
 
@@ -291,6 +297,8 @@ class Project < ActiveRecord::Base
   def create_active_notice
     Notice.create_notice :project_audited, self.id, owner_id
   end
+
+
 
 
 end

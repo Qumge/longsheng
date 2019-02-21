@@ -30,6 +30,7 @@ class Agent < ActiveRecord::Base
   has_many :users
   belongs_to :apply_user, class_name: 'User', foreign_key: :apply_id
   has_many :sales
+  has_many :audits, -> {where(model_type: 'Agent')}, foreign_key: :model_id
   include AASM
 
   after_create :create_project_manager_audit_notice
@@ -119,6 +120,11 @@ class Agent < ActiveRecord::Base
     STATUS[self.agent_status.to_sym]
   end
 
+  def audit_failed_reason
+    audit = self.audits.where(to_status: 'failed').last
+    audit&.content
+  end
+
 
 
 
@@ -131,7 +137,7 @@ class Agent < ActiveRecord::Base
       end
 
       if params[:table_search].present?
-        agents = agents.joins(:apply_user).where('users.name like ? or agents.name linke ?  or agents.username like ?', "%#{params[:table_search]}%", "%#{params[:table_search]}%", "%#{params[:table_search]}%")
+        agents = agents.joins(:apply_user).where('users.name like ? or agents.name like ?  or agents.username like ? or agents.phone like ?', "%#{params[:table_search]}%", "%#{params[:table_search]}%", "%#{params[:table_search]}%", "%#{params[:table_search]}%")
       end
       agents
     end

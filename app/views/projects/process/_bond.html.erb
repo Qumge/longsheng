@@ -27,7 +27,7 @@
 
       <% if @project.bond.present? %>
         <a href="javascript:void(0)" onclick="show_file(this)" class="btn show-file" data-url="<%= @project.bond.preview_url%>" data-file-name="<%= @project.bond.file_name %>">
-          <i class="fa fa-eye"></i><%= @project.bond.file_name %>
+          <i class="fa fa-eye"></i><%= show_file_name '尾款请款资料', @project.bond %>
         </a>
         <% if can? :delete_attachment, :projects %>
         <%= link_to '删除', 'JavaScript:void(0)', onclick: "delete_attachment(#{@project.bond.id}, '#{delete_attachment_project_path @project.id}')",class: 'btn  btn-sm ', style: 'color: red' if @project.can_do? :bond %>

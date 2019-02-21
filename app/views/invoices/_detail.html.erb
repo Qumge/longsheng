@@ -8,7 +8,7 @@
         <ul class="list-group list-group-unbordered">
           <% order.order_products.each do |order_product| %>
             <li class="list-group-item">
-              <p><b><%= order_product.product&.name  %> * <a><%= order_product.number  %></a></b> <span style="text-align: right"><a class="pull-right"><%= order_product.real_total_price %></a></span></p>
+              <p><b><%= order_product.product&.name  %> * <a><%= order_product.number  %></a></b> <span style="text-align: right"><a class="pull-right"><%= order_product.real_price %></a></span></p>
             </li>
           <% end %>
 

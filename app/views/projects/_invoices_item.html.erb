@@ -9,7 +9,7 @@
     <div class="timeline-body" id="invoice_timeline">
       <div class="box box-default collapsed-box" style="margin-bottom: 5px;">
         <div class="box-header with-border">
-          <h4 class="box-title">
+          <h4 class="box-title" style="font-size: 16px;">
             <% if can? :new, :invoices %>
             <%= link_to '开票申请', new_invoice_path(@project), 'data-toggle' => "modal", 'data-target' => "#global-modal", class: 'btn'  if @project.can_do? :invoice %>
             <%end %>
@@ -50,11 +50,13 @@
             <div class="col-md-12">
               <div class="col-md-6" style="text-align: left">
                 <b>状态：</b><%= invoice.get_status %>
+                <% if invoice.failed? %><span style="color: red"><%= invoice.audit_failed_reason %></span>
+                <% end %>
               </div>
               <div class="col-md-6">
                 <b>合计：</b><%= invoice.total_price %>
                 <span style="text-align: right; float: right">
-                <% if can? :apply_invoice, :invoices %>
+                <% if can? :invoice_apply, :invoices %>
                     <%= link_to '申请', 'JavaScript:void(0)', onclick: "apply_invoice(#{invoice.id})",class: 'btn btn-success btn-xs' if @project.can_do?(:invoice) && invoice.may_do_apply? %>
                     <%end %>
                 </span>

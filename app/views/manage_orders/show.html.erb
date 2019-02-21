@@ -7,7 +7,6 @@
   <div class="box-body" style="border: solid 1px #d2d6de;">
     <% @order.order_products.each do |order_product| %>
       <div class="col-md-4">
-        <!-- Profile Image -->
         <div class="box box-primary">
           <div class="box-body box-profile">
             <p class="text-muted text-center"><%= order_product.product&.name %></p>
@@ -30,6 +29,32 @@
           <!-- /.box-body -->
         </div>
         <!-- /.box -->
+      </div>
+      <div class="col-md-4" id="order_<%= @order.id %>_attachments">
+        <p class="text-muted ">
+          <span><b>订货清单:</b></span>
+          <% if @order.place_file.present? %>
+            <a href="javascript:void(0)" onclick="show_file(this)" class="btn show-file" data-url="<%= @order.place_file.preview_url%>" data-file-name="<%= @order.place_file.file_name %>">
+              <i class="fa fa-eye"></i><%= @order.place_file.file_name %>
+            </a>
+          <% end %>
+        </p>
+        <p class="text-muted ">
+          <span><b>发货清单:</b></span>
+          <% if @order.deliver_file.present? %>
+            <a href="javascript:void(0)" onclick="show_file(this)" class="btn show-file" data-url="<%= @order.deliver_file.preview_url%>" data-file-name="<%= @order.deliver_file.file_name %>">
+              <i class="fa fa-eye"></i><%= @order.deliver_file.file_name %>
+            </a>
+          <% end %>
+        </p>
+        <p class="text-muted ">
+            <span><b>签收清单:</b></span>
+          <% if @order.sign_file.present?  %>
+            <a href="javascript:void(0)" onclick="show_file(this)" class="btn show-file" data-url="<%= @order.sign_file.preview_url%>" data-file-name="<%= @order.sign_file.file_name %>">
+              <i class="fa fa-eye"></i><%= @order.sign_file.file_name %>
+            </a>
+          <% end %>
+        </p>
       </div>
     <% end %>
     <div class="col-md-12">

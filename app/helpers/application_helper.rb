@@ -134,7 +134,21 @@ module ApplicationHelper
       agents_path
     when 'agent_failed_audit'
       agents_path
+    when 'invoice_need_audit'
+      invoices_audits_path
+    when 'invoice_failed'
+      project_path notice.invoice.project
+    when 'invoice_applied'
+      project_path notice.invoice.project
+    when 'invoice_need_send'
+      invoices_audits_path
+    when 'invoice_sended'
+      project_path notice.invoice.project
     end
+  end
+
+  def show_file_name default_name, file
+    file.file_name.size > 10 ? "#{default_name}_#{simple_time file.created_at}" : file.file_name
   end
 
 end

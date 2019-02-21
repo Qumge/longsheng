@@ -73,7 +73,7 @@ class User < ActiveRecord::Base
       projects.where(owner_id: self.id)
     elsif 'agency' == self.role.desc
       #todo
-      projects.where(agent_id: self.agent.id)
+      projects.where(agency_id: self.agent.id)
     else
       projects.where('1 = -1')
     end

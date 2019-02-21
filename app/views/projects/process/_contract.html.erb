@@ -28,7 +28,7 @@
 
       <% if @project.project_contract.present? %>
       <a href="javascript:void(0)" onclick="show_file(this)" class="btn show-file" data-url="<%= @project.project_contract.preview_url%>" data-file-name="<%= @project.project_contract.file_name %>">
-        <i class="fa fa-eye"></i><%= @project.project_contract.file_name %>
+        <i class="fa fa-eye"></i><%= show_file_name '项目合同',  @project.project_contract %>
       </a>
         <% if can? :delete_attachment, :projects %>
         <%= link_to '删除', 'JavaScript:void(0)', onclick: "delete_attachment(#{@project.project_contract.id}, '#{delete_attachment_project_path @project.id}')",class: 'btn  btn-sm ', style: 'color: red' if @project.can_do? :contract %>

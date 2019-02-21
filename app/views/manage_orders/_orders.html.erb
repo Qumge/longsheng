@@ -83,7 +83,7 @@
           }
       }
   </script>
-  <div class="box-body">
+  <div class="box-body" style="overflow-x: scroll">
     <table class="table table-bordered">
       <tr>
         <th>项目名</th>
@@ -101,7 +101,6 @@
             <td><%= link_to order.project.name, project_path(order.project) %></td>
             <td>
               <%= link_to order.no, manage_order_path(order), 'data-toggle' => "modal", 'data-target' => "#global-modal"%>
-
             </td>
             <td><%= order.user&.name %></td>
             <td><%= simple_time order.created_at %></td>

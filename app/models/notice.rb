@@ -16,6 +16,7 @@ class Notice < ActiveRecord::Base
   belongs_to :order, foreign_key: 'model_id'
   belongs_to :project, foreign_key: 'model_id'
   belongs_to :agent, foreign_key: 'model_id'
+  belongs_to :invoice, foreign_key: 'model_id'
   TYPES = {
       project_need_audit: '有一个新立项的项目需要审核',
       project_audited: '您立项的的项目已经通过审核',

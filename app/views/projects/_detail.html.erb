@@ -68,6 +68,12 @@
         <th>对接人电话</th>
         <td><%= @project.butt_phone %></td>
       </tr>
+      <% if @project.failed? %>
+        <tr>
+          <th>审核失败原因</th>
+          <td><%= @project.audit_failed_reason %></td>
+        </tr>
+      <% end %>
       </tbody>
     </table>
   </div>

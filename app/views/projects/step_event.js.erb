@@ -2,7 +2,7 @@
   alert('步骤异常，请完善当前步骤或稍后重试。')
 <% end %>
 hideSpinner();
-$('#tab_2').html('<%= j render "/projects/process"%>');
+$('#tab_1').html('<%= j render "/projects/process"%>');
 $("[data-widget='collapse']").click(function() {
     //Find the box parent
     var box = $(this).parents(".box").first();

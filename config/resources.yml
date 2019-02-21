@@ -99,6 +99,7 @@ sales:
   edit: '价格体系-编辑界面'
   update: '价格体系-编辑'
   destroy: '价格体系-删除'
+  show: '价格体系-详情'
 
 
 

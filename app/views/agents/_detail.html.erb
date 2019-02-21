@@ -59,6 +59,12 @@
       <th>备注</th>
       <td><%= agent.desc %></td>
     </tr>
+    <% if agent.failed? %>
+      <tr>
+        <th>审核失败原因</th>
+        <td><%= agent.audit_failed_reason %></td>
+      </tr>
+    <% end %>
     </tbody>
   </table>
 </div>
