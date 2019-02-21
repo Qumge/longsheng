@@ -172,12 +172,12 @@ ActiveRecord::Schema.define(version: 20190219093304) do
 
   create_table "products", force: :cascade do |t|
     t.string   "no",              limit: 255
+    t.string   "name",            limit: 255
     t.string   "product_no",      limit: 255
     t.string   "unit",            limit: 255
     t.float    "reference_price", limit: 24
     t.datetime "created_at",                  null: false
     t.datetime "updated_at",                  null: false
-    t.string   "name",            limit: 255
     t.datetime "deleted_at"
   end
 
@@ -261,8 +261,8 @@ ActiveRecord::Schema.define(version: 20190219093304) do
   end
 
   create_table "roles", force: :cascade do |t|
-    t.string   "desc",       limit: 255
     t.string   "name",       limit: 255
+    t.string   "desc",       limit: 255
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
     t.datetime "deleted_at"
@@ -299,6 +299,7 @@ ActiveRecord::Schema.define(version: 20190219093304) do
     t.string   "login",                  limit: 255
     t.string   "name",                   limit: 255
     t.integer  "role_id",                limit: 4
+    t.integer  "organization_id",        limit: 4
     t.string   "reset_password_token",   limit: 255
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
@@ -309,7 +310,6 @@ ActiveRecord::Schema.define(version: 20190219093304) do
     t.string   "last_sign_in_ip",        limit: 255
     t.datetime "created_at",                                      null: false
     t.datetime "updated_at",                                      null: false
-    t.integer  "organization_id",        limit: 4
     t.integer  "agent_id",               limit: 4
     t.datetime "deleted_at"
   end

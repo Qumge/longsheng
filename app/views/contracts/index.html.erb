@@ -6,7 +6,7 @@
       <div class="box-header with-border">
         <h3 class="box-title">战略合同</h3>
         <% if can? :new, :contracts%>
-        <%= create_link Contract.new, '添加合同', class: 'font-a label pull-right bg-green', style: 'font-size: 100%' %>
+        <%= link_to '添加合同', new_contract_path, class: 'font-a label pull-right bg-green', style: 'font-size: 100%' %>
         <% end %>
       </div>
       <!-- /.box-header -->

@@ -30,7 +30,7 @@
                     <%= link_to '打回', failed_notice_audit_path(invoice, type: invoice.class.name), 'data-toggle' => "modal", 'data-target' => "#global-modal", class: 'btn btn-danger btn-xs' %>
                   <% end %>
                   <% if invoice.may_do_sended? %>
-                    <%= link_to '发快递', invoice_sended_audit_path(invoice), class: 'btn btn-success btn-xs'%>
+                    <%= link_to '发快递', invoice_sended_audit_path(invoice), class: 'btn btn-success btn-xs', data: {confirm: '确认已发送吗？'}%>
                   <% end %>
                 </td>
               </tr>

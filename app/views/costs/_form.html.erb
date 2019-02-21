@@ -5,7 +5,7 @@
   </div>
   <%= simple_form_for(@cost, html: {class: 'form-horizontal group_form', onkeydown: "if(event.keyCode==13)return false;"}, wrapper: :horizontal_form) do |f| %>
     <div class="modal-body" >
-      <%= f.input :user_id, as: :select, collection: User.service_users.collect{|user| ["#{user.role&.name}-#{user.name}", user.id]}, input_html: { class: 'select2', width: '600px' }  %>
+      <%= f.input :user_id, as: :select, collection: User.service_users.collect{|user| ["#{user.role&.name}-#{user.name}", user.id]}, input_html: { class: 'select2', width: '100%' }  %>
       <%= f.input :amount %>
       <%= f.input :purpose %>
 

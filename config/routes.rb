@@ -133,7 +133,7 @@ Rails.application.routes.draw do
       end
       resources :invoices do
         collection do
-          post :apply_invoice
+          post :invoice_apply
         end
       end
     end

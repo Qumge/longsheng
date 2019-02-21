@@ -35,7 +35,7 @@
             showSpinner();
             $.ajax({
                 type: 'POST',
-                url: '<%= apply_invoice_invoices_path %>',
+                url: '<%= invoice_apply_invoices_path %>',
                 data: {invoice_id: invoice_id},
                 dataType: 'script',
                 success: function (data) {

@@ -148,14 +148,10 @@ normal_admin:
     show: 开票-详情
 regional_manager:
   costs:
-    create: 费用-添加费用
-    new: 费用-添加费用界面
     index: 费用-列表
   sales:
     show: 价格体系-详情
   trains:
-    create: 培训资料-上传
-    new: 培训资料-上传界面
     index: 培训资料-列表
   competitors:
     create: 竞品信息-上传
@@ -218,14 +214,10 @@ regional_manager:
     show: 订单-详情
 project_manager:
   costs:
-    create: 费用-添加费用
-    new: 费用-添加费用界面
     index: 费用-列表
   sales:
     show: 价格体系-详情
   trains:
-    create: 培训资料-上传
-    new: 培训资料-上传界面
     index: 培训资料-列表
   competitors:
     create: 竞品信息-上传
@@ -354,7 +346,6 @@ agency:
     report: 项目-报备
     agent: 项目-代理商
     step_event: 项目动态-下一步
-    payment: 项目动态-回款金额确认
     delete_attachment: 项目动态-删除项目资料
     upload: 项目动态-上传文件资料
     show: 项目-详情

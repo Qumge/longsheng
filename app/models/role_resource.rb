@@ -20,7 +20,7 @@ class RoleResource < ActiveRecord::Base
         if role.present?
           value.each do |target, resources|
             resources.each do |resource_action, resource_name|
-              resource = Resource.find_by action: resource_action, name: resource_name, target: target
+              resource = Resource.find_by action: resource_action, target: target
               # p role.name, resource.action, resource.name
               RoleResource.find_or_create_by role: role, resource: resource if resource.present?
             end

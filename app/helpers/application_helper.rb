@@ -112,11 +112,11 @@ module ApplicationHelper
       project_path notice.model_id
     when 'project_failed_audit'
       project_path notice.model_id
-    when 'normal_order_need_audit'
+    when 'sample_order_need_audit'
       orders_audits_path
-    when 'normal_order_audited'
+    when 'sample_order_audited'
       project_path notice.order.project
-    when 'normal_order_failed_audit'
+    when 'sample_order_failed_audit'
       project_path notice.order.project
     when 'bargains_order_need_audit'
       bargains_audits_path

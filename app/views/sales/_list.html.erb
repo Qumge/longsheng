@@ -4,7 +4,7 @@
       <div class="box-header with-border">
         <h3 class="box-title">价格体系</h3>
         <% if can? :new, :sales %>
-          <%= create_link Sale.new, '添加价格', 'data-toggle' => "modal", 'data-target' => "#global-modal", class: 'font-a label pull-right bg-green', style: 'font-size: 100%' %>
+          <%= link_to  '添加价格', new_sale_path, 'data-toggle' => "modal", 'data-target' => "#global-modal", class: 'font-a label pull-right bg-green', style: 'font-size: 100%' %>
         <% end %>
       </div>
       <!-- /.box-header -->
