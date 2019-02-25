@@ -65,7 +65,8 @@ module ApplicationHelper
             new: '添加产品',
             create: '添加产品',
             edit: '修改产品',
-            update: '修改产品'
+            update: '修改产品',
+            contract_sales: '合同价列表'
         },
         costs: {
             index: '费用列表',

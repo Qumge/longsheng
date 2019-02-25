@@ -32,5 +32,13 @@ class Sale < ActiveRecord::Base
     def default_sales
       Sale.where(agent_id: nil, contract_id: nil)
     end
+
+    def search_conn params
+      sales = self.all
+      if params[:table_search].present?
+        sales = sales.joins(:contract).where('contracts.partner like ? and contracts.no like ?', "%#{params[:table_search]}%", "%#{params[:table_search]}%")
+      end
+      sales
+    end
   end
 end

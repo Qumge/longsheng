@@ -73,6 +73,7 @@ products:
   edit: '产品-编辑界面'
   update: '产品-编辑'
   show: '产品-详情'
+  contract_sales: '产品-合同价'
 projects:
   index: '项目-列表'
   new: '项目-立项界面'

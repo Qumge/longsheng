@@ -1,8 +1,8 @@
 class ProductsController < ApplicationController
-  before_action :set_product, only: [:show, :edit, :update, :destroy]
+  before_action :set_product, only: [:show, :edit, :update, :destroy, :contract_sales]
 
   def index
-    @products = Product.all.page(params[:page]).per(Settings.per_page)
+    @products = Product.search_conn(params).page(params[:page]).per(Settings.per_page)
   end
 
   def new
@@ -30,6 +30,10 @@ class ProductsController < ApplicationController
 
   def update
     @flag = @product.update product_permit
+  end
+
+  def contract_sales
+    @sales = @product.sales.search_conn(params).page(params[:page]).per(Settings.per_page)
   end
 
   private

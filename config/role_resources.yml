@@ -19,6 +19,7 @@ group_admin:
     create: 产品-新建
     new: 产品-新建界面
     index: 产品-列表
+    contract_sales: 产品-合同价
   notices:
     check: 消息通知-标记
     index: 消息通知-列表
@@ -93,6 +94,7 @@ normal_admin:
     create: 产品-新建
     new: 产品-新建界面
     index: 产品-列表
+    contract_sales: 产品-合同价
   notices:
     check: 消息通知-标记
     index: 消息通知-列表
@@ -174,6 +176,7 @@ regional_manager:
   products:
     show: 产品-详情
     index: 产品-列表
+    contract_sales: 产品-合同价
   orders:
     place_order: 订单-下单
     apply_order: 订单-申请
@@ -240,6 +243,7 @@ project_manager:
   products:
     show: 产品-详情
     index: 产品-列表
+    contract_sales: 产品-合同价
   orders:
     place_order: 订单-下单
     apply_order: 订单-申请
@@ -295,6 +299,7 @@ project_user:
   products:
     show: 产品-详情
     index: 产品-列表
+    contract_sales: 产品-合同价
   sales:
     show: 价格体系-详情
   orders:

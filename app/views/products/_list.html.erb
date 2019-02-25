@@ -1,12 +1,24 @@
 <div class="row" id="product-list">
   <div class="col-md-10">
     <div class="box">
+      <%= form_tag products_path, method: :get do%>
       <div class="box-header with-border">
         <h3 class="box-title">产品列表</h3>
         <% if can? :new, :products %>
-        <%= link_to '添加产品', new_product_path,'data-toggle' => "modal", 'data-target' => "#global-modal", class: 'font-a label pull-right bg-green', style: 'font-size: 100%' %>
+          <small><%= link_to '添加产品', new_product_path , class: 'font-a label bg-green', 'data-toggle' => "modal", 'data-target' => "#global-modal" %></small>
         <% end %>
+        <div class="box-tools">
+          <div class="input-group input-group-sm" style="width: 150px;">
+
+            <input type="text" name="table_search" class="form-control pull-right" placeholder="检索" value="<%= params[:table_search] %>">
+
+            <div class="input-group-btn">
+              <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+            </div>
+          </div>
+        </div>
       </div>
+      <% end %>
       <!-- /.box-header -->
       <div class="box-body">
         <table class="table table-bordered">
@@ -26,8 +38,13 @@
                 <td><%= product.product_no %></td>
                 <td><%= product.reference_price %></td>
                 <td>
+                  <% if can? :contract_sales, :products %>
+                    <%= link_to contract_sales_product_path(product), class: 'label label-info' do %>
+                      <i class="fa fa-search"></i>合同价
+                    <% end %>
+                  <% end %>
                   <% if can? :edit, :products %>
-                    <%= link_to  edit_product_path(product), class: 'label label-success', 'data-toggle' => "modal", 'data-target' => "#global-modal" do %>
+                    <%= link_to  edit_product_path(product), class: 'label label-success left-20', 'data-toggle' => "modal", 'data-target' => "#global-modal" do %>
                       <i class="fa fa-edit"></i>编辑
                     <% end %>
                   <% end %>
@@ -36,6 +53,7 @@
                                         <i class="fa fa-close"></i>删除
                     <% end %>
                   <% end %>
+
                 </td>
               </tr>
             <% end %>
@@ -51,7 +69,7 @@
       <!-- /.box-body -->
       <div class="box-footer clearfix">
         <div class="pull-right pagination-sm no-margin">
-          <%= paginate products %>
+          <%= paginate products, params: {table_search: params[:table_search]} %>
         </div>
       </div>
     </div>

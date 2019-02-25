@@ -34,4 +34,14 @@ class Product < ActiveRecord::Base
     price
   end
 
+  class << self
+    def search_conn params
+      products = Product.all
+      if params[:table_search].present?
+        products = products.where('no like ? or name like ? or product_no like ?', "%#{params[:table_search]}%", "%#{params[:table_search]}%", "%#{params[:table_search]}%")
+      end
+      products
+    end
+  end
+
 end

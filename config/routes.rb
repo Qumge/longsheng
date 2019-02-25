@@ -145,7 +145,11 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :products
+  resources :products do
+    member do
+      get :contract_sales
+    end
+  end
 
   resources :audits do
     collection do
