@@ -34,11 +34,13 @@ class Ability
     if user
       can :index, :home
     end
-    user.resources.each do |resource|
-      if resource.target =~ /\//
-        eval "can :#{resource.action}, :'#{resource.target}'"
-      else
-        eval "can :#{resource.action}, :#{resource.target}"
+    if user.resources.present?
+      user.resources.each do |resource|
+        if resource.target =~ /\//
+          eval "can :#{resource.action}, :'#{resource.target}'"
+        else
+          eval "can :#{resource.action}, :#{resource.target}"
+        end
       end
     end
   end

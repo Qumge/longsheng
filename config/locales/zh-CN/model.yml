@@ -16,6 +16,7 @@ zh-CN:
         password_confirmation: "重复密码"
         role_id: '角色'
         agent_id: '代理商'
+        title: '职务'
       organization:
         name: '组织名'
         created_at: '创建时间'

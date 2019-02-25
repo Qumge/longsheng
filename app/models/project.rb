@@ -20,7 +20,8 @@
 #  design_phone      :string(255)
 #  estimate          :integer
 #  name              :string(255)
-#  payment           :string(255)
+#  need_payment      :float(24)        default(0.0)
+#  payment           :float(24)        default(0.0)
 #  project_status    :string(255)
 #  purchase          :string(255)
 #  purchase_phone    :string(255)
@@ -45,6 +46,7 @@
 #
 
 class Project < ActiveRecord::Base
+  acts_as_paranoid
   include AASM
   belongs_to :owner, class_name: 'User', foreign_key: :owner_id
   belongs_to :create_user, class_name: 'User', foreign_key: :create_id
@@ -266,7 +268,7 @@ class Project < ActiveRecord::Base
   # 通知项目经理审批
   def create_project_manager_notice
     if owner.present? && owner.organization.present?
-      owner.organization.users.joins(:role).where('roles.desc = ?', 'project_manager').each do |user|
+      owner.organization.users.joins(:roles).where('roles.desc = ?', 'project_manager').each do |user|
         Notice.create_notice :project_need_audit, self.id, user.id
       end
     end
@@ -275,7 +277,7 @@ class Project < ActiveRecord::Base
   # 通知大区总监审批
   def create_audit_notice
     if owner.present? && owner.organization.present? && owner.organization.parent.present?
-      owner.organization.parent.users.joins(:role).where('roles.desc = ?', 'regional_manager').each do |user|
+      owner.organization.parent.users.joins(:roles).where('roles.desc = ?', 'regional_manager').each do |user|
         Notice.create_notice :project_need_audit, self.id, user.id
       end
     end
@@ -283,7 +285,7 @@ class Project < ActiveRecord::Base
 
   # 通知后勤审批
   def create_admin_audit_notice
-    User.joins(:role).where('roles.desc = ?', 'normal_admin').each do |user|
+    User.joins(:roles).where('roles.desc = ?', 'normal_admin').each do |user|
       Notice.create_notice :project_need_audit, self.id, user.id
     end
   end

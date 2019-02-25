@@ -8,6 +8,7 @@
 #  no           :string(255)
 #  order_status :string(255)
 #  order_type   :string(255)
+#  payment      :float(24)        default(0.0)
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null
 #  project_id   :integer
@@ -19,6 +20,7 @@
 #
 
 class Order < ActiveRecord::Base
+  acts_as_paranoid
   include AASM
   belongs_to :project
   has_many :order_products
@@ -108,7 +110,7 @@ class Order < ActiveRecord::Base
   # 通知项目经理审批
   def create_project_manager_audit_notice
     if project.owner.present? && project.owner.organization.present?
-      project.owner.organization.users.joins(:role).where('roles.desc = ?', 'project_manager').each do |user|
+      project.owner.organization.users.joins(:roles).where('roles.desc = ?', 'project_manager').each do |user|
         Notice.create_notice "#{order_type}_order_need_audit".to_sym, self.id, user.id
       end
     end
@@ -117,7 +119,7 @@ class Order < ActiveRecord::Base
   # 通知大区审批
   def create_regional_manager_audit_notice
     if project.owner.present? && project.owner.organization.present? && project.owner.organization.parent.present?
-      project.owner.organization.parent.users.joins(:role).where('roles.desc = ?', 'regional_manager').each do |user|
+      project.owner.organization.parent.users.joins(:roles).where('roles.desc = ?', 'regional_manager').each do |user|
         Notice.create_notice "#{order_type}_order_need_audit".to_sym, self.id, user.id
       end
     end
@@ -125,14 +127,14 @@ class Order < ActiveRecord::Base
 
   # 通知后勤审批
   def create_normal_admin_audit_notice
-    User.joins(:role).where('roles.desc = ?', 'normal_admin').each do |user|
+    User.joins(:roles).where('roles.desc = ?', 'normal_admin').each do |user|
       Notice.create_notice "#{order_type}_order_need_audit".to_sym, self.id, user.id
     end
   end
 
   # 通知管理审批
   def create_group_admin_audit_notice
-    User.joins(:role).where('roles.desc = ?', 'group_admin').each do |user|
+    User.joins(:roles).where('roles.desc = ?', 'group_admin').each do |user|
       Notice.create_notice "#{order_type}_order_need_audit".to_sym, self.id, user.id
     end
   end
@@ -145,7 +147,7 @@ class Order < ActiveRecord::Base
 
   # 通知发货
   def create_deliver_notice
-    User.joins(:role).where('roles.desc = ?', 'normal_admin').each do |user|
+    User.joins(:roles).where('roles.desc = ?', 'normal_admin').each do |user|
       Notice.create_notice :order_deliver, self.id, user.id
     end
   end

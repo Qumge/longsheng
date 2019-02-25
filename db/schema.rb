@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190219093304) do
+ActiveRecord::Schema.define(version: 20190225063547) do
 
   create_table "agents", force: :cascade do |t|
     t.string   "username",     limit: 255
@@ -148,13 +148,14 @@ ActiveRecord::Schema.define(version: 20190219093304) do
   create_table "orders", force: :cascade do |t|
     t.integer  "project_id",   limit: 4
     t.string   "order_type",   limit: 255
-    t.datetime "created_at",               null: false
-    t.datetime "updated_at",               null: false
+    t.datetime "created_at",                             null: false
+    t.datetime "updated_at",                             null: false
     t.integer  "user_id",      limit: 4
     t.string   "desc",         limit: 255
     t.string   "order_status", limit: 255
     t.string   "no",           limit: 255
     t.datetime "deleted_at"
+    t.float    "payment",      limit: 24,  default: 0.0
   end
 
   add_index "orders", ["deleted_at"], name: "index_orders_on_deleted_at", using: :btree
@@ -198,8 +199,8 @@ ActiveRecord::Schema.define(version: 20190219093304) do
     t.integer  "owner_id",          limit: 4
     t.integer  "create_id",         limit: 4
     t.integer  "agency_id",         limit: 4
-    t.datetime "created_at",                                null: false
-    t.datetime "updated_at",                                null: false
+    t.datetime "created_at",                                  null: false
+    t.datetime "updated_at",                                  null: false
     t.integer  "contract_id",       limit: 4
     t.integer  "step",              limit: 4,   default: 0
     t.string   "step_status",       limit: 255
@@ -215,10 +216,11 @@ ActiveRecord::Schema.define(version: 20190219093304) do
     t.string   "constructor_phone", limit: 255
     t.string   "supervisor",        limit: 255
     t.string   "supervisor_phone",  limit: 255
-    t.string   "payment",           limit: 255
+    t.float    "payment",           limit: 24,  default: 0.0
     t.string   "project_status",    limit: 255
     t.datetime "deleted_at"
     t.datetime "approval_time"
+    t.float    "need_payment",      limit: 24,  default: 0.0
   end
 
   add_index "projects", ["deleted_at"], name: "index_projects_on_deleted_at", using: :btree
@@ -293,6 +295,13 @@ ActiveRecord::Schema.define(version: 20190219093304) do
     t.datetime "updated_at",             null: false
   end
 
+  create_table "user_roles", force: :cascade do |t|
+    t.integer  "user_id",    limit: 4
+    t.integer  "role_id",    limit: 4
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
+  end
+
   create_table "users", force: :cascade do |t|
     t.string   "email",                  limit: 255, default: "", null: false
     t.string   "encrypted_password",     limit: 255, default: "", null: false
@@ -312,6 +321,7 @@ ActiveRecord::Schema.define(version: 20190219093304) do
     t.datetime "updated_at",                                      null: false
     t.integer  "agent_id",               limit: 4
     t.datetime "deleted_at"
+    t.string   "title",                  limit: 255
   end
 
   add_index "users", ["deleted_at"], name: "index_users_on_deleted_at", using: :btree

@@ -60,7 +60,7 @@ class Invoice < ActiveRecord::Base
   end
 
   def create_apply_notice
-    User.joins(:role).where('roles.desc in (?)', ['normal_admin', 'group_admin']).each do |user|
+    User.joins(:roles).where('roles.desc in (?)', ['normal_admin', 'group_admin']).each do |user|
       Notice.create_notice "invoice_need_audit".to_sym, self.id, user.id
     end
   end
@@ -71,7 +71,7 @@ class Invoice < ActiveRecord::Base
 
   def create_applied_notice
     Notice.create_notice "invoice_applied".to_sym, self.id, self.user_id
-    User.joins(:role).where('roles.desc in (?)', ['normal_admin', 'group_admin']).each do |user|
+    User.joins(:roles).where('roles.desc in (?)', ['normal_admin', 'group_admin']).each do |user|
       Notice.create_notice "invoice_need_send".to_sym, self.id, user.id
     end
   end

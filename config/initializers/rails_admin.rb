@@ -42,6 +42,7 @@ RailsAdmin.config do |config|
     field :password do
       label '密码'
     end
+    field :title
     field :name do
       label '姓名'
     end
@@ -49,7 +50,7 @@ RailsAdmin.config do |config|
       associated_collection_cache_all true  # REQUIRED if you want to SORT the list as below
       label '组织'
     end
-    field :role do
+    field :roles do
       associated_collection_cache_all true  # REQUIRED if you want to SORT the list as below
       label '角色'
     end

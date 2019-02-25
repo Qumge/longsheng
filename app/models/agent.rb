@@ -76,7 +76,7 @@ class Agent < ActiveRecord::Base
   # 通知项目经理审批
   def create_project_manager_audit_notice
     if apply_user.present? && apply_user.organization.present?
-      apply_user.organization.users.joins(:role).where('roles.desc = ?', 'project_manager').each do |user|
+      apply_user.organization.users.joins(:roles).where('roles.desc = ?', 'project_manager').each do |user|
         Notice.create_notice :agent_need_audit, self.id, user.id
       end
     end
@@ -85,7 +85,7 @@ class Agent < ActiveRecord::Base
   # 通知大区审批
   def create_regional_manager_audit_notice
     if apply_user.present? && apply_user.organization.present? && apply_user.organization.parent.present?
-      apply_user.organization.parent.users.joins(:role).where('roles.desc = ?', 'regional_manager').each do |user|
+      apply_user.organization.parent.users.joins(:roles).where('roles.desc = ?', 'regional_manager').each do |user|
         Notice.create_notice :agent_need_audit, self.id, user.id
       end
     end
@@ -93,14 +93,14 @@ class Agent < ActiveRecord::Base
 
   # 通知后勤审批
   def create_normal_admin_audit_notice
-    User.joins(:role).where('roles.desc = ?', 'normal_admin').each do |user|
+    User.joins(:roles).where('roles.desc = ?', 'normal_admin').each do |user|
       Notice.create_notice :agent_need_audit, self.id, user.id
     end
   end
 
   # 通知管理审批
   def create_group_admin_audit_notice
-    User.joins(:role).where('roles.desc = ?', 'group_admin').each do |user|
+    User.joins(:roles).where('roles.desc = ?', 'group_admin').each do |user|
       Notice.create_notice :agent_need_audit, self.id, user.id
     end
   end

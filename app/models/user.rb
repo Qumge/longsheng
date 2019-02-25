@@ -16,6 +16,7 @@
 #  reset_password_sent_at :datetime
 #  reset_password_token   :string(255)
 #  sign_in_count          :integer          default(0), not null
+#  title                  :string(255)
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
 #  agent_id               :integer
@@ -34,15 +35,16 @@ class User < ActiveRecord::Base
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
-
-  belongs_to :role
+  acts_as_paranoid
+  has_and_belongs_to_many :roles, join_table: 'user_roles'
+  has_many :user_roles
   belongs_to :organization
   has_many :notices
   has_many :active_notices, -> {where(readed: false)}, class_name: 'Notice', foreign_key: :user_id
-  has_many :resources, through: :role
+  # has_many :resources, through: :role
   has_many :audits
   belongs_to :agent
-  validates_presence_of :role_id
+  validates_presence_of :login, :title, :name
 
   validate do |user|
     user.must_has_one_agent
@@ -65,6 +67,18 @@ class User < ActiveRecord::Base
     # 大区经理和项目经理能查看当前架构所有的项目
     # 项目专员只能查看自己创建的项目
     # 超级管理员查看所有
+    # roles = self.roles.collect{|role| role.desc}
+    # if (roles & ['super_admin', 'group_admin', 'normal_admin']).present?
+    #   projects
+    # elsif (roles & ['regional_manager', 'project_manager']).present?
+    #   projects.where('owner_id in (?)', self.organization.subtree.map(&:users).flatten.map(&:id))
+    # elsif (roles & ['project_user']).present?
+    #   projects.where(owner_id: self.id)
+    # elsif (roles & ['agency']).present?
+    #   projects.where(agency_id: self.agent.id)
+    # else
+    #   projects.where('1 = -1')
+    # end
     if ['regional_manager', 'project_manager'].include? self.role.desc
       projects.where('owner_id in (?)', self.organization.subtree.map(&:users).flatten.map(&:id))
     elsif ['super_admin', 'group_admin', 'normal_admin'].include? self.role.desc
@@ -77,6 +91,10 @@ class User < ActiveRecord::Base
     else
       projects.where('1 = -1')
     end
+  end
+
+  def role
+    self.roles.where(desc: Role::ROLES.map{|k, v| k.to_s}).first
   end
 
   def audit_projects
@@ -169,10 +187,14 @@ class User < ActiveRecord::Base
     ['normal_admin', 'group_admin', 'super_admin'].include? self.role.desc
   end
 
+  def resources
+    self.roles.collect{|role| role.resources}.flatten!
+  end
+
   class << self
     # 业务人员
     def service_users
-      joins(:role).where('roles.desc in (?)', ['regional_manager', 'project_manager', 'project_user'])
+      joins(:roles).where('roles.desc in (?)', ['regional_manager', 'project_manager', 'project_user'])
     end
   end
 
