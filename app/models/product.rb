@@ -23,6 +23,7 @@ class Product < ActiveRecord::Base
   has_one :sale, ->(sale) { where("project_id = ?", sale.project_id) }
   validates_presence_of :no, :product_no, :name, :reference_price
   validates_uniqueness_of :no, if: proc{|product| product.no.present?}
+  validates_numericality_of :reference_price, greater_than: 0
 
 
   def default_price project

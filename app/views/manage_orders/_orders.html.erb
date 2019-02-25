@@ -128,7 +128,7 @@
               <% end %>
             </td>
             <td align="center">
-              <% if order.active? || order.deliver? %>
+              <% if  can?(:deliver, :manage_orders) && (order.active? || order.deliver?) %>
                 <a class="btn btn-xs bg-blue" id="<%= order.id %>" href="#" >
                   <i class="fa fa-plus"></i>
                   <span>
@@ -140,6 +140,11 @@
                     var option = set_option('<%= order.id %>');
                     var uploader = qiniu.uploader(option);
                 </script>
+              <% end %>
+              <% if can?(:edit_payment, :orders) %>
+                <%= link_to edit_payment_manage_order_path(order), 'data-toggle' => "modal", 'data-target' => "#global-modal", class: 'btn btn-success btn-xs' do %>
+                  <i class="fa fa-edit"></i>录入进度款
+                <% end %>
               <% end %>
             </td>
           </tr>

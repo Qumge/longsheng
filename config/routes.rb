@@ -174,6 +174,10 @@ Rails.application.routes.draw do
     collection do
       post :deliver
     end
+    member do
+      get :edit_payment
+      patch :update_payment
+    end
   end
 
   resources :agents

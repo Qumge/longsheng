@@ -27,6 +27,8 @@ group_admin:
     show: 订单-详情
     deliver: 订单管理-发货
     index: 订单管理-列表
+    edit_payment: 订单-录入进度款界面
+    update_payment: 订单-录入进度款
   costs:
     destroy: 费用-删除
     update: 费用-编辑
@@ -102,6 +104,8 @@ normal_admin:
     show: 订单-详情
     deliver: 订单管理-发货
     index: 订单管理-列表
+    edit_payment: 订单-录入进度款界面
+    update_payment: 订单-录入进度款
   costs:
     destroy: 费用-删除
     update: 费用-编辑

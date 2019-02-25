@@ -101,6 +101,8 @@ zh-CN:
         name: '资料名'
       competitor:
         name: '文件名'
+      order:
+        payment: '进度款'
 
 
 

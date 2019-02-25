@@ -55,6 +55,8 @@ manage_orders:
   index: '订单管理-列表'
   deliver: '订单管理-发货'
   show: '订单-详情'
+  edit_payment: '订单-录入进度款界面'
+  update_payment: '订单-录入进度款'
 notices:
   index: '消息通知-列表'
   check: '消息通知-标记'

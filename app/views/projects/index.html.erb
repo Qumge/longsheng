@@ -1,7 +1,7 @@
 <%= render 'projects/header' %>
 
 <div class="row">
-  <div class="col-md-10">
+  <div class="col-md-12">
     <div class="box">
       <div class="box-header with-border">
         <h3 class="box-title">项目列表
@@ -18,8 +18,9 @@
           <tr>
             <th>项目名</th>
             <th>甲方</th>
-            <th>规模</th>
             <th>负责人</th>
+            <th>订单应收</th>
+            <th>进度款总额</th>
             <th>状态</th>
           </tr>
           <% if @projects.present? %>
@@ -27,14 +28,15 @@
             <tr>
               <td><%= link_to project.name, project_path(project) %></td>
               <td><%= project.a_name %></td>
-              <td><%= project.estimate %></td>
               <td><%= project.owner.name %></td>
+              <td><%= project.need_payment %></td>
+              <td><%= project.payment %></td>
               <td><%= project.status %></td>
             </tr>
           <% end %>
           <% else %>
             <tr>
-              <td colspan="5" align="center">没有可显示的内容</td>
+              <td colspan="6" align="center">没有可显示的内容</td>
             </tr>
           <% end %>
 

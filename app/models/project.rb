@@ -257,6 +257,25 @@ class Project < ActiveRecord::Base
     audit&.content
   end
 
+  # 订单总金额
+  def compute_need_payment
+    amount = 0
+    self.orders.where(order_status: ['deliver', 'sign']).each do |order|
+      amount += order.real_total_price.to_f
+    end
+    amount
+    self.update need_payment: amount
+  end
+
+  # 已经回款金额
+  def compute_payment
+    amount = 0
+    self.orders.each do |order|
+      amount += order.payment
+    end
+    self.update payment: amount
+  end
+
 
   private
 

@@ -26,7 +26,7 @@ class OrderProduct < ActiveRecord::Base
   validates_presence_of :number, :product_id, :discount
   before_save :set_price
   validates_numericality_of :number, only_integer: true, greater_than: 0, if: ->(order_project) { order_project.number.present? }
-  validates_numericality_of :discount, greater_than: 0, if: ->(order_project) { order_project.discount.present? }
+  validates_numericality_of :discount, greater_than_or_equal_to: 0, if: ->(order_project) { order_project.discount.present? }
 
 
   def real_price

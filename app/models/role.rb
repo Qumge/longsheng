@@ -29,6 +29,7 @@ class Role < ActiveRecord::Base
 
   validate :check_if_can_be_change
 
+  # 基础角色不可删除
   def check_if_can_be_destroy
     if ROLES.map{|k, v| k.to_s}.include?(self.desc_was)
       errors.add :base, "you can't delete this"

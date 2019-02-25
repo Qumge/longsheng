@@ -32,6 +32,8 @@ class Order < ActiveRecord::Base
   has_one :deliver_file, -> {where(model_type: 'deliver')}, class_name: 'Attachment', foreign_key: :model_id
   has_one :sign_file, -> {where(model_type: 'sign')}, class_name: 'Attachment', foreign_key: :model_id
   has_many :audits, -> {where(model_type: 'Order')}, foreign_key: :model_id
+  validates_numericality_of :payment, greater_than_or_equal_to: 0
+  after_update :check_payment
 
   STATUS = {wait: '新订单', apply: '已申请', project_manager_audit: '项目经理已审核',
             regional_manager_audit: '大区经理已审核', normal_admin_audit: '后勤已审核',
@@ -55,12 +57,12 @@ class Order < ActiveRecord::Base
 
     # 发货
     event :do_deliver do
-      transitions :from => :active, :to => :deliver, :after => Proc.new {create_sign_notice }
+      transitions :from => :active, :to => :deliver, :after => Proc.new {compute_need_payment; create_sign_notice }
     end
 
     # 签收
     event :do_sign do
-      transitions :from => :deliver, :to => :sign
+      transitions :from => :deliver, :to => :sign, :after => Proc.new {compute_need_payment}
     end
 
     # 项目经理审批
@@ -185,6 +187,19 @@ class Order < ActiveRecord::Base
   def owner
     self.project.owner
   end
+
+  def compute_need_payment
+    self.project.compute_need_payment
+  end
+
+  def check_payment
+    self.compute_payment if self.payment_changed?
+  end
+
+  def compute_payment
+    self.project.compute_payment
+  end
+
 
   class << self
     # 检索

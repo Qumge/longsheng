@@ -1,7 +1,7 @@
 class ManageOrdersController < ApplicationController
   include ApplicationHelper
   before_action :set_uptoken, only: [:index, :deliver]
-  before_action :set_order, only: [:show, :deliver]
+  before_action :set_order, only: [:show, :deliver, :edit_payment, :update_payment]
 
   def index
     @orders = Order.search_conn(params).order('updated_at desc').page(params[:page]).per(Settings.per_page)
@@ -22,6 +22,14 @@ class ManageOrdersController < ApplicationController
 
   def show
     render layout: false
+  end
+
+  def edit_payment
+    render layout: false
+  end
+
+  def update_payment
+    @flag = @order.update payment: params[:order][:payment]
   end
 
   private
