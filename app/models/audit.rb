@@ -23,7 +23,7 @@ class Audit < ActiveRecord::Base
 
   MODEL_TYPES = {
       Project: '立项',
-      Order: '订单(特价、礼品、样品)',
+      Order: '订单(特价、样品)',
       Agent: '代理商',
       Invoice: '开票'
   }
@@ -48,7 +48,7 @@ class Audit < ActiveRecord::Base
 
 
   def get_model_type
-    model_type == 'Order' ? (model.order_type == 'bargains' ? '特价' : '样品、礼品') : MODEL_TYPES[model_type.to_sym]
+    model_type == 'Order' ? (model.order_type == 'bargains' ? '特价' : '样品') : MODEL_TYPES[model_type.to_sym]
   end
 
 end

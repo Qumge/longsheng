@@ -13,12 +13,13 @@
 class Train < ActiveRecord::Base
   has_one :attachment, -> {where(model_type: 'train')}, class_name: 'Attachment', foreign_key: :model_id
   belongs_to :user
+  validates_presence_of :name
 
   class << self
     def search_conn params
       trains = self.all
       if params[:table_search].present?
-        trains = trains.joins(:attachment).where('attachments.file_name like ?', "%#{params[:table_search]}%")
+        trains = trains.where('trains.name like ?', "%#{params[:table_search]}%")
       end
       trains
     end

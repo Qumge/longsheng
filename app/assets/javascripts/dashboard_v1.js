@@ -1,5 +1,4 @@
 //Dashboard-version1
-//= require jquery
 //= require jquery_ujs
 //= require jquery-ui
 //= require dist/resolve_tooltip_conflict

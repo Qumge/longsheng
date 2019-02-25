@@ -35,7 +35,7 @@ class Order < ActiveRecord::Base
             regional_manager_audit: '大区经理已审核', normal_admin_audit: '后勤已审核',
             active: '已下单或申请成功', deliver: '已发货', sign: '已签收', failed: '审核失败' }
 
-  ORDER_TYPE = {sample: '样品、礼品', normal: '订单', bargains: '特价订单'}
+  ORDER_TYPE = {sample: '样品', normal: '订单', bargains: '特价订单'}
 
   aasm :order_status do
     state :wait, :initial => true
@@ -177,6 +177,11 @@ class Order < ActiveRecord::Base
   def audit_failed_reason
     audit = self.audits.where(to_status: 'failed').last
     audit&.content
+  end
+
+
+  def owner
+    self.project.owner
   end
 
   class << self

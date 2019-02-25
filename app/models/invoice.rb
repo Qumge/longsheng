@@ -96,4 +96,8 @@ class Invoice < ActiveRecord::Base
     audit = self.audits.where(to_status: 'failed').last
     audit&.content
   end
+
+  def owner
+    self.project.owner
+  end
 end

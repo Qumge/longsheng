@@ -16,7 +16,6 @@
 //= require dist/adminlte
 //= require dist/adminlte_extra
 //= require dashboard_v1
-//= require uielements_icons
 //= require plupload/js/moxie
 //= require plupload/js/plupload.dev
 //= require select2-full

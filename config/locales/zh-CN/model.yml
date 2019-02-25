@@ -97,9 +97,9 @@ zh-CN:
         purpose: '费用用途'
         occur_time: '产生时间'
       train:
-        attachment: '资料名'
+        name: '资料名'
       competitor:
-        attachment: '文件名'
+        name: '文件名'
 
 
 

@@ -14,9 +14,10 @@ class TrainsController < ApplicationController
 
   def create
     @train = Train.new user: current_user
+    @train.name = params[:train_name]
     @train.build_attachment path: params[:path], file_name: params[:file_name]
     @flag = @train.save
-    render js: 'location.reload();'
+    #render js: 'location.reload();'
   end
 
   def edit
@@ -25,9 +26,10 @@ class TrainsController < ApplicationController
 
   def update
     @train.user = current_user
+    @train.name = params[:train_name]
     @train.build_attachment path: params[:path], file_name: params[:file_name]
     @flag = @train.save
-    render js: 'location.reload();'
+    render template: 'trains/create'
   end
 
   def destroy

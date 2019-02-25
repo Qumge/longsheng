@@ -14,9 +14,10 @@ class CompetitorsController < ApplicationController
 
   def create
     @competitor = Competitor.new user: current_user
+    @competitor.name = params[:competitor_name]
     @competitor.build_attachment path: params[:path], file_name: params[:file_name]
     @flag = @competitor.save
-    render js: 'location.reload();'
+
   end
 
   def edit
@@ -25,9 +26,10 @@ class CompetitorsController < ApplicationController
 
   def update
     @competitor.user = current_user
+    @competitor.name = params[:competitor_name]
     @competitor.build_attachment path: params[:path], file_name: params[:file_name]
     @flag = @competitor.save
-    render js: 'location.reload();'
+    render template: 'competitors/create'
   end
 
   def destroy

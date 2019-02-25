@@ -5,14 +5,15 @@
   </div>
   <%= simple_form_for(@train, html: {class: 'form-horizontal group_form', onkeydown: "if(event.keyCode==13)return false;"}, wrapper: :horizontal_form) do |f| %>
     <div class="modal-body" >
+      <%= f.input :name %>
       <div class="form-group row string optional train_attachment">
-        <label class="col-sm-3 col-form-label string optional" for="train_attachment">资料名</label>
+        <label class="col-sm-3 col-form-label string optional" for="train_attachment">文件</label>
         <div class="col-sm-9">
           <a class="btn btn-xs bg-blue" id="train_attachment" href="#" >
             <i class="fa fa-plus"></i>
             <span>选择文件</span>
           </a>
-          <span id="filename"><%= @train.attachment&.file_name %></span>
+          <span id="filename"></span>
         </div>
       </div>
 
@@ -39,7 +40,7 @@
             domain: '<%= Rails.application.config.qiniu_domain %>',
             //bucket 域名，下载资源时用到，**必需**
             // container: 'container',           //上传区域DOM ID，默认是browser_button的父元素，
-            max_file_size: '50mb',           //最大文件体积限制
+            max_file_size: '150mb',           //最大文件体积限制
             // flash_swf_url: 'js/plupload/Moxie.swf',  //引入flash,相对路径
             max_retries: 3,                   //上传失败最大重试次数
             // dragdrop: true,                   //开启可拖曳上传
@@ -82,7 +83,7 @@
                     $.ajax({
                         type: '<%= @train.id.present? ? 'PATCH' : 'POST' %>',
                         url: '<%= @train.id.present? ? train_path(@train) : trains_path  %>',
-                        data: {path: res.key, file_name: file.name, name: name},
+                        data: {path: res.key, file_name: file.name, name: name, train_name: $('#train_name').val()},
                         dataType: 'script',
                         success: function (data) {
 
