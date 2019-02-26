@@ -180,6 +180,12 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :manage_invoices do
+    collection do
+      post :upload_file
+    end
+  end
+
   resources :agents
   resources :costs
   resources :trains
@@ -190,6 +196,7 @@ Rails.application.routes.draw do
     end
   end
 
-  match ':controller(/:action(/:id))', :via => :get
+  # match ':controller(/:action(/:id))', :via => :get
+  mount ChinaCity::Engine => '/china_city'
 
 end

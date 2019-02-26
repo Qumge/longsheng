@@ -54,7 +54,7 @@ gem 'qiniu', '>= 6.9.0'                                       # 七牛云
 gem 'bower-rails', '~> 0.10.0'                                # node 包管理
 gem 'aasm'                                                    # 状态管理
 gem "paranoia", "~> 2.2"                                      # 软删除
-
+gem 'china_city'
 
 
 

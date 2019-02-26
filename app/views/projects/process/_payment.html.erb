@@ -10,7 +10,7 @@
   <i class="fa fa-check bg-blue"></i>
   <div class="timeline-item">
     <div class="timeline-body">
-        <input class="form-control string optional" type="text" name="payment" id="payment" style="max-width: 250px;" placeholder="录入付款形式" value="<%=@project.payment %>">
+        <input class="form-control string optional" type="text" name="payment" id="payment" style="max-width: 250px;" readonly value="<%=@project.payment %>">
       <% if can? :payment, :projects %>
       <a data-toggle="modal" class="btn btn-xs bg-blue" onclick="payment()">
         回款金额确认

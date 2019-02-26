@@ -63,6 +63,9 @@ GEM
     builder (3.2.3)
     byebug (9.0.6)
     cancancan (2.3.0)
+    china_city (0.0.4)
+      jquery-rails
+      rails (>= 3.1.0)
     ckeditor (4.2.4)
       cocaine
       orm_adapter (~> 0.5.0)
@@ -331,6 +334,7 @@ DEPENDENCIES
   bower-rails (~> 0.10.0)
   byebug (= 9.0.6)
   cancancan (~> 2.0)
+  china_city
   ckeditor (= 4.2.4)
   coffee-rails (= 4.2.1)
   devise

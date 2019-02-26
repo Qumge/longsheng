@@ -27,6 +27,7 @@
 #  purchase_phone    :string(255)
 #  settling          :string(255)
 #  settling_phone    :string(255)
+#  shipment_end      :datetime
 #  step              :integer          default(0)
 #  step_status       :string(255)
 #  strategic         :boolean
@@ -36,6 +37,8 @@
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
 #  agency_id         :integer
+#  category_id       :integer
+#  company_id        :integer
 #  contract_id       :integer
 #  create_id         :integer
 #  owner_id          :integer
@@ -49,10 +52,12 @@ class Project < ActiveRecord::Base
   acts_as_paranoid
   include AASM
   belongs_to :owner, class_name: 'User', foreign_key: :owner_id
+  belongs_to :category
+  belongs_to :company
   belongs_to :create_user, class_name: 'User', foreign_key: :create_id
   has_one :audit, -> {where(model_type: 'Project')}, foreign_key: :model_id
   after_create :create_project_manager_notice
-  validates_presence_of :name, :a_name, :category, :address, :city, :supplier_type
+  validates_presence_of :name, :company_id, :category_id, :address, :city, :supplier_type
   validates_numericality_of :estimate, if: Proc.new{|p| p.estimate.present?}
   validates_uniqueness_of :name
   has_one :project_contract, -> {where(model_type: 'contract')}, class_name: 'Attachment', foreign_key: :model_id
@@ -109,7 +114,7 @@ class Project < ActiveRecord::Base
 
   aasm :step_status do
     state :contract, :initial => true
-    state :advance, :pattern, :plate, :detail, :order, :invoice, :process_payment, :settlement, :payment, :bond, :confirm, :done
+    state :advance, :pattern, :plate, :detail, :order, :process_payment, :shipment_ended, :settlement, :payment, :bond, :confirm, :done
 
     event :done_contract do
       transitions :from => :contract, :to => :advance do
@@ -137,7 +142,7 @@ class Project < ActiveRecord::Base
     end
 
     event :done_order do
-      transitions :from => :order, :to => :invoice do
+      transitions :from => :order, :to => :process_payment do
         guard do
           true
           # 判断是否可以完结订单 TODO
@@ -145,22 +150,18 @@ class Project < ActiveRecord::Base
       end
     end
 
-    event :done_invoice do
-      transitions :from => :invoice, :to => :process_payment do
-        guard do
-          # 判断是否可以完结开票款申请 TODO
-          true
-        end
-      end
-    end
 
     event :done_process_payment do
-      transitions :from => :process_payment, :to => :settlement  do
+      transitions :from => :process_payment, :to => :shipment_ended  do
         guard do
           # 判断是否可以完结进度款申请 TODO
           true
         end
       end
+    end
+
+    event :done_shipment_ended do
+      transitions :from => :shipment_ended, :to => :settlement , :after => Proc.new {set_shipment_end }
     end
 
     event :done_settlement do
@@ -241,7 +242,7 @@ class Project < ActiveRecord::Base
 
   # 判断是否可查看当前步骤
   def can_view? step
-    steps = [:contract, :advance, :pattern, :plate, :detail, :order, :invoice, :process_payment, :settlement, :payment, :bond, :confirm, :done]
+    steps = [:contract, :advance, :pattern, :plate, :detail, :order, :process_payment, :shipment_ended, :settlement, :payment, :bond, :confirm, :done]
     # 当前进度大于步骤 可见
     steps.index(self.step_status.to_sym) >= steps.index(step)
   end
@@ -276,8 +277,17 @@ class Project < ActiveRecord::Base
     self.update payment: amount
   end
 
+  def city_name
+    ChinaCity.get self.city if self.city.present?
+  end
+
 
   private
+
+  #设置结算款时间
+  def set_shipment_end
+    self.update shipment_end: DateTime.now
+  end
 
   # 审批成功生成审批时间
   def set_approval_time

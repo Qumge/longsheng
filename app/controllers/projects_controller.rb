@@ -79,8 +79,8 @@ class ProjectsController < ApplicationController
 
   # 回款金额确认
   def payment
-    @project.done_payment
-    @project.update payment: params[:payment]
+    @project.done_payment!
+    #@project.update payment: params[:payment]
     render template: 'projects/reload_process'
   end
 
@@ -114,7 +114,7 @@ class ProjectsController < ApplicationController
 
   private
   def project_permit
-    params.require(:project).permit(:name, :a_name, :category, :address, :city, :supplier_type, :strategic, :estimate,
+    params.require(:project).permit(:name, :company_id, :category_id, :address, :city, :supplier_type, :strategic, :estimate,
                                     :butt_name, :butt_title, :butt_phone, :contract_id)
   end
 

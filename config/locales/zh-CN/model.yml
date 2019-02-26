@@ -46,6 +46,8 @@ zh-CN:
         supervisor: '监理'
         supervisor_phone: '监理电话'
         contract_id: '战略合作方'
+        category_id: '产品品类'
+        company_id: '甲方名称'
       contract:
         name: '明细'
         no: '合同编号'

@@ -51,6 +51,7 @@ invoices:
   update: '开票-编辑'
   show: '开票-详情'
   invoice_apply: '开票-申请'
+  index: '开票-列表'
 manage_orders:
   index: '订单管理-列表'
   deliver: '订单管理-发货'

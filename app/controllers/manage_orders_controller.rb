@@ -29,7 +29,7 @@ class ManageOrdersController < ApplicationController
   end
 
   def update_payment
-    @flag = @order.update payment: params[:order][:payment]
+    @flag = @order.update payment: params[:order][:payment], payment_at: params[:order][:payment_at]
   end
 
   private

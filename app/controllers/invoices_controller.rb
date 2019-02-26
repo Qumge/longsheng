@@ -1,6 +1,7 @@
 class InvoicesController < ApplicationController
   before_action :set_default_invoice, only: [:new, :create]
   before_action :set_invoice, only: [:edit, :update, :invoice_apply]
+  before_action :set_project, only: [:index]
 
   def new
     @orders = @project.can_invoice_orders
@@ -18,6 +19,11 @@ class InvoicesController < ApplicationController
       @invoice.orders = orders
       @invoice.save
     end
+    render js: 'location.reload()'
+  end
+
+  def index
+
   end
 
   def show
@@ -39,10 +45,12 @@ class InvoicesController < ApplicationController
     end
     @invoice.orders = orders
     @invoice.save
+    render js: 'location.reload()'
   end
 
   def invoice_apply
     @invoice.do_apply!
+    render js: 'location.reload()'
   end
 
   private
@@ -54,7 +62,11 @@ class InvoicesController < ApplicationController
     else
       @invoice = Invoice.new project_id: params[:id]
     end
+  end
 
+  def set_project
+    @project = current_user.view_projects.find_by id: params[:id]
+    redirect_to projects_path, alert: '找不到数据' unless @project.present?
   end
 
   def set_invoice

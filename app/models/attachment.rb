@@ -33,6 +33,9 @@ class Attachment < ActiveRecord::Base
     elsif self.model_type == 'sign'
       order = Order.find_by id: model_id
       order.do_sign! if order.may_do_sign?
+    elsif self.model_type == 'invoice'
+      invoice = Invoice.find_by id: model_id
+      invoice.do_sended! if invoice.may_do_sended?
     end
 
   end

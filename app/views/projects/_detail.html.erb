@@ -16,15 +16,15 @@
       </tr>
       <tr>
         <th>甲方名称</th>
-        <td><%= @project.a_name %></td>
+        <td><%= @project.company&.name %></td>
       </tr>
       <tr>
         <th>项目类别</th>
-        <td><%= @project.category %></td>
+        <td><%= @project.category&.name %></td>
       </tr>
       <tr>
         <th>城市</th>
-        <td><%= @project.city %></td>
+        <td><%= @project.city_name %></td>
       </tr>
       <tr>
         <th>项目地址</th>

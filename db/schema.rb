@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190225063547) do
+ActiveRecord::Schema.define(version: 20190226080805) do
 
   create_table "agents", force: :cascade do |t|
     t.string   "username",     limit: 255
@@ -67,6 +67,19 @@ ActiveRecord::Schema.define(version: 20190225063547) do
     t.string   "content",     limit: 255
   end
 
+  create_table "categories", force: :cascade do |t|
+    t.string   "name",       limit: 255
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
+  create_table "companies", force: :cascade do |t|
+    t.string   "name",       limit: 255
+    t.text     "desc",       limit: 65535
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+  end
+
   create_table "competitors", force: :cascade do |t|
     t.string   "name",       limit: 255
     t.string   "desc",       limit: 255
@@ -110,6 +123,8 @@ ActiveRecord::Schema.define(version: 20190225063547) do
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
     t.string   "invoice_status", limit: 255
+    t.datetime "apply_at"
+    t.datetime "applied_at"
   end
 
   create_table "notices", force: :cascade do |t|
@@ -156,6 +171,10 @@ ActiveRecord::Schema.define(version: 20190225063547) do
     t.string   "no",           limit: 255
     t.datetime "deleted_at"
     t.float    "payment",      limit: 24,  default: 0.0
+    t.datetime "payment_at"
+    t.integer  "payment_id",   limit: 4
+    t.datetime "apply_at"
+    t.datetime "applied_at"
   end
 
   add_index "orders", ["deleted_at"], name: "index_orders_on_deleted_at", using: :btree
@@ -221,6 +240,9 @@ ActiveRecord::Schema.define(version: 20190225063547) do
     t.datetime "deleted_at"
     t.datetime "approval_time"
     t.float    "need_payment",      limit: 24,  default: 0.0
+    t.datetime "shipment_end"
+    t.integer  "company_id",        limit: 4
+    t.integer  "category_id",       limit: 4
   end
 
   add_index "projects", ["deleted_at"], name: "index_projects_on_deleted_at", using: :btree

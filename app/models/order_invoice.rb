@@ -12,4 +12,5 @@
 class OrderInvoice < ActiveRecord::Base
   belongs_to :order
   belongs_to :invoice
+  validates_uniqueness_of :order_id
 end

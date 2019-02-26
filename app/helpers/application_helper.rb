@@ -83,6 +83,12 @@ module ApplicationHelper
         },
         competitors: {
             index: '竞品信息列表'
+        },
+        invoices: {
+            index: '开票列表'
+        },
+        manage_invoices: {
+            index: '开票列表'
         }
     }
   end

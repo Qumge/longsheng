@@ -47,6 +47,17 @@
       </li>
       <%end %>
 
+      <% if can? :index, :manage_invoices %>
+        <li class="<%= active_class params, 'manage_invoices' %>">
+          <%= link_to manage_invoices_path do %>
+            <i class="fa fa-credit-card"></i> <span>开票管理</span>
+            <span class="pull-right-container">
+              <small class="label pull-right bg-red"></small>
+            </span>
+          <% end %>
+        </li>
+      <%end %>
+
       <% if can? :index, :agents %>
       <li class="<%= active_class params, 'agents' %>">
         <%= link_to agents_path do %>

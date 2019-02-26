@@ -1,10 +1,10 @@
-<div id="orders">
+<div id="invoices">
   <script type="text/javascript">
-      function set_option(id) {
+      function set_option(id){
           return {
               runtimes: 'html5,html4',          //上传模式,依次退化
               browse_button: id,       //上传选择的点选按钮，**必需**
-              uptoken: '<%= @uptoken %>',
+              uptoken : '<%= @uptoken %>',
               //若未指定uptoken_url,则必须指定 uptoken ,uptoken由其他程序生成
               unique_names: true,
               // 默认 false，key为文件名。若开启该选项，SDK会为每个文件自动生成key（文件名）
@@ -55,7 +55,7 @@
                       console.log(sourceLink);
                       $.ajax({
                           type: 'POST',
-                          url: '<%= deliver_manage_orders_path  %>',
+                          url: '<%= upload_file_manage_invoices_path  %>',
                           data: {path: res.key, file_name: file.name, id: id},
                           dataType: 'script',
                           success: function (data) {
@@ -83,73 +83,49 @@
           }
       }
   </script>
-  <style>
-    .btn {
-      padding: 0;
-    }
-  </style>
   <div class="box-body" style="overflow-x: scroll">
     <table class="table table-bordered">
       <tr>
         <th>项目名</th>
-        <th>订单号</th>
+        <th>开票号</th>
         <th>下单人</th>
-        <th>下单时间</th>
-        <th>类型</th>
+        <th>申请时间</th>
         <th>状态</th>
         <th>单据</th>
         <th></th>
       </tr>
-      <% if @orders.present? %>
-        <% @orders.each do |order| %>
+      <% if @invoices.present? %>
+        <% @invoices.each do |invoice| %>
           <tr>
-            <td><%= link_to order.project.name, project_path(order.project) %></td>
+            <td><%= link_to invoice.project.name, project_path(invoice.project) %></td>
             <td>
-              <%= link_to order.no, manage_order_path(order), 'data-toggle' => "modal", 'data-target' => "#global-modal" %>
+              <%= link_to invoice.no, invoice_path(invoice), 'data-toggle' => "modal", 'data-target' => "#global-modal"%>
             </td>
-            <td><%= order.user&.name %></td>
-            <td><%= simple_time order.created_at %></td>
-            <td><%= order.get_order_type %></td>
-            <td><%= order.get_status %></td>
+            <td><%= invoice.user&.name %></td>
+            <td><%= simple_time invoice.apply_at %></td>
+            <td><%= invoice.get_status%></td>
             <td>
-              <% if order.place_file.present? %>
-                <a href="javascript:void(0)" onclick="show_file(this)" class="btn show-file" data-url="<%= order.place_file.preview_url %>" data-file-name="<%= order.place_file.file_name %>">
-                  <i class="fa fa-eye"></i>订单清单
+              <% if invoice.invoice_file.present? %>
+                <a href="javascript:void(0)" onclick="show_file(this)" class="btn show-file" data-url="<%= invoice.invoice_file.preview_url%>" data-file-name="<%= invoice.invoice_file.file_name %>">
+                  <i class="fa fa-eye"></i>开票文件
                 </a>
                 <br/>
               <% end %>
 
-              <% if order.deliver_file.present? %>
-                <a href="javascript:void(0)" onclick="show_file(this)" class="btn show-file" data-url="<%= order.deliver_file.preview_url %>" data-file-name="<%= order.deliver_file.file_name %>">
-                  <i class="fa fa-eye"></i>发货单
-                </a>
-                <br/>
-              <% end %>
-
-              <% if order.sign_file.present? %>
-                <a href="javascript:void(0)" onclick="show_file(this)" class="btn show-file" data-url="<%= order.sign_file.preview_url %>" data-file-name="<%= order.sign_file.file_name %>">
-                  <i class="fa fa-eye"></i>收货单
-                </a>
-              <% end %>
             </td>
             <td align="center">
-              <% if can?(:deliver, :manage_orders) && (order.active? || order.deliver?) %>
-                <a class="btn btn-xs bg-blue" id="<%= order.id %>" href="#">
+              <% if  can?(:upload_file, :manage_invoices) && (invoice.applied? || invoice.sended?) %>
+                <a class="btn btn-xs bg-blue" id="<%= invoice.id %>" href="#" >
                   <i class="fa fa-plus"></i>
                   <span>
-                    <%= order.active? ? '发货' : '重录发货单' %>
+                    开票文件
                   </span>
                 </a>
                 <script type="text/javascript">
                     var qiniu = new QiniuJsSDK();
-                    var option = set_option('<%= order.id %>');
+                    var option = set_option('<%= invoice.id %>');
                     var uploader = qiniu.uploader(option);
                 </script>
-              <% end %>
-              <% if can?(:edit_payment, :orders) %>
-                <%= link_to edit_payment_manage_order_path(order), 'data-toggle' => "modal", 'data-target' => "#global-modal", class: 'btn btn-success btn-xs' do %>
-                  <i class="fa fa-edit"></i>录入进度款
-                <% end %>
               <% end %>
             </td>
           </tr>
@@ -165,7 +141,7 @@
   <!-- /.box-body -->
   <div class="box-footer clearfix">
     <div class="pull-right pagination-sm no-margin">
-      <%= paginate @orders, remote: true, params: {order_status: params[:order_status], table_search: params[:table_search]} %>
+      <%= paginate @invoices, remote: true, params: {invoice_status: params[:invoice_status], table_search: params[:table_search]} %>
     </div>
 
   </div>

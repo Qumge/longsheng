@@ -3,14 +3,18 @@
 # Table name: orders
 #
 #  id           :integer          not null, primary key
+#  applied_at   :datetime
+#  apply_at     :datetime
 #  deleted_at   :datetime
 #  desc         :string(255)
 #  no           :string(255)
 #  order_status :string(255)
 #  order_type   :string(255)
 #  payment      :float(24)        default(0.0)
+#  payment_at   :datetime
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null
+#  payment_id   :integer
 #  project_id   :integer
 #  user_id      :integer
 #
@@ -33,6 +37,7 @@ class Order < ActiveRecord::Base
   has_one :sign_file, -> {where(model_type: 'sign')}, class_name: 'Attachment', foreign_key: :model_id
   has_many :audits, -> {where(model_type: 'Order')}, foreign_key: :model_id
   validates_numericality_of :payment, greater_than_or_equal_to: 0
+  validates_presence_of :payment_at, if: proc{|order| order.payment.present? && order.payment > 0}
   after_update :check_payment
 
   STATUS = {wait: '新订单', apply: '已申请', project_manager_audit: '项目经理已审核',
@@ -47,12 +52,12 @@ class Order < ActiveRecord::Base
 
     #申请
     event :do_apply do
-      transitions :from => [:wait, :failed], :to => :apply, :after => Proc.new {create_project_manager_audit_notice}
+      transitions :from => [:wait, :failed], :to => :apply, :after => Proc.new {create_project_manager_audit_notice; set_apply_at}
     end
 
     # 下单
     event :do_place do
-      transitions :from => [:wait, :failed], :to => :active, :after => Proc.new {create_deliver_notice }
+      transitions :from => [:wait, :failed], :to => :active, :after => Proc.new {create_deliver_notice; set_applied_at }
     end
 
     # 发货
@@ -82,7 +87,7 @@ class Order < ActiveRecord::Base
 
     # 部门管理审批
     event :do_group_admin_audit do
-      transitions :from => :normal_admin_audit, :to => :active, :after => Proc.new {create_active_notice }
+      transitions :from => :normal_admin_audit, :to => :active, :after => Proc.new {create_active_notice; set_applied_at }
     end
 
     #审批失败
@@ -107,6 +112,14 @@ class Order < ActiveRecord::Base
 
   def can_edit?
      self.wait? || self.failed?
+  end
+
+  def set_apply_at
+    self.update apply_at: DateTime.now
+  end
+
+  def set_applied_at
+    self.update applied_at: DateTime.now
   end
 
   # 通知项目经理审批

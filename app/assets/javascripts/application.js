@@ -20,6 +20,7 @@
 //= require plupload/js/plupload.dev
 //= require select2-full
 //= require icheck
+//= require 'china_city/jquery.china_city'
 
 
 $.fn.datepicker.dates['zh-cn'] = {
@@ -46,14 +47,13 @@ var initPage = function () {
         onUnCheck: function () {
         }
     });
-
+    $('.datepicker').datepicker({
+        autoclose: true,
+        language: 'zh-cn'
+    });
 
 };
 
-$('.datepicker').datepicker({
-    autoclose: true,
-    language: 'zh-cn'
-});
 
 // 在线预览office pdf
 function show_file(e){

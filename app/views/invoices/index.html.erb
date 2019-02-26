@@ -1,0 +1,14 @@
+<%= render 'projects/header' %>
+<div class="row" id="sale-list">
+  <div class="col-md-10">
+    <!-- /.box-header -->
+    <div>
+      <%= render 'projects/invoices_item' %>
+    </div>
+    <div>
+      <div class="pull-right no-margin">
+        <%= link_to '返回', project_path(@project), class: 'btn btn-primary', style: 'margin-left:20px;' %>
+      </div>
+    </div>
+  </div>
+</div>

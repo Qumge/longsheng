@@ -30,21 +30,6 @@
         }
     }
 
-    function apply_invoice(invoice_id){
-        if(confirm('申请后不可变更，确认申请吗？')){
-            showSpinner();
-            $.ajax({
-                type: 'POST',
-                url: '<%= invoice_apply_invoices_path %>',
-                data: {invoice_id: invoice_id},
-                dataType: 'script',
-                success: function (data) {
-
-                }
-            })
-        }
-    }
-
     //回款确认
     function payment(){
         if($('#payment').val()){
@@ -61,7 +46,7 @@
                 })
             }
         }else{
-            alert('请录入付款形式！');
+            alert('无金额');
         }
 
     }
@@ -248,9 +233,11 @@
       <!--批量订单-->
       <%= render 'projects/process/order' if @project.can_view? :order %>
       <!--开票申请-->
-      <%= render 'projects/process/invoice' if @project.can_view? :invoice %>
+      <%#= render 'projects/process/invoice' if @project.can_view? :invoice %>
       <!--进度款-->
       <%= render 'projects/process/process_payment' if @project.can_view? :process_payment %>
+      <!--结束发货-->
+      <%= render 'projects/process/shipment_ended' if @project.can_view? :shipment_ended %>
       <!--结算款-->
       <%= render 'projects/process/settlement' if @project.can_view? :settlement  %>
       <!--金额确认-->

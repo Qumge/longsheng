@@ -29,7 +29,7 @@ RailsAdmin.config do |config|
   # config.show_gravatar = true
   #
   config.main_app_name = ["龙胜", "工程"]
-  config.included_models = ["Resource", 'Role', 'User', 'Organization']
+  config.included_models = ["Resource", 'Role', 'User', 'Organization', 'Company', 'Category']
 
   config.model 'User' do
     label_plural "用户"
@@ -99,6 +99,22 @@ RailsAdmin.config do |config|
 
   end
 
+  config.model 'Company' do
+    label_plural "战略合作方"
+    field :name do
+      label '公司名'
+    end
+    field :desc do
+      label '简介'
+    end
+  end
+
+  config.model 'Category' do
+    label_plural "产品品类"
+    field :name do
+      label '品类名'
+    end
+  end
 
 
 

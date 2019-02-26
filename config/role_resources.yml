@@ -75,6 +75,7 @@ group_admin:
     index: 代理商-列表
   invoices:
     show: 开票-详情
+    index: 开票-列表
 normal_admin:
   sales:
     destroy: 价格体系-删除
@@ -152,6 +153,7 @@ normal_admin:
     index: 代理商-列表
   invoices:
     show: 开票-详情
+    index: 开票-列表
 regional_manager:
   costs:
     index: 费用-列表
@@ -199,6 +201,7 @@ regional_manager:
     new: 开票-新建界面
     show: 开票-详情
     invoice_apply: 开票-申请
+    index: 开票-列表
   contracts:
     show: 战略合同-详情
     index: 战略合同-列表
@@ -266,6 +269,7 @@ project_manager:
     new: 开票-新建界面
     show: 开票-详情
     invoice_apply: 开票-申请
+    index: 开票-列表
   contracts:
     show: 战略合同-详情
     index: 战略合同-列表
@@ -324,6 +328,7 @@ project_user:
     new: 开票-新建界面
     show: 开票-详情
     invoice_apply: 开票-申请
+    index: 开票-列表
   costs:
     index: 费用-列表
   contracts:
@@ -380,6 +385,7 @@ agency:
     new: 开票-新建界面
     show: 开票-详情
     invoice_apply: 开票-申请
+    index: 开票-列表
   trains:
     index: 培训资料-列表
   manage_orders:

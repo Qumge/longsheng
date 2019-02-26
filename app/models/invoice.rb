@@ -3,6 +3,8 @@
 # Table name: invoices
 #
 #  id             :integer          not null, primary key
+#  applied_at     :datetime
+#  apply_at       :datetime
 #  invoice_status :string(255)
 #  no             :string(255)
 #  created_at     :datetime         not null
@@ -18,14 +20,16 @@ class Invoice < ActiveRecord::Base
   belongs_to :project
   belongs_to :user
   has_many :audits, -> {where(model_type: 'Invoice')}, foreign_key: :model_id
+  has_one :invoice_file, -> {where(model_type: 'invoice')}, class_name: 'Attachment', foreign_key: :model_id
+  after_create :set_no
 
-  STATUS = {wait: '新建', apply: '已申请', applied: '已通过申请', failed: '审核失败', sended: '已发送快递'}
+  STATUS = {wait: '新建', apply: '已申请', applied: '已通过申请', failed: '审核失败', sended: '已开票'}
   aasm :invoice_status do
     state :wait, :initial => true
     state :apply, :applied, :failed, :sended
     #申请
     event :do_apply do
-      transitions :from => [:wait, :failed], :to => :apply, :after => Proc.new {create_apply_notice}
+      transitions :from => [:wait, :failed], :to => :apply, :after => Proc.new {create_apply_notice; set_apply_at}
     end
 
     event :do_failed do
@@ -33,7 +37,7 @@ class Invoice < ActiveRecord::Base
     end
 
     event :do_applied do
-      transitions :from => [:apply], :to => :applied, :after => Proc.new {create_applied_notice}
+      transitions :from => [:apply], :to => :applied, :after => Proc.new {create_applied_notice; set_applied_at}
     end
 
     event :do_sended do
@@ -55,8 +59,12 @@ class Invoice < ActiveRecord::Base
     '#NO.' + id.to_s.rjust(6, '0')
   end
 
+  def set_no
+    self.update no: invoice_no
+  end
+
   def can_edit?
-    project.can_do? :invoice
+    ['wait', 'failed'].include? self.invoice_status
   end
 
   def create_apply_notice
@@ -90,6 +98,14 @@ class Invoice < ActiveRecord::Base
 
   def get_status
     Invoice::STATUS[self.invoice_status.to_sym]
+  end
+
+  def set_apply_at
+    self.update apply_at: DateTime.now
+  end
+
+  def set_applied_at
+    self.update applied_at: DateTime.now
   end
 
   def audit_failed_reason

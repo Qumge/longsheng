@@ -6,6 +6,18 @@
   <%= simple_form_for(@order, html: {class: 'form-horizontal group_form', onkeydown: "if(event.keyCode==13)return false;"}, wrapper: :horizontal_form) do |f| %>
     <div class="modal-body" >
       <%= f.input :payment, label: '进度款' %>
+      <div class="form-group row optional order_payment_at form-group-valid">
+        <label class="col-sm-3 col-form-label float optional" for="order_payment_at">回款时间</label>
+        <div class="col-sm-9">
+          <div class="input-group date">
+            <div class="input-group-addon">
+              <i class="fa fa-calendar"></i>
+            </div>
+            <input type="text" class="form-control pull-right datepicker readonly" value='<%=simple_time @order.payment_at %>' id="order_payment_at" name="order[payment_at]" readonly>
+          </div>
+          <div class="invalid-feedback"><%= @order.errors.messages[:payment_at].first if @order.errors.messages[:payment_at].present? %></div>
+        </div>
+      </div>
     </div>
   <% end %>
 
@@ -37,7 +49,11 @@
                 }
             });
 
-        })
+        });
+        $('.datepicker').datepicker({
+            autoclose: true,
+            language: 'zh-cn'
+        });
     });
 </script>
 

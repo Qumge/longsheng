@@ -3,37 +3,36 @@
     padding: 2px;
   }
 </style>
-  <i class="fa fa-shopping-cart bg-orange"></i>
+<script type="text/javascript">
+    function apply_invoice(invoice_id){
+        if(confirm('申请后不可变更，确认申请吗？')){
+            showSpinner();
+            $.ajax({
+                type: 'POST',
+                url: '<%= invoice_apply_invoices_path %>',
+                data: {invoice_id: invoice_id},
+                dataType: 'script',
+                success: function (data) {
 
-  <div class="timeline-item">
-    <div class="timeline-body" id="invoice_timeline">
-      <div class="box box-default collapsed-box" style="margin-bottom: 5px;">
-        <div class="box-header with-border">
-          <h4 class="box-title" style="font-size: 16px;">
-            <% if can? :new, :invoices %>
-            <%= link_to '开票申请', new_invoice_path(@project), 'data-toggle' => "modal", 'data-target' => "#global-modal", class: 'btn'  if @project.can_do? :invoice %>
-            <%end %>
-          </h4>
-
-          <div class="box-tools pull-right">
-<!--            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>-->
-<!--            </button>-->
-          </div>
-          <!-- /.box-tools -->
-        </div>
-        <!-- /.box-header -->
-
-        <div class="box-body" style="display: none;border: solid 1px #d2d6de;" >
-
-
-        </div>
-
-      </div>
+                }
+            })
+        }
+    }
+</script>
+<div class="box box-default collapsed-box" style="margin-bottom: 5px;">
+  <div class="box-header with-border">
+    <h4 class="box-title">
+      <% if can?(:edit, :invoices) %>
+        <%= link_to '开票', new_invoice_path, 'data-toggle' => "modal", 'data-target' => "#global-modal", class: 'btn' %>
+      <% end %>
+    </h4>
+  </div>
+</div>
   <% @project.invoices.each do |invoice| %>
       <div class="box box-default collapsed-box" style="margin-bottom: 5px;">
         <div class="box-header with-border">
           <h4 class="box-title">票号<%= invoice.invoice_no %>
-            <% if can?(:edit, :invoices) && invoice.can_edit? %>
+            <% if can?(:edit, :invoices) %>
             <%= link_to '编辑', edit_invoice_path(@project, invoice_id: invoice.id), 'data-toggle' => "modal", 'data-target' => "#global-modal", class: 'btn' if invoice.can_edit? %>
             <% end %>
           </h4>
@@ -57,7 +56,7 @@
                 <b>合计：</b><%= invoice.total_price %>
                 <span style="text-align: right; float: right">
                 <% if can? :invoice_apply, :invoices %>
-                    <%= link_to '申请', 'JavaScript:void(0)', onclick: "apply_invoice(#{invoice.id})",class: 'btn btn-success btn-xs' if @project.can_do?(:invoice) && invoice.may_do_apply? %>
+                    <%= link_to '申请', 'JavaScript:void(0)', onclick: "apply_invoice(#{invoice.id})",class: 'btn btn-success btn-xs' if invoice.may_do_apply? %>
                     <%end %>
                 </span>
               </div>
@@ -67,10 +66,3 @@
         <!-- /.box-body -->
       </div>
   <% end %>
-      <div style="text-align: right">
-        <% if can? :step_event, :projects %>
-        <%= link_to '下一步', 'JavaScript:void(0)', onclick: "step_event('done_invoice')",class: 'btn  btn-success btn-sm' if @project.can_do? :invoice %>
-        <%end %>
-      </div>
-    </div>
-  </div>

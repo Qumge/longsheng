@@ -13,7 +13,7 @@
         <i class="fa  fa-building-o"></i>
       </div>
       <%= link_to report_project_path(@project), class: 'small-box-footer' do %>
-        <i class="fa fa-arrow-circle-right"></i>
+        详情  <i class="fa fa-arrow-circle-right"></i>
       <% end %>
     </div>
   </div>
@@ -33,7 +33,7 @@
         <i class="fa fa-user"></i>
       </div>
       <%= link_to agent_project_path(@project), class: 'small-box-footer' do %>
-        <i class="fa fa-arrow-circle-right"></i>
+        详情 <i class="fa fa-arrow-circle-right"></i>
       <% end %>
     </div>
   </div>
@@ -58,6 +58,25 @@
     </div>
   </div>
   <%end %>
+
+  <% if can? :index, :invoices %>
+    <div class="col-lg-3 col-xs-6">
+      <!-- small box -->
+      <div class="small-box bg-red">
+        <div class="inner">
+          <h4>开票</h4>
+
+          <p style="height: 13px;"></p>
+        </div>
+        <div class="icon">
+          <i class="fa   fa-credit-card"></i>
+        </div>
+        <%= link_to invoices_path, class: 'small-box-footer' do %>
+          详情 <i class="fa fa-arrow-circle-right"></i>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
 
 
 
