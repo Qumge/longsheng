@@ -15,7 +15,6 @@ audits:
   failed: '审批-打回'
   invoices: '审批-开票'
   invoice_success: '审批-开票确认'
-  invoice_sended: '审批-发开票快递'
 competitors:
   index: '竞品信息-列表'
   new: '竞品信息-上传界面'
@@ -58,6 +57,9 @@ manage_orders:
   show: '订单-详情'
   edit_payment: '订单-录入进度款界面'
   update_payment: '订单-录入进度款'
+manage_invoices:
+  index: '开票管理-列表'
+  upload_file: '开票管理-上传票据'
 notices:
   index: '消息通知-列表'
   check: '消息通知-标记'

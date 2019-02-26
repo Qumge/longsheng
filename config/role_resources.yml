@@ -29,6 +29,9 @@ group_admin:
     index: 订单管理-列表
     edit_payment: 订单-录入进度款界面
     update_payment: 订单-录入进度款
+  manage_invoices:
+    index: 开票管理-列表
+    upload_file: 开票管理-上传票据
   costs:
     destroy: 费用-删除
     update: 费用-编辑
@@ -69,7 +72,6 @@ group_admin:
     index: 审批-操作台
     invoices: 审批-开票
     invoice_success: 审批-开票确认
-    invoice_sended: 审批-发开票快递
   agents:
     show: 代理商-详情
     index: 代理商-列表
@@ -107,6 +109,9 @@ normal_admin:
     index: 订单管理-列表
     edit_payment: 订单-录入进度款界面
     update_payment: 订单-录入进度款
+  manage_invoices:
+    index: 开票管理-列表
+    upload_file: 开票管理-上传票据
   costs:
     destroy: 费用-删除
     update: 费用-编辑
@@ -147,7 +152,6 @@ normal_admin:
     index: 审批-操作台
     invoices: 审批-开票
     invoice_success: 审批-开票确认
-    invoice_sended: 审批-发开票快递
   agents:
     show: 代理商-详情
     index: 代理商-列表
