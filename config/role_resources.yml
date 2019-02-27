@@ -12,6 +12,8 @@ group_admin:
     payment: 项目动态-回款金额确认
     index: 项目-列表
     show: 项目-详情
+    order_import: 项目-批量订单界面
+    do_import: 项目-批量导入订单
   products:
     show: 产品-详情
     update: 产品-编辑
@@ -94,6 +96,8 @@ normal_admin:
     payment: 项目动态-回款金额确认
     index: 项目-列表
     show: 项目-详情
+    order_import: 项目-批量订单界面
+    do_import: 项目-批量导入订单
   products:
     show: 产品-详情
     update: 产品-编辑

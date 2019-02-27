@@ -96,6 +96,8 @@ projects:
   agent: '项目-代理商'
   report: '项目-报备'
   sales: '项目-价格体系'
+  order_import: '项目-批量订单界面'
+  do_import: '项目-批量导入订单'
 reports:
   new: '项目报备-新建界面'
   create: '项目报备-新建'

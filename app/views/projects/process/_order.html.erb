@@ -19,8 +19,8 @@
 
         <div class="box-header with-border">
           <div class="pull-right">
-            <% if can? :import, :products %>
-              <small><%= link_to '批量导入', import_products_path , class: 'font-a label bg-green', 'data-toggle' => "modal", 'data-target' => "#global-modal" %></small>
+            <% if can? :order_import, :projects %>
+              <small><%= link_to '批量导入', order_import_project_path(@project) , class: 'font-a label bg-green', 'data-toggle' => "modal", 'data-target' => "#global-modal" if @project.can_do? :order %></small>
             <% end %>
           </div>
           <h4 class="box-title">

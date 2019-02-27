@@ -1,5 +1,7 @@
 class ProjectsController < ApplicationController
-  before_action :set_project, only: [:show, :upload, :update_agency, :edit_information, :update_information, :delete_attachment, :payment, :done, :step_event, :agent, :sales, :report]
+  before_action :set_project, only: [:show, :upload, :update_agency, :edit_information, :update_information,
+                                     :delete_attachment, :payment, :done, :step_event, :agent, :sales, :report,
+                                     :order_import, :do_import]
   before_action :set_uptoken, only: [:show, :upload, :update_agency, :update_information, :delete_attachment, :payment, :done, :step_event]
   include ApplicationHelper
   def index
@@ -110,6 +112,19 @@ class ProjectsController < ApplicationController
 
   def sales
     @products = Product.all.page(params[:page]).per(Settings.per_page)
+  end
+
+  def order_import
+    render layout: false
+  end
+
+  def do_import
+    begin
+      Import::OrderImporter.import(params[:file].path, params: {project: @project, user: current_user}) if params[:file]
+      redirect_to project_path(@project), notice: '导入成功！'
+    rescue => e
+      redirect_to project_path(@project), alert: e.message
+    end
   end
 
   private

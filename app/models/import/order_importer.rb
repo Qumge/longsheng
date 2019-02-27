@@ -2,54 +2,59 @@ class Import::OrderImporter < ActiveImporter::Base
   imports Product
   imports Order
   imports OrderProduct
+  imports Sale
   transactional
 
   on :import_started do
     @row_count = 2
-    logger.info "开始导入产品信息信息...."
+    @normal_order = Order.create project: params[:project], user: params[:user], order_type: 'normal'
+    @bargains_order = Order.create project: params[:project], user: params[:user], order_type: 'bargains'
+    logger.info "开始导入订单信息信息...."
   end
   column '产品代码'
   column '产品名'
-  column '产品型号'
-  column '产品类型'
-  column '价格'
-  column '单位'
-  column '品牌'
-  column '规格尺寸'
-  column '市场价'
-  column '集采价'
-  column '运费'
-  column '外观颜色'
-  column '备注'
+  column '数量'
+  column '战略价'
+  column '单价（特价）'
+  column '金额'
+  column '备注/特殊要求'
 
 
 
   fetch_model do
-    product = Product.find_or_initialize_by no: row['产品代码']
+    product = Product.find_by no: row['产品代码']
+    raise "第#{row_count}行 #{row['产品代码']}不存在。" unless product.present?
+    raise "第#{row_count}行 【数量】不存在。" unless row['数量'].present? && row['数量'].to_i > 0
+    raise "第#{row_count}行 【战略价】或【单价（特价）】不存在。" unless row['战略价'].present? || row['单价（特价）'].present?
+    raise "第#{row_count}行 【金额】不存在。" unless row['金额'].present?
     product
   end
 
   on :row_processing do
+    project = params[:project]
     product = model
-    category = ProductCategory.find_by name: row['产品类型']
-    raise "第#{row_count}行 #{row['产品类型']}不存在。" unless category.present?
-    product.no = row['产品代码']
-    product.name = row['产品名']
-    product.product_no = row['产品型号']
-    product.product_category = category
-    product.reference_price = row['价格']
-    product.unit = row['单位']
-    product.brand = row['品牌']
-    product.norms = row['规格尺寸']
-    product.market_price = row['市场价']
-    product.acquisition_price = row['集采价']
-    product.freight = row['运费']
-    product.color = row['外观颜色']
-    product.desc = row['备注']
-    unless product.save
+    if row['战略价'].present?
+      sale = Sale.find_by product: product, contract: project.contract
+      raise "第#{row_count}行 战略价不存在或与系统内的战略价不匹配" unless sale.present? && sale.price == row['战略价'].to_f
+      price = sale.price
+      order = @normal_order
+      @normal_order.desc = "#{@normal_order.desc}#{row['备注/特殊要求']}; "
+      order
+    else
+      price = row['单价（特价）'].to_f
+      order = @bargains_order
+      @bargains_order.desc = "#{@bargains_order.desc}#{row['备注/特殊要求']}; "
+    end
+    number = row['数量'].to_i
+    total_price = number * price
+    raise "第#{row_count}行 【金额】计算不正确。" unless  row['金额'].to_f == total_price
+    order_product = OrderProduct.new order: order, product: product, number: number, price: product.default_price(project), total_price: number * product.default_price(project),
+                             discount_price: price, discount_total_price: total_price
+    unless order_product.save
       error = product.errors.messages.first
       raise "第#{row_count}行 #{I18n.t "activerecord.attributes.product.#{error.first.to_s}"}: #{error[1][0].to_s}"
     end
+
   end
 
   on :row_processed do
@@ -65,6 +70,20 @@ class Import::OrderImporter < ActiveImporter::Base
   end
 
   on :import_finished do
+    if @bargains_order.order_products.present?
+      unless @bargains_order.save
+        error = @bargains_order.errors.messages.first
+        raise "#{I18n.t "activerecord.attributes.product.#{error.first.to_s}"}: #{error[1][0].to_s}"
+      end
+    end
+
+    if @normal_order.order_products.present?
+      unless @normal_order.save
+        error = @normal_order.errors.messages.first
+        raise "#{I18n.t "activerecord.attributes.product.#{error.first.to_s}"}: #{error[1][0].to_s}"
+      end
+    end
+
     logger.info "#{@row_count} lines Data imported successfully!"
   end
 

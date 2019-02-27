@@ -124,6 +124,8 @@ Rails.application.routes.draw do
       get :agent
       get :sales
       get :report
+      get :order_import
+      post :do_import
       resources :reports
       resources :orders do
         collection do
