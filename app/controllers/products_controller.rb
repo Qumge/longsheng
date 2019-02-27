@@ -36,6 +36,19 @@ class ProductsController < ApplicationController
     @sales = @product.sales.search_conn(params).page(params[:page]).per(Settings.per_page)
   end
 
+  def import
+    render layout: false
+  end
+
+  def do_import
+    begin
+      Import::ProductImporter.import params[:file].path if params[:file]
+      redirect_to products_path, notice: '导入成功！'
+    rescue => e
+      redirect_to products_path, alert: e.message
+    end
+  end
+
   private
   def set_product
     @product = Product.find_by id: params[:id]
@@ -43,7 +56,8 @@ class ProductsController < ApplicationController
   end
 
   def product_permit
-    params.require('product').permit(:no, :product_no, :unit, :reference_price, :name)
+    params.require('product').permit(:no, :product_no, :unit, :reference_price, :name, :product_category_id, :brand, :norms,
+                                     :market_price, :acquisition_price, :freight, :color, :desc)
   end
 
 end

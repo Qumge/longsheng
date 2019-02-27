@@ -2,15 +2,23 @@
 #
 # Table name: products
 #
-#  id              :integer          not null, primary key
-#  deleted_at      :datetime
-#  name            :string(255)
-#  no              :string(255)
-#  product_no      :string(255)
-#  reference_price :float(24)
-#  unit            :string(255)
-#  created_at      :datetime         not null
-#  updated_at      :datetime         not null
+#  id                  :integer          not null, primary key
+#  acquisition_price   :float(24)
+#  brand               :string(255)
+#  color               :string(255)
+#  deleted_at          :datetime
+#  desc                :text(65535)
+#  freight             :float(24)
+#  market_price        :float(24)
+#  name                :string(255)
+#  no                  :string(255)
+#  norms               :string(255)
+#  product_no          :string(255)
+#  reference_price     :float(24)
+#  unit                :string(255)
+#  created_at          :datetime         not null
+#  updated_at          :datetime         not null
+#  product_category_id :integer
 #
 # Indexes
 #
@@ -21,7 +29,8 @@ class Product < ActiveRecord::Base
   has_many :sales
   has_many :order_products
   has_one :sale, ->(sale) { where("project_id = ?", sale.project_id) }
-  validates_presence_of :no, :product_no, :name, :reference_price
+  belongs_to :product_category
+  validates_presence_of :no, :product_no, :name, :reference_price, :product_category_id
   validates_uniqueness_of :no, if: proc{|product| product.no.present?}
   validates_numericality_of :reference_price, greater_than: 0
 

@@ -277,6 +277,7 @@ class Project < ActiveRecord::Base
     self.update payment: amount
   end
 
+
   def city_name
     ChinaCity.get self.city if self.city.present?
   end

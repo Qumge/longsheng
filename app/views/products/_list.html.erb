@@ -7,17 +7,27 @@
         <% if can? :new, :products %>
           <small><%= link_to '添加产品', new_product_path , class: 'font-a label bg-green', 'data-toggle' => "modal", 'data-target' => "#global-modal" %></small>
         <% end %>
-        <div class="box-tools">
-          <div class="input-group input-group-sm" style="width: 150px;">
-
-            <input type="text" name="table_search" class="form-control pull-right" placeholder="检索" value="<%= params[:table_search] %>">
-
-            <div class="input-group-btn">
-              <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+        <div class="pull-right">
+          <% if can? :import, :products %>
+            <small><%= link_to '批量导入', import_products_path , class: 'font-a label bg-green', 'data-toggle' => "modal", 'data-target' => "#global-modal" %></small>
+          <% end %>
+        </div>
+      </div>
+      <div class="box-tools">
+        <div class="input-group input-group-sm">
+          <div class="pull-right">
+            <div class="col-xs-12">
+              <input type="text" name="table_search" class="form-control" placeholder="检索" value="<%= params[:table_search] %>">
             </div>
+          </div>
+
+          <div class="input-group-btn">
+            <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
           </div>
         </div>
       </div>
+
+
       <% end %>
       <!-- /.box-header -->
       <div class="box-body">

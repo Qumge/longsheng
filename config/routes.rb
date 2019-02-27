@@ -149,6 +149,10 @@ Rails.application.routes.draw do
     member do
       get :contract_sales
     end
+    collection do
+      get :import
+      post :do_import
+    end
   end
 
   resources :audits do

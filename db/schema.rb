@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190226080805) do
+ActiveRecord::Schema.define(version: 20190226101245) do
 
   create_table "agents", force: :cascade do |t|
     t.string   "username",     limit: 255
@@ -190,15 +190,30 @@ ActiveRecord::Schema.define(version: 20190226080805) do
   add_index "organizations", ["ancestry"], name: "index_organizations_on_ancestry", using: :btree
   add_index "organizations", ["deleted_at"], name: "index_organizations_on_deleted_at", using: :btree
 
+  create_table "product_categories", force: :cascade do |t|
+    t.string   "name",       limit: 255
+    t.text     "desc",       limit: 65535
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+  end
+
   create_table "products", force: :cascade do |t|
-    t.string   "no",              limit: 255
-    t.string   "name",            limit: 255
-    t.string   "product_no",      limit: 255
-    t.string   "unit",            limit: 255
-    t.float    "reference_price", limit: 24
-    t.datetime "created_at",                  null: false
-    t.datetime "updated_at",                  null: false
+    t.string   "no",                  limit: 255
+    t.string   "name",                limit: 255
+    t.string   "product_no",          limit: 255
+    t.string   "unit",                limit: 255
+    t.float    "reference_price",     limit: 24
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
     t.datetime "deleted_at"
+    t.string   "brand",               limit: 255
+    t.string   "norms",               limit: 255
+    t.float    "market_price",        limit: 24
+    t.float    "acquisition_price",   limit: 24
+    t.float    "freight",             limit: 24
+    t.integer  "product_category_id", limit: 4
+    t.string   "color",               limit: 255
+    t.text     "desc",                limit: 65535
   end
 
   add_index "products", ["deleted_at"], name: "index_products_on_deleted_at", using: :btree

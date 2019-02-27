@@ -19,6 +19,8 @@ group_admin:
     create: 产品-新建
     new: 产品-新建界面
     index: 产品-列表
+    import: 产品-批量导入界面
+    do_import: 产品-批量导入
     contract_sales: 产品-合同价
   notices:
     check: 消息通知-标记
@@ -100,6 +102,8 @@ normal_admin:
     new: 产品-新建界面
     index: 产品-列表
     contract_sales: 产品-合同价
+    import: 产品-批量导入界面
+    do_import: 产品-批量导入
   notices:
     check: 消息通知-标记
     index: 消息通知-列表

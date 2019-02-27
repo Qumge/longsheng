@@ -79,6 +79,8 @@ products:
   update: '产品-编辑'
   show: '产品-详情'
   contract_sales: '产品-合同价'
+  import: '产品-批量导入界面'
+  do_import: '产品-批量导入'
 projects:
   index: '项目-列表'
   new: '项目-立项界面'

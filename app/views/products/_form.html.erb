@@ -5,11 +5,19 @@
   </div>
   <%= simple_form_for(@product, html: {class: 'form-horizontal group_form', onkeydown: "if(event.keyCode==13)return false;"}, wrapper: :horizontal_form) do |f| %>
     <div class="modal-body" >
-      <%= f.input :no, label: '序号' %>
+      <%= f.input :no, label: '产品代码' %>
       <%= f.input :name, label: '产品名' %>
       <%= f.input :product_no, label: '产品型号' %>
+      <%= f.input :product_category_id, as: :select, collection: ProductCategory.all.collect{|p| [p.name, p.id]} %>
       <%= f.input :reference_price, label: '单价' %>
       <%= f.input :unit, label: '单位' %>
+      <%= f.input :brand %>
+      <%= f.input :norms %>
+      <%= f.input :market_price %>
+      <%= f.input :acquisition_price %>
+      <%= f.input :freight %>
+      <%= f.input :color %>
+      <%= f.input :desc %>
     </div>
   <% end %>
 
