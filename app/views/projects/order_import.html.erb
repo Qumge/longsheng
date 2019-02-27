@@ -7,7 +7,6 @@
     <ol>
       <table class="table table-condensed table-bordered">
         <thead>
-        <th>产品代码</th>
         <th>产品名</th>
         <th>数量</th>
         <th>战略价</th>
@@ -17,10 +16,9 @@
         </thead>
         <tbody>
         <td>必填</td>
-        <td>选填</td>
         <td>必填</td>
         <td>选填</td>
-        <td>选填</td>
+        <td>必填</td>
         <td>必填</td>
         <td>选填</td>
         </tbody>
@@ -28,9 +26,9 @@
 
       <ul>
         <li>表格样式如上所示,表头（第一行）必须和上述表格一致</li>
-        <li>【产品代码】为产品的唯一标识，产品必须事先录入到系统当中</li>
+        <li>【产品名】为产品的唯一标识，产品必须事先录入到系统当中</li>
         <li>【战略价】必须事先录入到系统当中</li>
-        <li>同一行【战略价】和【单价】只能选填其中一个, 如果一个表格中即有战略价又有特价，会生成两张不同的订单</li>
+        <li>【单价（特价）】与系统的合同价不一样时会生成特价订单</li>
         <li>表格重复上传会生成新的订单</li>
       </ul>
     </ol>
@@ -40,6 +38,6 @@
 
   <div class="modal-footer">
     <%= submit_tag '保存', class: 'btn btn-primary', data: { disable_with: "处理中..." } %>
-    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+    <button type="button" class="btn btn-default" data-dismiss="modal">返回</button>
   </div>
 <% end %>

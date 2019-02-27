@@ -30,8 +30,9 @@ class Product < ActiveRecord::Base
   has_many :order_products
   has_one :sale, ->(sale) { where("project_id = ?", sale.project_id) }
   belongs_to :product_category
-  validates_presence_of :no, :product_no, :name, :reference_price, :product_category_id
+  validates_presence_of :no, :product_no, :name, :product_category_id#, :reference_price
   validates_uniqueness_of :no, if: proc{|product| product.no.present?}
+  validates_uniqueness_of :name, if: proc{|product| product.no.present?}
   validates_numericality_of :reference_price, greater_than: 0
 
 
@@ -41,7 +42,7 @@ class Product < ActiveRecord::Base
       sale = project.contract.sales.find_by(product_id: self.id)
       price = sale.price if sale.present?
     end
-    price
+    price.to_f
   end
 
   class << self

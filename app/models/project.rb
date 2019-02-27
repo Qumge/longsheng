@@ -58,7 +58,7 @@ class Project < ActiveRecord::Base
   belongs_to :create_user, class_name: 'User', foreign_key: :create_id
   has_one :audit, -> {where(model_type: 'Project')}, foreign_key: :model_id
   after_create :create_project_manager_notice
-  validates_presence_of :name, :company_id, :category_id, :address, :city, :supplier_type
+  validates_presence_of :name, :company_id, :contract_id, :category_id, :address, :city, :supplier_type
   validates_numericality_of :estimate, if: Proc.new{|p| p.estimate.present?}
   validates_uniqueness_of :name
   has_one :project_contract, -> {where(model_type: 'contract')}, class_name: 'Attachment', foreign_key: :model_id
