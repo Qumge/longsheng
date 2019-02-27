@@ -2,21 +2,22 @@
 #
 # Table name: orders
 #
-#  id           :integer          not null, primary key
-#  applied_at   :datetime
-#  apply_at     :datetime
-#  deleted_at   :datetime
-#  desc         :string(255)
-#  no           :string(255)
-#  order_status :string(255)
-#  order_type   :string(255)
-#  payment      :float(24)        default(0.0)
-#  payment_at   :datetime
-#  created_at   :datetime         not null
-#  updated_at   :datetime         not null
-#  payment_id   :integer
-#  project_id   :integer
-#  user_id      :integer
+#  id              :integer          not null, primary key
+#  applied_at      :datetime
+#  apply_at        :datetime
+#  deleted_at      :datetime
+#  desc            :string(255)
+#  no              :string(255)
+#  order_status    :string(255)
+#  order_type      :string(255)
+#  payment         :float(24)        default(0.0)
+#  payment_at      :datetime
+#  payment_percent :float(24)
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
+#  payment_id      :integer
+#  project_id      :integer
+#  user_id         :integer
 #
 # Indexes
 #
@@ -206,11 +207,20 @@ class Order < ActiveRecord::Base
   end
 
   def check_payment
-    self.compute_payment if self.payment_changed?
+    if self.payment_changed?
+      self.compute_payment
+      self.compute_percent
+    end
   end
 
   def compute_payment
     self.project.compute_payment
+  end
+
+  def compute_percent
+    if real_total_price.present?
+      self.update_columns payment_percent: self.payment / self.real_total_price
+    end
   end
 
 

@@ -16,7 +16,13 @@
   <div class="timeline-item">
     <div class="timeline-body">
       <div class="box box-default collapsed-box" style="margin-bottom: 5px;">
+
         <div class="box-header with-border">
+          <div class="pull-right">
+            <% if can? :import, :products %>
+              <small><%= link_to '批量导入', import_products_path , class: 'font-a label bg-green', 'data-toggle' => "modal", 'data-target' => "#global-modal" %></small>
+            <% end %>
+          </div>
           <h4 class="box-title">
             <% if can? :new, :orders %>
             <%= link_to '添加新订单', new_order_path(@project, type: 'normal'), 'data-toggle' => "modal", 'data-target' => "#global-modal", class: 'btn' if @project.can_do? :order %>

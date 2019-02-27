@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190226101245) do
+ActiveRecord::Schema.define(version: 20190227035735) do
 
   create_table "agents", force: :cascade do |t|
     t.string   "username",     limit: 255
@@ -161,20 +161,21 @@ ActiveRecord::Schema.define(version: 20190226101245) do
   add_index "order_products", ["deleted_at"], name: "index_order_products_on_deleted_at", using: :btree
 
   create_table "orders", force: :cascade do |t|
-    t.integer  "project_id",   limit: 4
-    t.string   "order_type",   limit: 255
-    t.datetime "created_at",                             null: false
-    t.datetime "updated_at",                             null: false
-    t.integer  "user_id",      limit: 4
-    t.string   "desc",         limit: 255
-    t.string   "order_status", limit: 255
-    t.string   "no",           limit: 255
+    t.integer  "project_id",      limit: 4
+    t.string   "order_type",      limit: 255
+    t.datetime "created_at",                                null: false
+    t.datetime "updated_at",                                null: false
+    t.integer  "user_id",         limit: 4
+    t.string   "desc",            limit: 255
+    t.string   "order_status",    limit: 255
+    t.string   "no",              limit: 255
     t.datetime "deleted_at"
-    t.float    "payment",      limit: 24,  default: 0.0
+    t.float    "payment",         limit: 24,  default: 0.0
     t.datetime "payment_at"
-    t.integer  "payment_id",   limit: 4
+    t.integer  "payment_id",      limit: 4
     t.datetime "apply_at"
     t.datetime "applied_at"
+    t.float    "payment_percent", limit: 24
   end
 
   add_index "orders", ["deleted_at"], name: "index_orders_on_deleted_at", using: :btree
@@ -258,6 +259,7 @@ ActiveRecord::Schema.define(version: 20190226101245) do
     t.datetime "shipment_end"
     t.integer  "company_id",        limit: 4
     t.integer  "category_id",       limit: 4
+    t.float    "payment_percent",   limit: 24
   end
 
   add_index "projects", ["deleted_at"], name: "index_projects_on_deleted_at", using: :btree

@@ -62,7 +62,7 @@ class User < ActiveRecord::Base
   end
 
   def view_projects
-    projects = Project.includes(:owner, :audit).order('created_at desc')
+    projects = Project.includes(:owner, :audit)
     # 后台人员权限 可以查看所有项目
     # 大区经理和项目经理能查看当前架构所有的项目
     # 项目专员只能查看自己创建的项目

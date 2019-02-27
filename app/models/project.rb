@@ -22,6 +22,7 @@
 #  name              :string(255)
 #  need_payment      :float(24)        default(0.0)
 #  payment           :float(24)        default(0.0)
+#  payment_percent   :float(24)
 #  project_status    :string(255)
 #  purchase          :string(255)
 #  purchase_phone    :string(255)
@@ -266,6 +267,7 @@ class Project < ActiveRecord::Base
     end
     amount
     self.update need_payment: amount
+    compute_payment_percent
   end
 
   # 已经回款金额
@@ -275,6 +277,12 @@ class Project < ActiveRecord::Base
       amount += order.payment
     end
     self.update payment: amount
+    compute_payment_percent
+  end
+
+  # 计算回款百分比
+  def compute_payment_percent
+    self.update payment_percent: self.payment/self.need_payment if self.need_payment.to_f > 0
   end
 
 
