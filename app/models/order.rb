@@ -108,7 +108,7 @@ class Order < ActiveRecord::Base
   end
 
   def set_no
-    self.no = 'LG#NO.' + self.id.to_s.rjust(6, '0')
+    self.no = 'NO.' + self.id.to_s.rjust(6, '0')
     self.save
   end
 

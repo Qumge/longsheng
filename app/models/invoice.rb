@@ -56,7 +56,7 @@ class Invoice < ActiveRecord::Base
   end
 
   def invoice_no
-    '#NO.' + id.to_s.rjust(6, '0')
+    'NO.' + id.to_s.rjust(6, '0')
   end
 
   def set_no

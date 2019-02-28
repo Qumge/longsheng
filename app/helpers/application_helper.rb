@@ -158,4 +158,26 @@ module ApplicationHelper
     file.file_name.size > 10 ? "#{default_name}_#{simple_time file.created_at}" : file.file_name
   end
 
+  def get_color_class project
+    if project.payment_percent
+      if project.payment_percent >= 0.95
+        'label-success'
+      elsif project.payment_percent >= 0.75
+        'label-info'
+      elsif project.payment_percent >= 0.50
+        'bg-blue'
+      elsif project.payment_percent >= 0.25
+        'label-warning'
+      else
+        'label-danger'
+      end
+    else
+
+    end
+  end
+
+  def format_float number
+   number.present? ?  "#{(number * 100).ceil 2}%" : ''
+  end
+
 end

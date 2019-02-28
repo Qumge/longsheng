@@ -290,6 +290,36 @@ class Project < ActiveRecord::Base
     ChinaCity.get self.city if self.city.present?
   end
 
+  class << self
+    def search_conn params
+      projects = self.all
+      if params[:table_search].present?
+        projects = projects.joins(:owner).where('projects.name like ? or projects.a_name like ? or users.name like ?', "%#{params[:table_search]}%", "%#{params[:table_search]}%", "%#{params[:table_search]}%")
+      end
+      if params[:payment_percent].present?
+        from = 0
+        to = 10000
+        case params[:payment_percent]
+        when 'danger'
+          to = 0.25
+        when 'warning'
+          from = 0.25
+          to = 0.5
+        when 'blue'
+          from = 0.5
+          to = 0.75
+        when 'info'
+          from = 0.75
+          to = 0.95
+        when 'green'
+          from = 0.95
+        end
+        projects = projects.where('projects.payment_percent >= ? and projects.payment_percent < ?', from, to)
+      end
+      projects
+    end
+  end
+
 
   private
 

@@ -33,6 +33,8 @@ group_admin:
     index: 订单管理-列表
     edit_payment: 订单-录入进度款界面
     update_payment: 订单-录入进度款
+    deliver_message: 订单-提醒收货界面
+    send_message: 订单-提醒收货
   manage_invoices:
     index: 开票管理-列表
     upload_file: 开票管理-上传票据
@@ -117,6 +119,8 @@ normal_admin:
     index: 订单管理-列表
     edit_payment: 订单-录入进度款界面
     update_payment: 订单-录入进度款
+    deliver_message: 订单-提醒收货界面
+    send_message: 订单-提醒收货
   manage_invoices:
     index: 开票管理-列表
     upload_file: 开票管理-上传票据
