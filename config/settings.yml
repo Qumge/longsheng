@@ -1,1 +1,7 @@
 per_page: 15
+submail:
+  message:
+    appid: '32549'
+    appkey: '0bfb4f86f3d8685a3a9b305296df8d46'
+    template_id: '6mjsM4'
+    message_x_send_url: 'https://api.submail.cn/message/xsend.json'

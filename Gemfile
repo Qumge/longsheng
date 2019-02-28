@@ -55,7 +55,8 @@ gem 'bower-rails', '~> 0.10.0'                                # node 包管理
 gem 'aasm'                                                    # 状态管理
 gem "paranoia", "~> 2.2"                                      # 软删除
 gem 'china_city'                                              # 城市选择
-gem 'active_importer'
+gem 'active_importer'                                         # excel导入
+gem 'rest-client'                                             # http请求
 
 
 

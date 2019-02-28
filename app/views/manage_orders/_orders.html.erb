@@ -133,11 +133,11 @@
               <% end %>
             </td>
             <td align="center">
-              <% if can?(:deliver, :manage_orders) && (order.active? || order.deliver?) %>
-                <a class="btn btn-xs bg-blue" id="<%= order.id %>" href="#">
+              <% if can?(:deliver, :manage_orders) && (order.active? || order.deliver? || order.sign?) %>
+                <a class="btn btn-sm " id="<%= order.id %>" href="#">
                   <i class="fa fa-plus"></i>
                   <span>
-                    <%= order.active? ? '发货' : '重录发货单' %>
+                    <%= order.active? ? '发货' : '发货单' %>
                   </span>
                 </a>
                 <script type="text/javascript">
@@ -146,9 +146,15 @@
                     var uploader = qiniu.uploader(option);
                 </script>
               <% end %>
-              <% if can?(:edit_payment, :orders) %>
-                <%= link_to edit_payment_manage_order_path(order), 'data-toggle' => "modal", 'data-target' => "#global-modal", class: 'btn btn-success btn-xs' do %>
-                  <i class="fa fa-edit"></i>录入进度款
+              <% if can?(:edit_payment, :orders) && (order.deliver? || order.sign?) %>
+                <%= link_to edit_payment_manage_order_path(order), 'data-toggle' => "modal", 'data-target' => "#global-modal", class: 'btn  btn-sm' do %>
+                  <i class="fa fa-money"></i>进度款
+                <% end %>
+              <% end %>
+
+              <% if can?(:deliver_message, :orders) && (order.deliver? || order.sign?) %>
+                <%= link_to deliver_message_manage_order_path(order), 'data-toggle' => "modal", 'data-target' => "#global-modal", class: 'btn  btn-sm' do %>
+                  <i class="fa  fa-send-o"></i>提醒收货
                 <% end %>
               <% end %>
             </td>

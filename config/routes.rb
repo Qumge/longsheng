@@ -183,6 +183,8 @@ Rails.application.routes.draw do
     member do
       get :edit_payment
       patch :update_payment
+      get :deliver_message
+      post :send_message
     end
   end
 

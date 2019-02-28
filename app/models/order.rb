@@ -37,6 +37,7 @@ class Order < ActiveRecord::Base
   has_one :deliver_file, -> {where(model_type: 'deliver')}, class_name: 'Attachment', foreign_key: :model_id
   has_one :sign_file, -> {where(model_type: 'sign')}, class_name: 'Attachment', foreign_key: :model_id
   has_many :audits, -> {where(model_type: 'Order')}, foreign_key: :model_id
+  has_many :delivers
   validates_numericality_of :payment, greater_than_or_equal_to: 0
   validates_presence_of :payment_at, if: proc{|order| order.payment.present? && order.payment > 0}
   after_update :check_payment

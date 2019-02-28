@@ -371,6 +371,7 @@ DEPENDENCIES
   rails_admin (>= 1.0.0.rc)
   rails_admin_nestable (~> 0.3.2)
   rails_config (~> 0.4.2)
+  rest-client
   sass-rails (= 5.0.6)
   select2-rails (= 4.0.3)
   simple_form

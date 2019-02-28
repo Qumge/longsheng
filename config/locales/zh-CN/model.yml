@@ -113,6 +113,12 @@ zh-CN:
         name: '文件名'
       order:
         payment: '进度款'
+      deliver:
+        name: '物流联系人'
+        number: '货物件数'
+        phone: '联系电话'
+        phone_to: '接收人电话'
+
 
 
 
