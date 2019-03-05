@@ -1,0 +1,37 @@
+<div class="box-body">
+  <table class="table table-bordered">
+    <tr>
+      <th>时间</th>
+      <th>销售人员</th>
+      <th>下单金额</th>
+      <th>发货金额</th>
+      <th>回款金额</th>
+    </tr>
+    <% if @users_array.present? %>
+      <% @users_array.each do |data| %>
+        <% data.each do |date, user_data| %>
+          <% user_data.each do |user, amount| %>
+            <tr>
+              <td><%= date %></td>
+              <td><%= user.name %></td>
+              <td><%= (@applied_hash[date].present? && @applied_hash[date][user].present?) ? @applied_hash[date][user] : 0 %></td>
+              <td><%= (@deliver_hash[date].present? && @deliver_hash[date][user].present?) ? @deliver_hash[date][user] : 0 %></td>
+              <td><%= amount %></td>
+            </tr>
+          <% end %>
+        <% end %>
+      <% end %>
+    <% else %>
+      <tr>
+        <td colspan="5" align="center">没有可显示的内容</td>
+      </tr>
+    <% end %>
+
+  </table>
+</div>
+<div class="box-footer clearfix">
+  <div class="pull-right pagination-sm no-margin">
+    <%= paginate @users_array, remote: true, params: params%>
+  </div>
+
+</div>

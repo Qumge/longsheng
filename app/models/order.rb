@@ -6,6 +6,7 @@
 #  applied_at      :datetime
 #  apply_at        :datetime
 #  deleted_at      :datetime
+#  deliver_at      :datetime
 #  desc            :string(255)
 #  no              :string(255)
 #  order_status    :string(255)
@@ -13,6 +14,7 @@
 #  payment         :float(24)        default(0.0)
 #  payment_at      :datetime
 #  payment_percent :float(24)
+#  total_price     :float(24)
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
 #  payment_id      :integer
@@ -29,6 +31,7 @@ class Order < ActiveRecord::Base
   include AASM
   belongs_to :project
   has_many :order_products
+  has_and_belongs_to_many :products, join_table: 'order_products'
   has_many :order_invoices
   belongs_to :user
   after_create :set_no
@@ -64,7 +67,7 @@ class Order < ActiveRecord::Base
 
     # 发货
     event :do_deliver do
-      transitions :from => :active, :to => :deliver, :after => Proc.new {compute_need_payment; create_sign_notice }
+      transitions :from => :active, :to => :deliver, :after => Proc.new {compute_need_payment; set_deliver_at; create_sign_notice }
     end
 
     # 签收
@@ -117,11 +120,15 @@ class Order < ActiveRecord::Base
   end
 
   def set_apply_at
-    self.update apply_at: DateTime.now
+    self.update apply_at: DateTime.now, total_price: real_total_price
   end
 
   def set_applied_at
     self.update applied_at: DateTime.now
+  end
+
+  def set_deliver_at
+    self.update deliver_at: DateTime.now
   end
 
   # 通知项目经理审批

@@ -3,10 +3,12 @@
 # Table name: invoices
 #
 #  id             :integer          not null, primary key
+#  amount         :float(24)
 #  applied_at     :datetime
 #  apply_at       :datetime
 #  invoice_status :string(255)
 #  no             :string(255)
+#  sended_at      :datetime
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
 #  project_id     :integer
@@ -41,7 +43,7 @@ class Invoice < ActiveRecord::Base
     end
 
     event :do_sended do
-      transitions :from => [:applied], :to => :sended, :after => Proc.new {create_sended_notice}
+      transitions :from => [:applied], :to => :sended, :after => Proc.new {create_sended_notice; set_sended_at}
     end
 
   end
@@ -101,11 +103,15 @@ class Invoice < ActiveRecord::Base
   end
 
   def set_apply_at
-    self.update apply_at: DateTime.now
+    self.update apply_at: DateTime.now, amount: total_price
   end
 
   def set_applied_at
     self.update applied_at: DateTime.now
+  end
+
+  def set_sended_at
+    self.update sended_at: DateTime.now
   end
 
   def audit_failed_reason

@@ -89,6 +89,13 @@ module ApplicationHelper
         },
         manage_invoices: {
             index: '开票列表'
+        },
+        record_reports: {
+            index: '今日看板',
+            orders: '订单报表',
+            users: '人员业绩报表',
+            projects: '项目报表',
+            invoices: '开票报表'
         }
     }
   end
@@ -178,6 +185,12 @@ module ApplicationHelper
 
   def format_float number
    number.present? ?  "#{(number * 100).ceil 2}%" : ''
+  end
+
+  def page_numbers params
+    params[:page] ||= 1
+    page = params[:page].to_i
+    (page - 1) * Settings.per_page
   end
 
 end

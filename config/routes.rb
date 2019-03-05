@@ -204,6 +204,17 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :record_reports do
+    collection do
+      get 'orders'
+      get 'projects'
+      get 'users'
+      get 'costs'
+      # get 'products'
+      get 'invoices'
+    end
+  end
+
   # match ':controller(/:action(/:id))', :via => :get
   mount ChinaCity::Engine => '/china_city'
 

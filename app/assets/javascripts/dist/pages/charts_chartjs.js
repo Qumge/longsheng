@@ -196,7 +196,7 @@ $(function () {
         legendTemplate          : '<ul class="<%=name.toLowerCase()%>-legend"><% for (var i=0; i<datasets.length; i++){%><li><span style="background-color:<%=datasets[i].fillColor%>"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>',
         //Boolean - whether to make the chart responsive
         responsive              : true,
-        maintainAspectRatio     : true
+        maintainAspectRatio     : true.
     }
 
     barChartOptions.datasetFill = false

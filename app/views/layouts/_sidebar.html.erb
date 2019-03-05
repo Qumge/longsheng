@@ -106,6 +106,63 @@
       </li>
       <% end %>
 
+
+      <% if can? :index, :record_reports %>
+      <li class="treeview <%= active_class params, 'record_reports' %>">
+        <a href="#">
+          <i class="fa fa-bar-chart"></i>
+          <span>报表</span>
+          <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+        </a>
+        <ul class="treeview-menu">
+          <li class="<%= active_class params, 'record_reports', 'index' %>">
+            <%= link_to record_reports_path do %>
+              <i class="fa  fa-pie-chart"></i> <span>今日看板</span>
+            <% end %>
+          </li>
+          <% if can? :orders, :record_reports %>
+          <li class="<%= active_class params, 'record_reports', 'orders' %>">
+            <%= link_to orders_record_reports_path do %>
+              <i class="fa fa-shopping-cart"></i> <span>订单</span>
+            <% end %>
+          </li>
+          <% end %>
+          <% if can? :orders, :record_reports %>
+            <li class="<%= active_class params, 'record_reports', 'invoices' %>">
+              <%= link_to invoices_record_reports_path do %>
+                <i class="fa fa-rmb"></i> <span>开票</span>
+              <% end %>
+            </li>
+          <% end %>
+          <% if can? :projects, :record_reports %>
+            <li class="<%= active_class params, 'record_reports', 'projects' %>">
+              <%= link_to projects_record_reports_path do %>
+                <i class="fa fa-building-o"></i> <span>项目</span>
+              <% end %>
+            </li>
+          <% end %>
+
+          <% if can? :users, :record_reports %>
+            <li class="<%= active_class params, 'record_reports', 'users' %>">
+              <%= link_to users_record_reports_path do %>
+                <i class="fa fa-users"></i> <span>人员业绩</span>
+              <% end %>
+            </li>
+          <% end %>
+
+          <% if can? :costs, :record_reports %>
+            <li class="<%= active_class params, 'record_reports', 'costs' %>">
+              <%= link_to costs_record_reports_path do %>
+                <i class="fa fa-money"></i> <span>人员费用</span>
+              <% end %>
+            </li>
+          <% end %>
+
+        </ul>
+      </li>
+      <% end %>
       <% if current_user.has_role? 'super_admin' %>
       <li>
         <%= link_to rails_admin_path do %>

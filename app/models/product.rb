@@ -28,6 +28,7 @@
 class Product < ActiveRecord::Base
   has_many :sales
   has_many :order_products
+  has_and_belongs_to_many :orders, join_table: 'order_products'
   has_one :sale, ->(sale) { where("project_id = ?", sale.project_id) }
   belongs_to :product_category
   validates_presence_of :no, :product_no, :name, :product_category_id#, :reference_price

@@ -21,7 +21,8 @@
 //= require select2-full
 //= require icheck
 //= require 'china_city/jquery.china_city'
-
+//= require externals/Chart
+//= require my_chat
 
 $.fn.datepicker.dates['zh-cn'] = {
     days: ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"],

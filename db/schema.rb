@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190228034325) do
+ActiveRecord::Schema.define(version: 20190305063637) do
 
   create_table "agents", force: :cascade do |t|
     t.string   "username",     limit: 255
@@ -135,6 +135,8 @@ ActiveRecord::Schema.define(version: 20190228034325) do
     t.string   "invoice_status", limit: 255
     t.datetime "apply_at"
     t.datetime "applied_at"
+    t.datetime "sended_at"
+    t.float    "amount",         limit: 24
   end
 
   create_table "messages", force: :cascade do |t|
@@ -201,6 +203,8 @@ ActiveRecord::Schema.define(version: 20190228034325) do
     t.datetime "apply_at"
     t.datetime "applied_at"
     t.float    "payment_percent", limit: 24
+    t.datetime "deliver_at"
+    t.float    "total_price",     limit: 24
   end
 
   add_index "orders", ["deleted_at"], name: "index_orders_on_deleted_at", using: :btree

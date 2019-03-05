@@ -1,0 +1,40 @@
+<div class="box-body">
+  <table class="table table-bordered">
+    <tr>
+      <th>时间</th>
+      <th>项目类别</th>
+      <th>项目名</th>
+      <th>下单金额</th>
+      <th>发货金额</th>
+      <th>回款金额</th>
+    </tr>
+    <% if @projects_array.present? %>
+      <% @projects_array.each do |data| %>
+        <% data.each do |date, project_data| %>
+          <% project_data.each do |project, amount| %>
+            <tr>
+              <td><%= date %></td>
+              <td><%= project.category.name %></td>
+              <td><%= project.name %></td>
+              <td><%= (@applied_hash[date].present? && @applied_hash[date][project].present?) ? @applied_hash[date][project] : 0 %></td>
+              <td><%= (@deliver_hash[date].present? && @deliver_hash[date][project].present?) ? @deliver_hash[date][project] : 0 %></td>
+              <td><%= amount %></td>
+            </tr>
+          <% end %>
+
+        <% end %>
+      <% end %>
+    <% else %>
+      <tr>
+        <td colspan="4" align="center">没有可显示的内容</td>
+      </tr>
+    <% end %>
+
+  </table>
+</div>
+<div class="box-footer clearfix">
+  <div class="pull-right pagination-sm no-margin">
+    <%= paginate @projects_array, remote: true, params: params%>
+  </div>
+
+</div>
