@@ -14,6 +14,7 @@ set :branch, 'master'
 #配置rvm位置
 # set :rvm_path, '/usr/local/rvm/bin/rvm'
 set :term_mode, :system
+set :whenever_name, "longsheng_#{rails_env}"
 
 # This task is the environment that is loaded for most commands, such as
 # `mina deploy` or `mina rake`.
@@ -80,14 +81,16 @@ task :deploy => :environment do
     invoke :'bundle:install'
     # invoke :'rails:db_create'
     invoke :'rails:db_migrate' #首次执行可能会报错 需要我们手动先创建数据库 db:create
+    invoke :'rails:db_seed'
     invoke :'rails:assets_precompile'
     invoke :'deploy:cleanup'
 
     to :launch do
+      invoke :'whenever:update'
       queue "mkdir -p #{deploy_to}/current/tmp/"
       # queue "chown -R www-data #{deploy_to}"
-      queue "touch #{deploy_to}/current/tmp/restart.txt"
-      invoke "puma:restart" #touch好像没有效果 所以直接使用的命令重启， 重启命令参考：
+      #queue "touch #{deploy_to}/current/tmp/restart.txt"
+      invoke "puma:restart"
     end
   end
 end

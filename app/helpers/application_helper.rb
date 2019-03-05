@@ -158,6 +158,12 @@ module ApplicationHelper
       invoices_audits_path
     when 'invoice_sended'
       project_path notice.invoice.project
+    when 'advance_overdue'
+      project_path notice.model_id
+    when 'settlement_overdue'
+      project_path notice.model_id
+    when 'bond_overdue'
+      project_path notice.model_id
     end
   end
 

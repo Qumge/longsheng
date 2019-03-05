@@ -231,6 +231,23 @@ class Order < ActiveRecord::Base
     end
   end
 
+  # 进度款是否到期
+  def payment_overdue?
+    flag = false
+    # 已经发货
+    if deliver_at.present?
+      days = project&.contract&.process_time.present? ? project.contract.process_time : 45
+      percent = Settings.need_payment_percent
+      percent ||= 0.8
+      flag = (deliver_at + days.days) < DateTime.now && payment.to_f < total_price.to_f * percent
+    end
+    flag
+  end
+
+  def check_overdue
+    Notice.create_notice :order_payment_overdue, self.id, project.owner_id if self.payment_overdue?
+  end
+
 
   class << self
     # 检索
@@ -244,6 +261,12 @@ class Order < ActiveRecord::Base
         orders = orders.joins(:project, :user).where('projects.name like ? or orders.no like ? or users.name like ?', "%#{params[:table_search]}%", "%#{params[:table_search]}%", "%#{params[:table_search]}%")
       end
       orders
+    end
+
+    def check_overdue
+      Order.all.each do |order|
+        order.check_overdue
+      end
     end
   end
 

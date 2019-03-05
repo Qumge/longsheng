@@ -13,9 +13,7 @@
         <ul class="todo-list ui-sortable">
           <% if @notices.present? %>
             <% @notices.each do |notice| %>
-
               <%= render partial: 'notices/notice_li', locals: {notice: notice} %>
-
             <% end %>
           <% else %>
             <li>

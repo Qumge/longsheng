@@ -112,6 +112,14 @@ sales:
   update: '价格体系-编辑'
   destroy: '价格体系-删除'
   show: '价格体系-详情'
+record_reports:
+  index: '报表-今日看板'
+  projects: '报表-项目'
+  orders: '报表-订单'
+  invoices: '报表-开票'
+  users: '报表-人员业绩'
+  costs: '报表-费用'
+
 
 
 

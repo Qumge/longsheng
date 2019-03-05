@@ -100,7 +100,7 @@ RailsAdmin.config do |config|
   end
 
   config.model 'Company' do
-    label_plural "战略合作方"
+    label_plural "甲方名"
     field :name do
       label '公司名'
     end

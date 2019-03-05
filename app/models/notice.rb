@@ -36,7 +36,11 @@ class Notice < ActiveRecord::Base
       invoice_failed: '开票申请审核未通过',
       invoice_applied: '开票申请已通过审核',
       invoice_need_send: '开票申请需要安排开票快递',
-      invoice_sended: '开票快递已发出'
+      invoice_sended: '开票快递已发出',
+      advance_overdue: '有一个项目预付款超期了',
+      settlement_overdue: '有一个结算款超期了',
+      bond_overdue: '有一个项目尾款超期了',
+      order_payment_overdue: '有一个订单进度款超期了（未回款或回款不足）'
   }
 
 

@@ -57,6 +57,7 @@ gem "paranoia", "~> 2.2"                                      # 软删除
 gem 'china_city'                                              # 城市选择
 gem 'active_importer'                                         # excel导入
 gem 'rest-client'                                             # http请求
+gem 'whenever', require: false
 
 
 

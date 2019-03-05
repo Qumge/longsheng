@@ -290,6 +290,54 @@ class Project < ActiveRecord::Base
     ChinaCity.get self.city if self.city.present?
   end
 
+  # 用于判断预付款 进度款 结算款
+  def step_end? step
+    steps = [:contract, :advance, :pattern, :plate, :detail, :order, :process_payment, :shipment_ended, :settlement, :payment, :bond, :confirm, :done]
+    # 当前进度大于步骤 可见
+    file = step == 'settlement' ? 'settlements' : step
+    (steps.index(self.step_status.to_sym) > steps.index(step.to_sym)) || self.send(file).present?
+  end
+
+
+  #判断预是否预付款到期
+  def advance_overdue?
+    flag = false
+    unless step_end? 'advance'
+      # 到期时间
+      days = contract&.advance_time.present? ? contract.advance_time : 7
+      flag = approval_time.present? && (approval_time + days.days) < DateTime.now
+    end
+    flag
+  end
+
+  #判断预是否结算款到期
+  def settlement_overdue?
+    flag = false
+    unless step_end? 'settlement'
+      # 到期时间
+      days = contract&.settlement_time.present? ? contract.settlement_time : 90
+      flag = shipment_end.present? && (shipment_end + days.days) < DateTime.now
+    end
+    flag
+  end
+
+  #判断预是尾款是否到期
+  def bond_overdue?
+    flag = false
+    unless step_end? 'bond'
+      # 到期时间
+      days = contract&.tail_time.present? ? contract.tail_time : 90
+      flag = shipment_end.present? && (shipment_end + days.days) < DateTime.now
+    end
+    flag
+  end
+
+  def check_overdue
+    create_money_notice 'advance' if advance_overdue?
+    create_money_notice 'settlement' if settlement_overdue?
+    create_money_notice 'bond' if bond_overdue?
+  end
+
   class << self
     def search_conn params
       projects = self.all
@@ -318,7 +366,15 @@ class Project < ActiveRecord::Base
       end
       projects
     end
+
+    def check_overdue
+      Project.all.each do |project|
+        project.check_overdue
+      end
+    end
   end
+
+
 
 
   private
@@ -367,6 +423,12 @@ class Project < ActiveRecord::Base
   def create_active_notice
     Notice.create_notice :project_audited, self.id, owner_id
   end
+
+  # 通知付款信息未到
+  def create_money_notice type
+    Notice.create_notice "#{type}_overdue".to_sym, self.id, owner_id
+  end
+
 
 
 
