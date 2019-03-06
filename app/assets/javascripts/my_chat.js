@@ -20,7 +20,7 @@ var pieOptions     = {
     // Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
     maintainAspectRatio  : true,
     //String - A legend template
-    //legendTemplate       : '<ul class="<%=name.toLowerCase()%>-legend"><% for (var i=0; i<segments.length; i++){%><li><span style="background-color:<%=segments[i].fillColor; console.log(1);%>"></span><%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>'
+    legendTemplate       : '<ul class="<%=name.toLowerCase()%>-legend"><% for (var i=0; i<segments.length; i++){%><li><span style="background-color:<%=segments[i].fillColor; console.log(1);%>"></span><%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>'
 };
 
 var chatColor = ['#00a65a', '#dd4b39', '#00c0ef', '#f39c12', '#3c8dbc', '#ff0084', '#205081', '#f94877', '#001f3f','#d2d6de']
@@ -47,7 +47,7 @@ var barChartOptions                  = {
     //Number - Spacing between data sets within X values
     barDatasetSpacing       : 1,
     //String - A legend template
-    //legendTemplate          : '<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets[i].fillColor%>\"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>',
+    legendTemplate          : '<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets[i].fillColor%>\"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>',
     //Boolean - whether to make the chart responsive
     responsive              : true,
     maintainAspectRatio     : true,
@@ -55,26 +55,23 @@ var barChartOptions                  = {
 }
 
 function myPieChat(id, labels, data){
-    let pieChartCanvas = $('#' + id).get(0).getContext('2d');
-    let pieChart       = new Chart(pieChartCanvas);
+    var pieChartCanvas = $('#' + id).get(0).getContext('2d');
+    var pieChart       = new Chart(pieChartCanvas);
     pieChart.Pie(formatPieData(labels, data), pieOptions)
 }
 
 function barChat(id, labels, bars, data){
-    let barChartCanvas = $('#' + id).get(0).getContext('2d');
-    let barChart = new Chart(barChartCanvas);
+    var barChartCanvas = $('#' + id).get(0).getContext('2d');
+    var barChart = new Chart(barChartCanvas);
     barChartOptions.datasetFill = false;
-    console.log(data);
-    console.log(formatBarData(labels, bars, data));
-    console.log(barChartOptions);
     barChart.Bar(formatBarData(labels, bars, data), barChartOptions);
     return barChart;
 }
 
 function formatPieData(labels, data){
-    let datasets = []
+    var datasets = []
     data.forEach(function (value, index, arr) {
-        let dataset = {
+        var dataset = {
             value: arr[index],
             label: labels[index],
             color: chatColor[index],
@@ -86,14 +83,12 @@ function formatPieData(labels, data){
 }
 
 function formatBarData(labels, bars, data) {
-    let formatData = {};
+    var formatData = {};
     formatData.labels = labels;
-    let datasets = [];
-    console.log(data);
-    console.log(111);
+    var datasets = [];
     data.forEach(function (value, index, arr) {
         console.log(bars[index]);
-        let dataset = {
+        var dataset = {
             label: bars[index],
             fillColor: chatColor[index],
             data: arr[index]
