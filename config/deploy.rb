@@ -81,12 +81,13 @@ task :deploy => :environment do
     invoke :'bundle:install'
     # invoke :'rails:db_create'
     invoke :'rails:db_migrate' #首次执行可能会报错 需要我们手动先创建数据库 db:create
-    invoke :'rails:db_seed'
+    # invoke :'rails:db_seed'
     invoke :'rails:assets_precompile'
     invoke :'deploy:cleanup'
 
     to :launch do
-      invoke :'whenever:update'
+      invoke :'whenever:update'  if ENV['to'] == "production"
+      # invoke :'whenever:update'
       queue "mkdir -p #{deploy_to}/current/tmp/"
       # queue "chown -R www-data #{deploy_to}"
       #queue "touch #{deploy_to}/current/tmp/restart.txt"
@@ -127,5 +128,29 @@ namespace :puma do
   task :restart => :environment do
     invoke 'puma:stop'
     invoke 'puma:start'
+  end
+end
+
+namespace :whenever do
+  desc "Clear crontab"
+  task :clear do
+    queue %{
+      echo "-----> Clear crontab for #{app_name}"
+      #{echo_cmd %[cd #{deploy_to!}/#{current_path!} ; bundle exec whenever --clear-crontab #{app_name} --set 'environment=production&path=#{deploy_to!}/#{current_path!}']}
+          }
+  end
+  desc "Update crontab"
+  task :update do
+    queue %{
+      echo "-----> Update crontab for #{app_name}"
+      #{echo_cmd %[cd #{deploy_to!}/#{current_path!} ; bundle exec whenever --update-crontab #{app_name} --set 'environment=production&path=#{deploy_to!}/#{current_path!}']}
+          }
+  end
+  desc "Write crontab"
+  task :write do
+    queue %{
+      echo "-----> Update crontab for #{app_name}"
+      #{echo_cmd %[cd #{deploy_to!}/#{current_path!} ; bundle exec whenever --write-crontab #{app_name} --set 'environment=production&path=#{deploy_to!}/#{current_path!}']}
+          }
   end
 end

@@ -56,15 +56,15 @@ gem 'aasm'                                                    # 状态管理
 gem "paranoia", "~> 2.2"                                      # 软删除
 gem 'china_city'                                              # 城市选择
 gem 'active_importer'                                         # excel导入
-gem 'rest-client'                                             # http请求
-gem 'whenever', require: false
+gem 'rest-client' # http请求
+
 
 
 
 group :development, :test do
   gem 'byebug',                         '9.0.6'               # Byebug is a Ruby 2 debugger.
   gem 'annotate'
-  gem 'mina',                           '0.3.8'
+  gem 'mina', '0.3.8'
 end
 
 group :development do
