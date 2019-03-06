@@ -3,6 +3,7 @@ require 'mina/rails'
 require 'mina/git'
 require 'mina/rvm' #服务器上使用的是rvm
 
+set :app_name, 'longsheng'
 #服务器地址,是使用ssh的方式登录服务器
 set :domain, 'heyen@120.79.28.184' #在服务器~/.ssh/authorized_keys 里面写入你的id_rsa.pub就不用密码登录
 #服务器中项目部署位置
@@ -86,7 +87,7 @@ task :deploy => :environment do
     invoke :'deploy:cleanup'
 
     to :launch do
-      invoke :'whenever:update'  if ENV['to'] == "production"
+      invoke :'whenever:update'
       # invoke :'whenever:update'
       queue "mkdir -p #{deploy_to}/current/tmp/"
       # queue "chown -R www-data #{deploy_to}"
