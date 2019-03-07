@@ -1,0 +1,24 @@
+<div class="box box-danger">
+  <div class="box-header with-border">
+    <h3 class="box-title">产品类型（数量）
+      <% if can? :projects, :record_reports %>
+        <small><%= link_to '更多', products_record_reports_path , class: 'font-a label bg-green' %></small>
+      <% end %>
+    </h3>
+
+    <div class="box-tools pull-right">
+      <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+      </button>
+      <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+    </div>
+  </div>
+  <div class="box-body">
+    <canvas id="products_pie" style="height:250px"></canvas>
+  </div>
+  <!-- /.box-body -->
+</div>
+<script type="text/javascript">
+    $(function(){
+        myPieChat('products_pie', <%= raw @products_pie_labels %>, <%= raw @products_pie_data %>);
+    });
+</script>

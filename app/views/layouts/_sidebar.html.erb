@@ -143,6 +143,13 @@
               <% end %>
             </li>
           <% end %>
+          <% if can? :products, :record_reports %>
+            <li class="<%= active_class params, 'record_reports', 'products' %>">
+              <%= link_to products_record_reports_path do %>
+                <i class="fa fa-leaf"></i> <span>产品</span>
+              <% end %>
+            </li>
+          <% end %>
 
           <% if can? :users, :record_reports %>
             <li class="<%= active_class params, 'record_reports', 'users' %>">

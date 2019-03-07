@@ -62,7 +62,7 @@ class Order < ActiveRecord::Base
 
     # 下单
     event :do_place do
-      transitions :from => [:wait, :failed], :to => :active, :after => Proc.new {create_deliver_notice; set_applied_at }
+      transitions :from => [:wait, :failed], :to => :active, :after => Proc.new {create_deliver_notice; set_apply_at; set_applied_at }
     end
 
     # 发货
@@ -103,11 +103,11 @@ class Order < ActiveRecord::Base
   end
 
   def real_total_price
-    total_price = 0
+    amount = 0
     order_products.each do |p|
-      total_price += p.real_total_price
+      amount += p.real_total_price.to_f
     end
-    total_price
+    amount
   end
 
   def set_no

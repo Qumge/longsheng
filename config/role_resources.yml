@@ -84,6 +84,14 @@ group_admin:
   invoices:
     show: 开票-详情
     index: 开票-列表
+  record_reports:
+    index: 报表-今日看板
+    projects: 报表-项目
+    orders: 报表-订单
+    invoices: 报表-开票
+    users: 报表-人员业绩
+    costs: 报表-费用
+    products: 报表-产品
 normal_admin:
   sales:
     destroy: 价格体系-删除
@@ -170,6 +178,14 @@ normal_admin:
   invoices:
     show: 开票-详情
     index: 开票-列表
+  record_reports:
+    index: 报表-今日看板
+    projects: 报表-项目
+    orders: 报表-订单
+    invoices: 报表-开票
+    users: 报表-人员业绩
+    costs: 报表-费用
+    products: 报表-产品
 regional_manager:
   costs:
     index: 费用-列表
@@ -238,13 +254,6 @@ regional_manager:
     index: 代理商-列表
   manage_orders:
     show: 订单-详情
-  record_reports:
-    index: 报表-今日看板
-    projects: 报表-项目
-    orders: 报表-订单
-    invoices: 报表-开票
-    users: 报表-人员业绩
-    costs: 报表-费用
 project_manager:
   costs:
     index: 费用-列表
@@ -313,13 +322,6 @@ project_manager:
     index: 代理商-列表
   manage_orders:
     show: 订单-详情
-  record_reports:
-    index: 报表-今日看板
-    projects: 报表-项目
-    orders: 报表-订单
-    invoices: 报表-开票
-    users: 报表-人员业绩
-    costs: 报表-费用
 project_user:
   projects:
     sales: 项目-价格体系

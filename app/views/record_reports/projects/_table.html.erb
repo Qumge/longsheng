@@ -10,19 +10,14 @@
     </tr>
     <% if @projects_array.present? %>
       <% @projects_array.each do |data| %>
-        <% data.each do |date, project_data| %>
-          <% project_data.each do |project, amount| %>
-            <tr>
-              <td><%= date %></td>
-              <td><%= project.category.name %></td>
-              <td><%= project.name %></td>
-              <td><%= (@applied_hash[date].present? && @applied_hash[date][project].present?) ? @applied_hash[date][project] : 0 %></td>
-              <td><%= (@deliver_hash[date].present? && @deliver_hash[date][project].present?) ? @deliver_hash[date][project] : 0 %></td>
-              <td><%= amount %></td>
-            </tr>
-          <% end %>
-
-        <% end %>
+          <tr>
+            <td><%= data[0] %></td>
+            <td><%= data[1].category.name %></td>
+            <td><%= data[1].name %></td>
+            <td><%= (@applied_hash[data[0]].present? && @applied_hash[data[0]][data[1]].present?) ? @applied_hash[data[0]][data[1]] : 0 %></td>
+            <td><%= (@deliver_hash[data[0]].present? && @deliver_hash[data[0]][data[1]].present?) ? @deliver_hash[data[0]][data[1]] : 0 %></td>
+            <td><%= data[2] %></td>
+          </tr>
       <% end %>
     <% else %>
       <tr>

@@ -18,6 +18,12 @@
       <%= select_tag :user_id, options_for_select(User.all.collect{|user| [user.name, user.id]}, params[:user_id]), include_blank: '销售人员', class: 'form-control select2' %>
     </div>
     <% end %>
+    <% if ['products'].include? params[:action] %>
+      <div class="col-md-3">
+        <%= select_tag :product_id, options_for_select(Product.all.collect{|product| [product.name, product.id]}, params[:product_id]), include_blank: '产品名', class: 'form-control select2' %>
+      </div>
+    <% end %>
+
     <div class="col-md-3">
       <%= select_tag :group_type, options_for_select([['日', 'day'], ['月', 'month'], ['年', 'year']], params[:group_type]), include_blank: false, class: 'form-control' %>
     </div>

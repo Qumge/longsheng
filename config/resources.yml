@@ -119,6 +119,7 @@ record_reports:
   invoices: '报表-开票'
   users: '报表-人员业绩'
   costs: '报表-费用'
+  products: '报表-产品'
 
 
 

@@ -24,7 +24,7 @@ var pieOptions     = {
 };
 
 var chatColor = ['#00a65a', '#dd4b39', '#00c0ef', '#f39c12', '#3c8dbc', '#ff0084', '#205081', '#f94877', '#001f3f','#d2d6de']
-
+//var chatColor = ['#2edfa3', '#0eb83a', '#70f3ff', '#177cb0', '#f00056', '#ff7500', '#ff4e20', '#b35c44', '#758a99', '#424c50']
 var barChartOptions                  = {
     //Boolean - Whether the scale should start at zero, or an order of magnitude down from the lowest value
     scaleBeginAtZero        : true,

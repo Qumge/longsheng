@@ -372,6 +372,46 @@ class Project < ActiveRecord::Base
         project.check_overdue
       end
     end
+
+
+    def test_data number=20, begin_date=DateTime.now-10.days, end_date=DateTime.now+2.days
+      1.step(number).each do |n|
+        Project.create category: Category.all.sample, contract: Contract.all.sample, owner: User.all.sample,
+                       company: Company.all.sample, create_user: User.all.sample, name: "数据测试_#{n}",
+                       address: '协信中心', city: '440300', supplier_type: '甲指'
+      end
+      begin_date.step(end_date).each do |date|
+        Project.all.each do |project|
+          1.step(5).each do |number|
+            op = OrderProduct.new product: Product.all.sample, number: (rand 20)
+            order = Order.new project: project, order_type: 'normal', user: User.all.sample, order_status: :wait, order_products: [op]
+            if order.save
+              if rand(20) > 5
+                p "order: #{ order.id}do place"
+                order.do_place!
+                order.update applied_at: date
+                if rand(20) > 5
+                  p "order: #{ order.id} do deliver"
+                  order.do_deliver!
+                  order.update deliver_at: (order.applied_at + rand(2).days)
+                  if rand(20) > 5
+                    order.update payment: (rand(20)/20.0)*order.total_price, payment_at: (order.deliver_at + rand(2).days)
+                  end
+                end
+              end
+            else
+              p order.errors
+            end
+          end
+        end
+
+        User.all.each do |user|
+          if rand(20) > 10
+            Cost.create purpose: 'test', user: user, amount: rand(2000), occur_time: date
+          end
+        end
+      end
+    end
   end
 
 

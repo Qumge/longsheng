@@ -95,7 +95,9 @@ module ApplicationHelper
             orders: '订单报表',
             users: '人员业绩报表',
             projects: '项目报表',
-            invoices: '开票报表'
+            invoices: '开票报表',
+            cost: '人员费用报表',
+            products: '产品报表'
         }
     }
   end

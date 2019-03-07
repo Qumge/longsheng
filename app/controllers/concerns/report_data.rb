@@ -53,6 +53,22 @@ module ReportData
     search.join ' and '
   end
 
+  def product_type_conn type
+    search = ['1=1']
+    if params[:begin_date].present?
+      begin_date = params[:begin_date].to_date.beginning_of_day
+      search << "orders.#{type}_at >= '#{begin_date}'"
+    end
+    if params[:end_date].present?
+      end_date = params[:end_date].to_date.end_of_day
+      search << "orders.#{type}_at <= '#{end_date}'"
+    end
+    if params[:product_id].present?
+      search << "order_products.product_id <= '#{params[:product_id]}'"
+    end
+    search.join ' and '
+  end
+
   def cost_conn
     search = ['1=1']
     if params[:begin_date].present?
@@ -121,15 +137,19 @@ module ReportData
     invoice_scope.where(invoice_status: 'sended').where(invoice_conn)
   end
 
+  def product_data type
+    OrderProduct.joins(:product, :order).where(product_type_conn type)
+  end
+
   ####################################### begin  data #######################################
 
 
   ####################################### begin chat data #######################################
   def order_data_for_pie type
     if type == 'payment'
-      order_data(type).select(total_payment).first.total_payment.to_f
+      order_data(type).select(total_payment).first.total_payment.to_f.round 2
     else
-      order_data(type).select(total_price).first.total_price.to_f
+      order_data(type).select(total_price).first.total_price.to_f.round 2
     end
   end
 
@@ -139,7 +159,7 @@ module ReportData
     group_data = order_data.group_by{|order| order.project}
     datas = {}
     group_data.each do |project, orders|
-      datas[project] = orders.sum{|order| order.payment}
+      datas[project] = orders.sum{|order| order.payment}.round 2
     end
     datas
   end
@@ -149,7 +169,7 @@ module ReportData
     group_data = project_datas.group_by{|project, data| project.category}
     datas = {}
     group_data.each do |category, project_data|
-      datas[category] = project_data.sum{|project, data| data}
+      datas[category] = project_data.sum{|project, data| data}.round 2
     end
     datas
   end
@@ -159,7 +179,7 @@ module ReportData
     group_data = project_datas.group_by{|project, data| project.owner}
     datas = {}
     group_data.each do |user, project_data|
-      datas[user] = project_data.sum{|project, data|  data}
+      datas[user] = project_data.sum{|project, data|  data}.round 2
     end
     datas
   end
@@ -169,7 +189,24 @@ module ReportData
     group_data = cost_datas.group_by{|cost, data| cost.user}
     datas = {}
     group_data.each do |user, cost_data|
-      datas[user] = cost_data.sum{| data| data.amount}
+      datas[user] = cost_data.sum{| data| data.amount}.round 2
+    end
+    datas
+  end
+
+  def product_data_for_pie type
+    product_data = product_data type
+    # {project1 => [order1, order2], project2 => [order3, order4]}
+    group_data = product_data.group_by{|order_product| order_product.product.product_category}
+    datas = {}
+    group_data.each do |product_category, order_products|
+      number = 0
+      amount = 0
+      order_products.each do |op|
+        number += op.number
+        amount += op.discount_total_price
+      end
+      datas[product_category] = {number: number, amount: amount}
     end
     datas
   end
@@ -196,9 +233,31 @@ module ReportData
         orders.each do |order|
           amount += order.send("#{type == 'payment' ? 'payment' : 'total_price'}").to_f
         end
-        order_datas_hash[category] = amount
+        order_datas_hash[category] = amount.round(2)
       end
       date_datas_hash[date] = order_datas_hash
+    end
+    date_datas_hash
+  end
+
+  def product_category_data_for_bar type
+    data = product_data(type)
+    date_datas = data.group_by do |d|
+      simple_date_time d.order.send("#{type}_at")
+    end
+    date_datas_hash = {}
+    date_datas.each do |date, order_products|
+      product_datas_hash = {}
+      order_products.group_by{|order_product| order_product.product.product_category}.each do |category, ops|
+        amount = 0
+        number = 0
+        ops.each do |op|
+          amount += op.discount_total_price
+          number += op.number
+        end
+        product_datas_hash[category] = {amount: amount.round(2), number: number}
+      end
+      date_datas_hash[date] = product_datas_hash
     end
     date_datas_hash
   end
@@ -220,6 +279,28 @@ module ReportData
         order_datas_hash[project] = amount
       end
       date_datas_hash[date] = order_datas_hash
+    end
+    date_datas_hash
+  end
+
+  def product_data_for_table type='payment'
+    data = product_data(type)
+    date_datas = data.group_by do |d|
+      simple_date_time d.order.send("#{type}_at")
+    end
+    date_datas_hash = {}
+    date_datas.each do |date, order_products|
+      order_product_datas_hash = {}
+      order_products.group_by{|order_product| order_product.product}.each do |product, order_products|
+        amount = 0
+        number = 0
+        order_products.each do |order_product|
+          amount += order_product.discount_total_price.to_f
+          number += order_product.number
+        end
+        order_product_datas_hash[product] = {amount: amount, number: number}
+      end
+      date_datas_hash[date] = order_product_datas_hash
     end
     date_datas_hash
   end
@@ -275,9 +356,30 @@ module ReportData
       end
       date_datas_hash[date] = invoice_datas_hash
     end
-    p date_datas_hash, 111111111111
     date_datas_hash
   end
+
+  def products_data_for_table type
+    data = product_data(type)
+    date_datas = data.group_by do |d|
+      simple_date_time d.order.send("#{type}_at")
+    end
+    date_datas_hash = []
+    date_datas.each do |date, order_products|
+      product_datas_hash = {}
+      order_products.group_by{|order_product| order_product.product}.each do |product, ops|
+        amount = 0
+        number = 0
+        ops.each do |op|
+          amount += op.discount_total_price
+          number += op.number
+        end
+        date_datas_hash = [date, product, amount.round(2), number]
+      end
+    end
+    date_datas_hash
+  end
+
   ####################################### end chat data #######################################
 
 
@@ -293,30 +395,57 @@ module ReportData
 
   def format_project_data_for_pie type = 'payment'
     projects_datas = project_data_for_pie(type)
-    projects_pie_labels = projects_datas.collect{|project, data| project.name}[0..10]
-    projects_pie_data = projects_datas.collect{|project, data| data}[0..10]
-    return projects_pie_labels, projects_pie_data
+    projects_pie_labels = []
+    projects_pie_data = []
+    projects_datas.each do |project, data|
+      projects_pie_labels << project.name
+      projects_pie_data << data
+    end
+    return projects_pie_labels[0..9], projects_pie_data[0..9]
   end
 
   def format_category_data_for_pie type = 'payment'
-    category_datas = category_data_for_pie(type)
-    categories_pie_labels = category_datas.collect{|category, data| category.name}[0..10]
-    categories_pie_data = category_datas.collect{|category, data| data}[0..10]
-    return categories_pie_labels, categories_pie_data
+    categories_datas = category_data_for_pie(type)
+    categories_pie_labels = []
+    categories_pie_data = []
+    categories_datas.each do |category, data|
+      categories_pie_labels << category.name
+      categories_pie_data << data
+    end
+    return categories_pie_labels[0..9], categories_pie_data[0..9]
   end
 
   def format_user_data_for_pie type = 'payment'
     users_datas = user_data_for_pie(type)
-    users_pie_labels = users_datas.collect{|user, data| user.name}[0..10]
-    users_pie_data = users_datas.collect{|user, data| data}[0..10]
-    return users_pie_labels, users_pie_data
+    users_pie_labels = []
+    users_pie_data = []
+    users_datas.each do |user, data|
+      users_pie_labels << user.name
+      users_pie_data << data
+    end
+    return users_pie_labels[0..9], users_pie_data[0..9]
   end
 
   def format_cost_data_for_pie
     costs_datas = cost_data_for_pie
-    costs_pie_labels = costs_datas.collect{|user, data| user.name}[0..10]
-    costs_datas_pie_data = costs_datas.collect{|user, data| data}[0..10]
-    return costs_pie_labels, costs_datas_pie_data
+    costs_pie_labels = []
+    costs_pie_data = []
+    costs_datas.each do |user, data|
+      costs_pie_labels << user.name
+      costs_pie_data << data
+    end
+    return costs_pie_labels[0..9], costs_pie_data[0..9]
+  end
+
+  def format_product_data_for_pie type = 'payment'
+    products_datas = product_data_for_pie(type)
+    products_pie_labels = []
+    products_pie_data = []
+    products_datas.each do |product_category, data|
+      products_pie_labels << product_category.name
+      products_pie_data << data[:number]
+    end
+    return products_pie_labels[0..9], products_pie_data[0..9]
   end
 
 
@@ -334,7 +463,7 @@ module ReportData
             price += d.send("#{type == 'payment' ? 'payment' : 'total_price'}").to_f
           end
         end
-        bar_data << price
+        bar_data << price.round(2)
       end
       datas << bar_data
     end
@@ -346,15 +475,33 @@ module ReportData
     datas = []
     data = category_data_for_bar(type)
     bars = []
-
     data_label.each_with_index do |date, index|
       bar_data = []
       bars = []
       Category.all.each do |category|
         amount = 0
         amount = data[date][category].to_f if data[date].present? && data[date][category].present?
-        bar_data << amount
+        bar_data << amount.round(2)
         bars << category.name
+      end
+      datas << bar_data
+    end
+    return labels, bars, format_arr(datas)
+  end
+
+  def format_product_category_data_for_bar type='deliver'
+    labels = data_label
+    datas = []
+    data = product_category_data_for_bar(type)
+    bars = []
+    data_label.each_with_index do |date, index|
+      bar_data = []
+      bars = []
+      ProductCategory.all.each do |product_category|
+        number = 0
+        number = data[date][product_category][:number] if data[date].present? && data[date][product_category].present?
+        bar_data << number
+        bars << product_category.name
       end
       datas << bar_data
     end
@@ -372,12 +519,33 @@ module ReportData
       projects.each do |project|
         amount = 0
         amount = data[date][project] if data[date].present? && data[date][project].present?
-        project_hash[project] = amount
+        # project_hash[project] = amount.round(2)
+        datas << [date, project, amount.round(2)]
       end
-      datas << {date => project_hash}
     end
     datas
   end
+
+  def format_product_data_for_table type='payment'
+    datas = []
+    data = product_data_for_table type
+    data_label.each do |date|
+      product_hash = {}
+      products = Product.all
+      products = products.where(id: params[:product_id]) if params[:product_id].present?
+      products.each do |product|
+        amount = 0
+        number = 0
+        if data[date].present? && data[date][product].present?
+          amount = data[date][product][:amount]
+          number = data[date][product][:number]
+        end
+        datas << [date, product, number, amount.round(2)]
+      end
+    end
+    datas
+  end
+
   #
   def format_user_data_for_table type='payment'
     datas = []
@@ -389,9 +557,8 @@ module ReportData
       users.each do |user|
         amount = 0
         amount = data[date][user] if data[date].present? && data[date][user].present?
-        user_hash[user] = amount
+        datas << [date, user, amount.round(2)]
       end
-      datas << {date => user_hash}
     end
     datas
   end
@@ -405,7 +572,7 @@ module ReportData
       users.each do |user|
         amount = 0
         amount = data[date][user] if data[date].present? && data[date][user].present?
-        datas << [date, user, amount]
+        datas << [date, user, amount.round(2)]
       end
     end
     datas
@@ -420,10 +587,9 @@ module ReportData
       users.each do |user|
         amount = 0
         amount = data[date][user] if data[date].present? && data[date][user].present?
-        datas << [date, user, amount]
+        datas << [date, user, amount.round(2)]
       end
     end
-    p datas, 11111111111
     datas
   end
 

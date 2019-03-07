@@ -1,0 +1,37 @@
+<div class="box-body">
+  <table class="table table-bordered">
+    <tr>
+      <th>时间</th>
+      <th>产品类别</th>
+      <th>产品名</th>
+      <th>下单数量</th>
+      <th>下单金额</th>
+      <th>发货数量</th>
+      <th>发货金额</th>
+    </tr>
+    <% if @products_array.present? %>
+      <% @products_array.each do |data| %>
+          <tr>
+            <td><%= data[0] %></td>
+            <td><%= data[1].product_category&.name %></td>
+            <td><%= data[1].name %></td>
+            <td><%= (@applied_hash[data[0]].present? && @applied_hash[data[0]][data[1]].present?) ? @applied_hash[data[0]][data[1]][:number] : 0 %></td>
+            <td><%= (@applied_hash[data[0]].present? && @applied_hash[data[0]][data[1]].present?) ? @applied_hash[data[0]][data[1]][:amount] : 0 %></td>
+            <td><%= data[2] %></td>
+            <td><%= data[3] %></td>
+          </tr>
+      <% end %>
+    <% else %>
+      <tr>
+        <td colspan="4" align="center">没有可显示的内容</td>
+      </tr>
+    <% end %>
+
+  </table>
+</div>
+<div class="box-footer clearfix">
+  <div class="pull-right pagination-sm no-margin">
+    <%= paginate @products_array, remote: true, params: params%>
+  </div>
+
+</div>

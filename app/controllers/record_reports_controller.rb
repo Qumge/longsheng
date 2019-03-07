@@ -13,6 +13,8 @@ class RecordReportsController < ApplicationController
 
     @costs_pie_labels, @costs_pie_data = format_cost_data_for_pie
 
+    @products_pie_labels, @products_pie_data = format_product_data_for_pie 'deliver'
+
   end
 
 
@@ -20,31 +22,86 @@ class RecordReportsController < ApplicationController
     @orders_bar_labels, @orders_bar_data = format_order_bar
     @orders_bar_bars = ["下单金额", "发货金额", "回款金额"]
     @order_array = Kaminari.paginate_array(@orders_bar_labels).page(params[:page]).per(Settings.per_page)
+    respond_to do |format|
+      format.html
+      format.js
+      format.xls do
+        headers["Content-Disposition"] = "attachment; filename=\"订单报表-#{Date.today}.xls\""
+      end
+    end
+
   end
 
 
   def projects
     @projects_bar_labels, @projects_bar_bars, @projects_bar_data = format_category_bar 'payment'
-    @projects_array = Kaminari.paginate_array(format_project_data_for_table 'payment').page(params[:page]).per(Settings.per_page)
+    @table_data = format_project_data_for_table 'payment'
+    @projects_array = Kaminari.paginate_array(@table_data).page(params[:page]).per(Settings.per_page)
     @applied_hash = project_data_for_table 'applied'
     @deliver_hash = project_data_for_table 'deliver'
+    respond_to do |format|
+      format.html
+      format.js
+      format.xls do
+        headers["Content-Disposition"] = "attachment; filename=\"项目报表-#{Date.today}.xls\""
+      end
+    end
+  end
+
+  def products
+    @products_bar_labels, @products_bar_bars, @products_bar_data = format_product_category_data_for_bar 'deliver'
+    @table_data = format_product_data_for_table 'deliver'
+    @products_array = Kaminari.paginate_array(@table_data).page(params[:page]).per(Settings.per_page)
+    @applied_hash = product_data_for_table 'applied'
+    respond_to do |format|
+      format.html
+      format.js
+      format.xls do
+        headers["Content-Disposition"] = "attachment; filename=\"产品报表-#{Date.today}.xls\""
+      end
+    end
   end
 
 
   def users
     #@projects_array = Kaminari.paginate_array(project_data_for_table 'payment').page(params[:page]).per(Settings.per_page)
     #@projects_bar_labels, @projects_bar_bars, @projects_bar_data = format_category_bar 'payment'
-    @users_array = Kaminari.paginate_array(format_user_data_for_table 'payment').page(params[:page]).per(Settings.per_page)
+    #
+    @table_data = format_user_data_for_table 'payment'
+    @users_array = Kaminari.paginate_array(@table_data).page(params[:page]).per(Settings.per_page)
     @applied_hash = user_data_for_table 'applied'
     @deliver_hash = user_data_for_table 'deliver'
+    respond_to do |format|
+      format.html
+      format.js
+      format.xls do
+        headers["Content-Disposition"] = "attachment; filename=\"人员业绩报表-#{Date.today}.xls\""
+      end
+    end
   end
 
   def costs
-    @costs_array = Kaminari.paginate_array(format_cost_data_for_table).page(params[:page]).per(Settings.per_page)
+    @table_data = format_cost_data_for_table
+    @costs_array = Kaminari.paginate_array(@table_data).page(params[:page]).per(Settings.per_page)
+    respond_to do |format|
+      format.html
+      format.js
+      format.xls do
+        headers["Content-Disposition"] = "attachment; filename=\"人员费用报表-#{Date.today}.xls\""
+      end
+    end
   end
 
   def invoices
-    @invoices_array = Kaminari.paginate_array(format_invoice_data_for_table).page(params[:page]).per(Settings.per_page)
+    @table_data = format_invoice_data_for_table
+    @invoices_array = Kaminari.paginate_array(@table_data).page(params[:page]).per(Settings.per_page)
+    respond_to do |format|
+      format.html
+      format.js
+      format.xls do
+        headers["Content-Disposition"] = "attachment; filename=\"开票报表-#{Date.today}.xls\""
+      end
+    end
   end
 
 end

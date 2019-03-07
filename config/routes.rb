@@ -210,7 +210,7 @@ Rails.application.routes.draw do
       get 'projects'
       get 'users'
       get 'costs'
-      # get 'products'
+      get 'products'
       get 'invoices'
     end
   end
