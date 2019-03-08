@@ -26,6 +26,9 @@ module ReportData
     if params[:project_id].present?
       search << "projects.id = #{params[:project_id]}"
     end
+    if params[:company_id].present?
+      search << "projects.company_id = #{params[:company_id]}"
+    end
     if params[:product_category_id].present?
       search << "product_categories.id = #{params[:product_category_id]}"
     end
@@ -397,18 +400,18 @@ module ReportData
     projects_datas = project_data_for_pie(type)
     projects_pie_labels = []
     projects_pie_data = []
-    projects_datas.each do |project, data|
+    projects_datas.sort{|x, y| y[1] <=> x[1] }[0..9].each do |project, data|
       projects_pie_labels << project.name
       projects_pie_data << data
     end
-    return projects_pie_labels[0..9], projects_pie_data[0..9]
+    return projects_pie_labels, projects_pie_data
   end
 
   def format_category_data_for_pie type = 'payment'
     categories_datas = category_data_for_pie(type)
     categories_pie_labels = []
     categories_pie_data = []
-    categories_datas.each do |category, data|
+    categories_datas.sort{|x, y| y[1] <=> x[1] }[0..9].each do |category, data|
       categories_pie_labels << category.name
       categories_pie_data << data
     end
@@ -419,7 +422,7 @@ module ReportData
     users_datas = user_data_for_pie(type)
     users_pie_labels = []
     users_pie_data = []
-    users_datas.each do |user, data|
+    users_datas.sort{|x, y| y[1] <=> x[1] }[0..9].each do |user, data|
       users_pie_labels << user.name
       users_pie_data << data
     end
@@ -430,7 +433,7 @@ module ReportData
     costs_datas = cost_data_for_pie
     costs_pie_labels = []
     costs_pie_data = []
-    costs_datas.each do |user, data|
+    costs_datas.sort{|x, y| y[1] <=> x[1] }[0..9].each do |user, data|
       costs_pie_labels << user.name
       costs_pie_data << data
     end
@@ -441,9 +444,9 @@ module ReportData
     products_datas = product_data_for_pie(type)
     products_pie_labels = []
     products_pie_data = []
-    products_datas.each do |product_category, data|
+    products_datas.sort{|x, y| y[1][:amount] <=> x[1][:amount]}[0..9].each do |product_category, data|
       products_pie_labels << product_category.name
-      products_pie_data << data[:number]
+      products_pie_data << data[:amount]
     end
     return products_pie_labels[0..9], products_pie_data[0..9]
   end
@@ -516,6 +519,7 @@ module ReportData
       project_hash = {}
       projects = Project.all
       projects = projects.where(id: params[:project_id]) if params[:project_id].present?
+      projects = projects.where(company_id: params[:company_id]) if params[:company_id].present?
       projects.each do |project|
         amount = 0
         amount = data[date][project] if data[date].present? && data[date][project].present?

@@ -23,6 +23,7 @@ class Invoice < ActiveRecord::Base
   belongs_to :user
   has_many :audits, -> {where(model_type: 'Invoice')}, foreign_key: :model_id
   has_one :invoice_file, -> {where(model_type: 'invoice')}, class_name: 'Attachment', foreign_key: :model_id
+  validates_presence_of :amount
   after_create :set_no
 
   STATUS = {wait: '新建', apply: '已申请', applied: '已通过申请', failed: '审核失败', sended: '已开票'}
@@ -121,5 +122,20 @@ class Invoice < ActiveRecord::Base
 
   def owner
     self.project.owner
+  end
+
+  class << self
+    def search_conn params
+      invoices = self.joins(:project, :user)
+      if params[:invoice_status].present?
+        invoices = invoices.where(invoice_status: params[:invoice_status])
+      end
+
+      if params[:table_search].present?
+        invoices = invoices.where('projects.name like ? or invoices.no like ? or users.name like ?', "%#{params[:table_search]}%", "%#{params[:table_search]}%", "%#{params[:table_search]}%")
+      end
+      invoices
+    end
+
   end
 end

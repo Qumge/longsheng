@@ -12,6 +12,7 @@ class OrdersController < ApplicationController
     @order.order_type = params[:type]
     @order_product = @order.order_products.new order_product_permit
     @order.desc = params[:desc]
+    @order.factory_id = params[:factory_id]
     @flag = @order.save
 
   end

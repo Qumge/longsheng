@@ -3,19 +3,19 @@
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
     <h4 class="modal-title" id="file-modal-label"></h4>
   </div>
-  <%= simple_form_for(@order, html: {class: 'form-horizontal group_form', onkeydown: "if(event.keyCode==13)return false;"}, wrapper: :horizontal_form) do |f| %>
+  <%= simple_form_for(@payment_log, url: (update_payment_manage_order_path @order),html: {class: 'form-horizontal group_form', onkeydown: "if(event.keyCode==13)return false;"}, wrapper: :horizontal_form) do |f| %>
     <div class="modal-body" >
-      <%= f.input :payment, label: '进度款' %>
-      <div class="form-group row optional order_payment_at form-group-valid">
-        <label class="col-sm-3 col-form-label float optional" for="order_payment_at">回款时间</label>
+      <%= f.input :amount, label: '进度款' %>
+      <div class="form-group row optional required order_payment_at form-group-valid">
+        <label class="col-sm-3 col-form-label float optional" for="order_payment_at">回款时间<abbr title="required">*</abbr></label>
         <div class="col-sm-9">
           <div class="input-group date">
             <div class="input-group-addon">
               <i class="fa fa-calendar"></i>
             </div>
-            <input type="text" class="form-control pull-right datepicker readonly" value='<%=simple_time @order.payment_at %>' id="order_payment_at" name="order[payment_at]" readonly>
+            <input type="text" class="form-control pull-right datepicker readonly" value='<%=simple_time @payment_log.payment_at %>' id="payment_log_payment_at" name="payment_log[payment_at]" readonly>
           </div>
-          <div class="invalid-feedback"><%= @order.errors.messages[:payment_at].first if @order.errors.messages[:payment_at].present? %></div>
+          <div class="invalid-feedback"><%= @payment_log.errors.messages[:payment_at].first if @payment_log.errors.messages[:payment_at].present? %></div>
         </div>
       </div>
     </div>
@@ -32,7 +32,7 @@
         $('.commit').click(function(){
             showSpinner();
             $.ajax({
-                type: "POST",
+                type: "patch",
                 url: '<%= update_payment_manage_order_path @order%>',
                 data: $('.group_form').serialize(),
                 dataType: 'script',

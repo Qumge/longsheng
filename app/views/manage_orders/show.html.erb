@@ -1,6 +1,7 @@
 <div class="modal-header" style="padding:5px; padding-left: 15px;">
   <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-  <h4 class="modal-title" id="file-modal-label">订单详情</h4>
+  <h4 class="modal-title" id="file-modal-label">订单详情<small><%= link_to '导出', manage_order_path(@order, format: 'xls') %></small></h4>
+
 </div>
 
 <div class="modal-body" >
@@ -59,9 +60,6 @@
       </p>
       <p class="text-muted ">
         <span><b>回款金额（元）:</b> <%= @order.payment %></span>
-      </p>
-      <p class="text-muted ">
-        <span><b>回款时间:</b> <%= simple_time @order.payment_at %></span>
       </p>
     </div>
     <div class="col-md-12">

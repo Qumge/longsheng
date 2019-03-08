@@ -1,7 +1,7 @@
 class ManageOrdersController < ApplicationController
   include ApplicationHelper
   before_action :set_uptoken, only: [:index, :deliver]
-  before_action :set_order, only: [:show, :deliver, :edit_payment, :update_payment, :deliver_message, :send_message]
+  before_action :set_order, only: [:show, :deliver, :edit_payment, :update_payment, :deliver_message, :send_message, :payment_logs]
 
   def index
     @orders = Order.search_conn(params).order('updated_at desc').page(params[:page]).per(Settings.per_page)
@@ -21,15 +21,28 @@ class ManageOrdersController < ApplicationController
   end
 
   def show
-    render layout: false
+    respond_to do |format|
+      format.xls do
+        headers["Content-Disposition"] = "attachment; filename=\"订单-#{@order.no}.xls\""
+      end
+      format.html
+    end
+    #render layout: false
   end
 
   def edit_payment
+    @payment_log = @order.payment_logs.new
     render layout: false
   end
 
   def update_payment
-    @flag = @order.update payment: params[:order][:payment], payment_at: params[:order][:payment_at]
+    @payment_log = @order.payment_logs.new
+    @flag = @payment_log.update amount: params[:payment_log][:amount], payment_at: params[:payment_log][:payment_at], user: current_user
+  end
+
+  def payment_logs
+    @payment_logs = @order.payment_logs
+    render layout: false
   end
 
   def deliver_message

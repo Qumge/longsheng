@@ -11,6 +11,7 @@ class Import::OrderImporter < ActiveImporter::Base
     @bargains_order = Order.create project: params[:project], user: params[:user], order_type: 'bargains'
     logger.info "开始导入订单信息信息...."
   end
+  column '订单厂商'
   column '产品名'
   column '数量'
   column '战略价'
@@ -40,6 +41,14 @@ class Import::OrderImporter < ActiveImporter::Base
     else
       @bargains_order.desc = "#{@bargains_order.desc}#{row['备注/特殊要求']}; "
       order = @bargains_order
+    end
+    if row['订单厂商'].present?
+      factory = Factory.find_by name: row['订单厂商']
+      if factory.present?
+        order.factory = factory
+      else
+        raise "第#{row_count}行 【订单厂商】不存在。"
+      end
     end
     number = row['数量'].to_i
     total_price = number * price

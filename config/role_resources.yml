@@ -14,6 +14,7 @@ group_admin:
     show: 项目-详情
     order_import: 项目-批量订单界面
     do_import: 项目-批量导入订单
+    show_money: 项目-查看金额
   products:
     show: 产品-详情
     update: 产品-编辑
@@ -108,6 +109,7 @@ normal_admin:
     show: 项目-详情
     order_import: 项目-批量订单界面
     do_import: 项目-批量导入订单
+    show_money: 项目-查看金额
   products:
     show: 产品-详情
     update: 产品-编辑
@@ -211,6 +213,7 @@ regional_manager:
     new: 项目-立项界面
     index: 项目-列表
     show: 项目-详情
+    show_money: 项目-查看金额
   products:
     show: 产品-详情
     index: 产品-列表
@@ -279,6 +282,7 @@ project_manager:
     new: 项目-立项界面
     index: 项目-列表
     show: 项目-详情
+    show_money: 项目-查看金额
   products:
     show: 产品-详情
     index: 产品-列表
@@ -336,6 +340,7 @@ project_user:
     new: 项目-立项界面
     index: 项目-列表
     show: 项目-详情
+    show_money: 项目-查看金额
   products:
     show: 产品-详情
     index: 产品-列表
@@ -396,6 +401,7 @@ agency:
     upload: 项目动态-上传文件资料
     show: 项目-详情
     index: 项目-列表
+    show_money: 项目-查看金额
   products:
     show: 产品-详情
     index: 产品-列表

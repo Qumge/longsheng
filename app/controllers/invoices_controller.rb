@@ -1,25 +1,15 @@
 class InvoicesController < ApplicationController
-  before_action :set_default_invoice, only: [:new, :create]
   before_action :set_invoice, only: [:edit, :update, :invoice_apply]
-  before_action :set_project, only: [:index]
+  before_action :set_project, only: [:index, :create]
 
   def new
-    @orders = @project.can_invoice_orders
+    @invoice = Invoice.new
     render layout: false
   end
 
   def create
-    orders = []
-    if params[:order].present?
-      params[:order].each do |key, val|
-        order = Order.find_by id: key
-        orders << order if order.present? && order.invoices.blank?
-      end
-      @invoice.user = current_user
-      @invoice.orders = orders
-      @invoice.save
-    end
-    render js: 'location.reload()'
+    @invoice = @project.invoices.new
+    @flag = @invoice.update invoice_permit
   end
 
   def index
@@ -36,16 +26,8 @@ class InvoicesController < ApplicationController
   end
 
   def update
-    orders = []
-    if params[:order].present?
-      params[:order].each do |key, val|
-        order = Order.find_by id: key
-        orders << order if order.present? && (order.invoices.blank? || order.invoices.include?(@invoice))
-      end
-    end
-    @invoice.orders = orders
-    @invoice.save
-    render js: 'location.reload()'
+    @flag = @invoice.update invoice_permit
+    render template: 'invoices/create'
   end
 
   def invoice_apply
@@ -66,13 +48,17 @@ class InvoicesController < ApplicationController
 
   def set_project
     @project = current_user.view_projects.find_by id: params[:id]
+    p @project
     redirect_to projects_path, alert: '找不到数据' unless @project.present?
+  end
+
+  def invoice_permit
+    params.require(:invoice).permit(:amount)
   end
 
   def set_invoice
     @project = current_user.view_projects.find_by id: params[:id]
     @invoice = Invoice.find_by id: params[:invoice_id]
     redirect_to projects_path, alert: '找不到数据' unless @invoice.present? && @project.present?
-    @orders = @invoice.can_invoice_orders
   end
 end

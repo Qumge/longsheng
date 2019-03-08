@@ -17,6 +17,7 @@
 #  total_price     :float(24)
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
+#  factory_id      :integer
 #  payment_id      :integer
 #  project_id      :integer
 #  user_id         :integer
@@ -30,9 +31,11 @@ class Order < ActiveRecord::Base
   acts_as_paranoid
   include AASM
   belongs_to :project
+  belongs_to :factory
   has_many :order_products
   has_and_belongs_to_many :products, join_table: 'order_products'
   has_many :order_invoices
+  has_many :payment_logs
   belongs_to :user
   after_create :set_no
   has_and_belongs_to_many :invoices, join_table: "order_invoices"
@@ -41,9 +44,7 @@ class Order < ActiveRecord::Base
   has_one :sign_file, -> {where(model_type: 'sign')}, class_name: 'Attachment', foreign_key: :model_id
   has_many :audits, -> {where(model_type: 'Order')}, foreign_key: :model_id
   has_many :delivers
-  validates_numericality_of :payment, greater_than_or_equal_to: 0
-  validates_presence_of :payment_at, if: proc{|order| order.payment.present? && order.payment > 0}
-  after_update :check_payment
+  # after_update :check_payment
 
   STATUS = {wait: '新订单', apply: '已申请', project_manager_audit: '项目经理已审核',
             regional_manager_audit: '大区经理已审核', normal_admin_audit: '后勤已审核',
@@ -214,22 +215,27 @@ class Order < ActiveRecord::Base
     self.project.compute_need_payment
   end
 
-  def check_payment
-    if self.payment_changed?
-      self.compute_payment
-      self.compute_percent
-    end
-  end
+  # def check_payment
+  #   if self.payment_changed?
+  #     self.compute_payment
+  #     self.compute_percent
+  #   end
+  # end
 
   def compute_payment
+    amount = 0
+    self.payment_logs.each do |payment|
+      amount += payment.amount
+    end
+    self.update payment: amount, payment_percent: amount / self.real_total_price
     self.project.compute_payment
   end
 
-  def compute_percent
-    if real_total_price.present?
-      self.update_columns payment_percent: self.payment / self.real_total_price
-    end
-  end
+  # def compute_percent
+  #   if real_total_price.present?
+  #     self.update_columns payment_percent: self.payment / self.real_total_price
+  #   end
+  # end
 
   # 进度款是否到期
   def payment_overdue?
@@ -255,6 +261,9 @@ class Order < ActiveRecord::Base
       orders = Order.all
       if params[:order_status].present?
         orders = orders.where(order_status: params[:order_status])
+      end
+      if params[:factory_id].present?
+        orders = orders.where(factory_id: params[:factory_id])
       end
 
       if params[:table_search].present?

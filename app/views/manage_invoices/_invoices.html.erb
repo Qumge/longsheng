@@ -99,7 +99,7 @@
           <tr>
             <td><%= link_to invoice.project.name, project_path(invoice.project) %></td>
             <td>
-              <%= link_to invoice.no, invoice_path(invoice), 'data-toggle' => "modal", 'data-target' => "#global-modal"%>
+              <%= invoice.no %>
             </td>
             <td><%= invoice.user&.name %></td>
             <td><%= simple_time invoice.apply_at %></td>

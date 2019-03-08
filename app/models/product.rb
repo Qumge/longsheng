@@ -46,6 +46,10 @@ class Product < ActiveRecord::Base
     price.to_f
   end
 
+  def sale project
+    sale = project.contract.sales.find_by(product_id: self.id)
+  end
+
   class << self
     def search_conn params
       products = Product.all

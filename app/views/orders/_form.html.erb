@@ -11,6 +11,12 @@
       <%= f.input :number, label: '数量' %>
       <% if @order.id.blank? %>
         <div class="form-group row string optional sale_desc">
+          <label class="col-sm-3 col-form-label string optional" for="sale_desc">订单厂商</label>
+          <div class="col-sm-9">
+            <%= select_tag :factory_id, options_for_select(Factory.all.collect{|f| [f.name, f.id]}, @order.factory_id), class: 'select2 form-control', style: 'width:100%', include_blank: true %>
+          </div>
+        </div>
+        <div class="form-group row string optional sale_desc">
           <label class="col-sm-3 col-form-label string optional" for="sale_desc">备注</label>
           <div class="col-sm-9">
             <input class="form-control string optional" type="text" name="desc" id="desc" value="<%= @order.desc %>">

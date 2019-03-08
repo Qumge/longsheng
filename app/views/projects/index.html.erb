@@ -35,21 +35,20 @@
             <th>项目名</th>
             <th>甲方</th>
             <th>负责人</th>
-            <th>订单应收</th>
-            <th>进度款总额</th>
             <th>状态</th>
           </tr>
           <% if @projects.present? %>
           <% @projects.each do |project| %>
             <tr>
               <td>
+                <%= link_to show_money_project_path(project), 'data-toggle' => "modal", 'data-target' => "#global-modal", class: 'btn  btn-sm' do %>
                 <span class="label <%=get_color_class project %>"><%= format_float project.payment_percent %></span>
+                  <% end %>
+              </td>
               </td>
               <td><%= link_to project.name, project_path(project) %></td>
               <td><%= project.a_name %></td>
               <td><%= project.owner.name %></td>
-              <td><%= project.need_payment %></td>
-              <td><%= project.payment %></td>
               <td><%= project.status %></td>
             </tr>
           <% end %>

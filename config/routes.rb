@@ -121,6 +121,7 @@ Rails.application.routes.draw do
       post :delete_attachment
       post :payment
       post :step_event
+      get :show_money
       get :agent
       get :sales
       get :report
@@ -185,6 +186,7 @@ Rails.application.routes.draw do
       patch :update_payment
       get :deliver_message
       post :send_message
+      get :payment_logs
     end
   end
 

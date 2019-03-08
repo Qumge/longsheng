@@ -9,6 +9,7 @@
       <Row>
         <Cell><Data ss:Type="String">时间</Data></Cell>
         <Cell><Data ss:Type="String">项目类别</Data></Cell>
+        <Cell><Data ss:Type="String">甲方名</Data></Cell>
         <Cell><Data ss:Type="String">项目名</Data></Cell>
         <Cell><Data ss:Type="String">下单金额</Data></Cell>
         <Cell><Data ss:Type="String">发货金额</Data></Cell>
@@ -18,7 +19,8 @@
       <% @table_data.each do |data| %>
         <Row>
           <Cell><Data ss:Type="String"><%= data[0] %></Data></Cell>
-          <Cell><Data ss:Type="String"><%= data[1].category.name %></Data></Cell>
+          <Cell><Data ss:Type="String"><%= data[1].category&.name %></Data></Cell>
+          <Cell><Data ss:Type="String"><%= data[1].company&.name %></Data></Cell>
           <Cell><Data ss:Type="String"><%= data[1].name %></Data></Cell>
           <Cell><Data ss:Type="String"><%= (@applied_hash[data[0]].present? && @applied_hash[data[0]][data[1]].present?) ? @applied_hash[data[0]][data[1]] : 0 %></Data></Cell>
           <Cell><Data ss:Type="String"><%= (@deliver_hash[data[0]].present? && @deliver_hash[data[0]][data[1]].present?) ? @deliver_hash[data[0]][data[1]] : 0 %></Data></Cell>

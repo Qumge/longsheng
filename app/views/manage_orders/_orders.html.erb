@@ -93,8 +93,10 @@
       <tr>
         <th>项目名</th>
         <th>订单号</th>
+        <th>订单厂商</th>
         <th>下单人</th>
         <th>下单时间</th>
+        <th>回款金额</th>
         <th>类型</th>
         <th>状态</th>
         <th>单据</th>
@@ -107,8 +109,18 @@
             <td>
               <%= link_to order.no, manage_order_path(order), 'data-toggle' => "modal", 'data-target' => "#global-modal" %>
             </td>
+            <td><%= order.factory&.name %></td>
             <td><%= order.user&.name %></td>
-            <td><%= simple_time order.created_at %></td>
+            <td><%= simple_time order.apply_at %></td>
+            <td>
+              <% if can?(:payment_logs, :manage_orders) %>
+                <%= link_to payment_logs_manage_order_path(order), 'data-toggle' => "modal", 'data-target' => "#global-modal", class: 'btn  btn-sm' do %>
+                 <%= order.payment %>
+                <% end %>
+                <% else %>
+                <%= order.payment %>
+              <% end %>
+            </td>
             <td><%= order.get_order_type %></td>
             <td><%= order.get_status %></td>
             <td>
@@ -146,13 +158,13 @@
                     var uploader = qiniu.uploader(option);
                 </script>
               <% end %>
-              <% if can?(:edit_payment, :orders) && (order.deliver? || order.sign?) %>
+              <% if can?(:edit_payment, :manage_orders) && (order.deliver? || order.sign?) %>
                 <%= link_to edit_payment_manage_order_path(order), 'data-toggle' => "modal", 'data-target' => "#global-modal", class: 'btn  btn-sm' do %>
                   <i class="fa fa-money"></i>进度款
                 <% end %>
               <% end %>
 
-              <% if can?(:deliver_message, :orders) && (order.deliver? || order.sign?) %>
+              <% if can?(:deliver_message, :manage_orders) && (order.deliver? || order.sign?) %>
                 <%= link_to deliver_message_manage_order_path(order), 'data-toggle' => "modal", 'data-target' => "#global-modal", class: 'btn  btn-sm' do %>
                   <i class="fa  fa-send-o"></i>提醒收货
                 <% end %>
@@ -162,7 +174,7 @@
         <% end %>
       <% else %>
         <tr>
-          <td colspan="7" align="center">没有可显示的内容</td>
+          <td colspan="8" align="center">没有可显示的内容</td>
         </tr>
       <% end %>
 

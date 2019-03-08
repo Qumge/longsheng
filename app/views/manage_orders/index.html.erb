@@ -10,10 +10,14 @@
       <div class="box-tools">
         <%= form_tag manage_orders_path, method: :get do%>
           <div class="input-group input-group-sm">
-            <div class="pull-right">
-              <div class="col-xs-6"><%= select_tag :order_status, options_for_select(Order::STATUS.collect{|status| [status[1], status[0]]}, params[:order_status]),include_blank: '全部', class: 'form-control' %></div>
-
-              <div class="col-xs-6"><input type="text" name="table_search" class="form-control" placeholder="检索" value="<%= params[:table_search] %>"></div>
+            <div class="pull-right col-md-3 col-xs-6">
+              <div><%= select_tag :order_status, options_for_select(Order::STATUS.collect{|status| [status[1], status[0]]}, params[:order_status]),include_blank: '订单状态', class: 'form-control' %></div>
+            </div>
+            <div class="pull-right col-md-3 col-xs-6">
+            <div ><%= select_tag :factory_id, options_for_select(Factory.all.collect{|factory| [factory.name, factory.id]}, params[:factory_id]),include_blank: '订单厂商', class: 'form-control' %></div>
+            </div>
+            <div class="pull-right col-md-3 col-xs-6">
+              <div><input type="text" name="table_search" class="form-control" placeholder="检索" value="<%= params[:table_search] %>"></div>
             </div>
 
             <div class="input-group-btn">

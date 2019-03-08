@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190305063637) do
+ActiveRecord::Schema.define(version: 20190308022719) do
 
   create_table "agents", force: :cascade do |t|
     t.string   "username",     limit: 255
@@ -107,13 +107,21 @@ ActiveRecord::Schema.define(version: 20190305063637) do
 
   add_index "contracts", ["deleted_at"], name: "index_contracts_on_deleted_at", using: :btree
 
+  create_table "cost_categories", force: :cascade do |t|
+    t.string   "name",       limit: 255
+    t.text     "desc",       limit: 65535
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+  end
+
   create_table "costs", force: :cascade do |t|
-    t.integer  "user_id",    limit: 4
-    t.float    "amount",     limit: 24
-    t.string   "purpose",    limit: 255
+    t.integer  "user_id",          limit: 4
+    t.float    "amount",           limit: 24
+    t.string   "purpose",          limit: 255
     t.datetime "occur_time"
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
+    t.integer  "cost_category_id", limit: 4
   end
 
   create_table "delivers", force: :cascade do |t|
@@ -124,6 +132,14 @@ ActiveRecord::Schema.define(version: 20190305063637) do
     t.string   "name",       limit: 255
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
+  end
+
+  create_table "factories", force: :cascade do |t|
+    t.string   "name",       limit: 255
+    t.string   "address",    limit: 255
+    t.text     "desc",       limit: 65535
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
   end
 
   create_table "invoices", force: :cascade do |t|
@@ -205,6 +221,7 @@ ActiveRecord::Schema.define(version: 20190305063637) do
     t.float    "payment_percent", limit: 24
     t.datetime "deliver_at"
     t.float    "total_price",     limit: 24
+    t.integer  "factory_id",      limit: 4
   end
 
   add_index "orders", ["deleted_at"], name: "index_orders_on_deleted_at", using: :btree
@@ -219,6 +236,15 @@ ActiveRecord::Schema.define(version: 20190305063637) do
 
   add_index "organizations", ["ancestry"], name: "index_organizations_on_ancestry", using: :btree
   add_index "organizations", ["deleted_at"], name: "index_organizations_on_deleted_at", using: :btree
+
+  create_table "payment_logs", force: :cascade do |t|
+    t.integer  "order_id",   limit: 4
+    t.datetime "payment_at"
+    t.float    "amount",     limit: 24
+    t.integer  "user_id",    limit: 4
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
+  end
 
   create_table "product_categories", force: :cascade do |t|
     t.string   "name",       limit: 255

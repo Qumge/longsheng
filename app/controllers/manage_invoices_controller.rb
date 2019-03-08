@@ -4,7 +4,7 @@ class ManageInvoicesController < ApplicationController
   before_action :set_uptoken, only: [:index]
 
   def index
-    @invoices = Invoice.order('updated_at desc').page(params[:page]).per(Settings.per_page)
+    @invoices = Invoice.search_conn(params).order('updated_at desc').page(params[:page]).per(Settings.per_page)
   end
 
   def upload_file

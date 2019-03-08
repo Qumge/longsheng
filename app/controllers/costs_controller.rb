@@ -39,7 +39,7 @@ class CostsController < ApplicationController
   end
 
   def cost_permit
-    params.require('cost').permit(:user_id, :amount, :purpose, :occur_time)
+    params.require('cost').permit(:user_id, :amount, :purpose, :occur_time, :cost_category_id)
   end
 
 end

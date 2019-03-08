@@ -107,6 +107,7 @@ zh-CN:
         amount: '费用金额'
         purpose: '费用用途'
         occur_time: '产生时间'
+        cost_category_id: '费用类型'
       train:
         name: '资料名'
       competitor:
@@ -118,6 +119,9 @@ zh-CN:
         number: '货物件数'
         phone: '联系电话'
         phone_to: '接收人电话'
+      payment_log:
+        amount: '进度款'
+        payment_at: '回款时间'
 
 
 
