@@ -27,7 +27,6 @@ class InvoicesController < ApplicationController
 
   def update
     @flag = @invoice.update invoice_permit
-    render template: 'invoices/create'
   end
 
   def invoice_apply
@@ -48,7 +47,6 @@ class InvoicesController < ApplicationController
 
   def set_project
     @project = current_user.view_projects.find_by id: params[:id]
-    p @project
     redirect_to projects_path, alert: '找不到数据' unless @project.present?
   end
 

@@ -122,6 +122,8 @@ zh-CN:
       payment_log:
         amount: '进度款'
         payment_at: '回款时间'
+      invoice:
+        amount: '金额'
 
 
 

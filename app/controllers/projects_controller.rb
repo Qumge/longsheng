@@ -119,12 +119,12 @@ class ProjectsController < ApplicationController
   end
 
   def do_import
-    # begin
+    begin
       Import::OrderImporter.import(params[:file].path, params: {project: @project, user: current_user}) if params[:file]
-    #  redirect_to project_path(@project), notice: '导入成功！'
-    # rescue => e
-    #  redirect_to project_path(@project), alert: e.message
-    # end
+     redirect_to project_path(@project), notice: '导入成功！'
+    rescue => e
+     redirect_to project_path(@project), alert: e.message
+    end
   end
 
   def show_money

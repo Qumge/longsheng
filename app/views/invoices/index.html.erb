@@ -59,3 +59,20 @@
     <!-- /.box -->
   </div>
 </div>
+<script type="text/javascript">
+
+  function apply_invoice(invoice_id){
+      if(confirm('申请后不可变更，确认申请吗？')){
+          showSpinner();
+          $.ajax({
+              type: 'POST',
+              url: '<%= invoice_apply_invoices_path %>',
+              data: {invoice_id: invoice_id},
+              dataType: 'script',
+              success: function (data) {
+              }
+          })
+      }
+  }
+
+</script>

@@ -104,7 +104,7 @@ class Invoice < ActiveRecord::Base
   end
 
   def set_apply_at
-    self.update apply_at: DateTime.now, amount: total_price
+    self.update apply_at: DateTime.now
   end
 
   def set_applied_at

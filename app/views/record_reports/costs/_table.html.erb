@@ -3,6 +3,9 @@
     <tr>
       <th>时间</th>
       <th>人员</th>
+      <% if params[:cost_category_id].present? %>
+        <th>费用类型</th>
+        <%end %>
       <th>费用</th>
     </tr>
     <% if @costs_array.present? %>
@@ -10,6 +13,9 @@
             <tr>
               <td><%= data[0] %></td>
               <td><%= data[1]&.name %></td>
+              <% if params[:cost_category_id].present? %>
+                <td><%= CostCategory.find_by(id: params[:cost_category_id])&.name %></td>
+              <%end %>
               <td><%= data[2] %></td>
             </tr>
       <% end %>

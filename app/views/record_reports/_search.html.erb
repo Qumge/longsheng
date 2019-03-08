@@ -23,6 +23,11 @@
     <div class="col-md-3 pull-right">
       <%= select_tag :user_id, options_for_select(User.all.collect{|user| [user.name, user.id]}, params[:user_id]), include_blank: '销售人员', class: 'form-control select2' %>
     </div>
+    <% if ['costs'].include? params[:action] %>
+      <div class="col-md-3 pull-right">
+      <%= select_tag :cost_category_id, options_for_select(CostCategory.all.collect{|cc| [cc.name, cc.id]}, params[:cost_category_id]), include_blank: '费用类型', class: 'form-control select2' %>
+      </div>
+    <% end %>
     <% end %>
     <% if ['products'].include? params[:action] %>
       <div class="col-md-3 pull-right">

@@ -85,6 +85,9 @@ module ReportData
     if params[:user_id].present?
       search << "costs.user_id = #{params[:user_id]}"
     end
+    if params[:cost_category_id].present?
+      search << "costs.cost_category_id = #{params[:cost_category_id]}"
+    end
     search.join ' and '
   end
 

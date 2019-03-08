@@ -25,9 +25,11 @@ class ManageOrdersController < ApplicationController
       format.xls do
         headers["Content-Disposition"] = "attachment; filename=\"订单-#{@order.no}.xls\""
       end
-      format.html
+      format.html do
+        render layout: false
+      end
     end
-    #render layout: false
+
   end
 
   def edit_payment
