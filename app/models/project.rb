@@ -368,9 +368,16 @@ class Project < ActiveRecord::Base
     end
 
     def check_overdue
+      logger.info "##########{DateTime.now} 开始项目延期检测#################"
       Project.all.each do |project|
+        logger.info "############开始检测项目: #{project.name}############"
         project.check_overdue
       end
+      logger.info "##########{DateTime.now} 结束项目延期检测#################"
+    end
+
+    def logger
+      Logger.new 'log/overdue.log'
     end
 
 

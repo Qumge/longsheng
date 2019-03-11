@@ -273,9 +273,16 @@ class Order < ActiveRecord::Base
     end
 
     def check_overdue
+      logger.info "##########{DateTime.now} 开始订单延期检测#################"
       Order.all.each do |order|
+        logger.info "############开始检测项目: #{order.no}############"
         order.check_overdue
       end
+      logger.info "##########{DateTime.now} 结束订单延期检测#################"
+    end
+
+    def logger
+      Logger.new 'log/overdue.log'
     end
   end
 
