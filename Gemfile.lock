@@ -94,6 +94,9 @@ GEM
     domain_name (0.5.20180417)
       unf (>= 0.0.5, < 1.0.0)
     erubis (2.7.0)
+    exception_notification (4.3.0)
+      actionmailer (>= 4.0, < 6)
+      activesupport (>= 4.0, < 6)
     execjs (2.7.0)
     fastclick-rails (1.0.1)
     ffi (1.9.25)
@@ -348,6 +351,7 @@ DEPENDENCIES
   ckeditor (= 4.2.4)
   coffee-rails (= 4.2.1)
   devise
+  exception_notification
   fastclick-rails (= 1.0.1)
   flot-rails (= 0.0.7)
   font-awesome-rails (= 4.7.0.1)
