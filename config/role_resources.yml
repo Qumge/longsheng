@@ -36,6 +36,7 @@ group_admin:
     update_payment: 订单-录入进度款
     deliver_message: 订单-提醒收货界面
     send_message: 订单-提醒收货
+    payment_logs: 订单-查看回款记录
   manage_invoices:
     index: 开票管理-列表
     upload_file: 开票管理-上传票据
@@ -131,6 +132,7 @@ normal_admin:
     update_payment: 订单-录入进度款
     deliver_message: 订单-提醒收货界面
     send_message: 订单-提醒收货
+    payment_logs: 订单-查看回款记录
   manage_invoices:
     index: 开票管理-列表
     upload_file: 开票管理-上传票据
@@ -257,6 +259,7 @@ regional_manager:
     index: 代理商-列表
   manage_orders:
     show: 订单-详情
+    payment_logs: 订单-查看回款记录
 project_manager:
   costs:
     index: 费用-列表
@@ -326,6 +329,7 @@ project_manager:
     index: 代理商-列表
   manage_orders:
     show: 订单-详情
+    payment_logs: 订单-查看回款记录
 project_user:
   projects:
     sales: 项目-价格体系
@@ -384,6 +388,7 @@ project_user:
     index: 代理商-列表
   manage_orders:
     show: 订单-详情
+    payment_logs: 订单-查看回款记录
 agency:
   reports:
     update: 项目报备-编辑
@@ -428,3 +433,4 @@ agency:
     index: 培训资料-列表
   manage_orders:
     show: 订单-详情
+    payment_logs: 订单-查看回款记录
