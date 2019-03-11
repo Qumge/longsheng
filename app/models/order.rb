@@ -8,11 +8,11 @@
 #  deleted_at      :datetime
 #  deliver_at      :datetime
 #  desc            :string(255)
+#  last_payment_at :datetime
 #  no              :string(255)
 #  order_status    :string(255)
 #  order_type      :string(255)
 #  payment         :float(24)        default(0.0)
-#  payment_at      :datetime
 #  payment_percent :float(24)
 #  total_price     :float(24)
 #  created_at      :datetime         not null

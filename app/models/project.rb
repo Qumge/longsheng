@@ -94,8 +94,8 @@ class Project < ActiveRecord::Base
       transitions :from => :project_manager_audit, :to => :regional_audit, :after => Proc.new {create_admin_audit_notice }
     end
 
-    # 后勤审批
-    event :do_normal_admin_audit do
+    # 后勤管理审批
+    event :do_group_admin_audit do
       transitions :from => :regional_audit, :to => :active, :after => Proc.new {create_active_notice; set_approval_time }
     end
 
@@ -394,9 +394,9 @@ class Project < ActiveRecord::Base
                   p "order: #{ order.id} do deliver"
                   order.do_deliver!
                   order.update deliver_at: (order.applied_at + rand(2).days)
-                  if rand(20) > 5
-                    order.update payment: (rand(20)/20.0)*order.total_price, payment_at: (order.deliver_at + rand(2).days)
-                  end
+                  # if rand(20) > 5
+                  #   order.update payment: (rand(20)/20.0)*order.total_price, payment_at: (order.deliver_at + rand(2).days)
+                  # end
                 end
               end
             else
@@ -449,7 +449,7 @@ class Project < ActiveRecord::Base
 
   # 通知后勤审批
   def create_admin_audit_notice
-    User.joins(:roles).where('roles.desc = ?', 'normal_admin').each do |user|
+    User.joins(:roles).where('roles.desc = ?', 'group_admin').each do |user|
       Notice.create_notice :project_need_audit, self.id, user.id
     end
   end

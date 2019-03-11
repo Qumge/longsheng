@@ -57,12 +57,12 @@ class Agent < ActiveRecord::Base
 
     # 后勤审批
     event :do_normal_admin_audit do
-      transitions :from => :regional_manager_audit, :to => :normal_admin_audit, :after => Proc.new {create_group_admin_audit_notice }
+      transitions :from => :regional_manager_audit, :to => :active, :after => Proc.new {create_active_notice }
     end
 
     # 部门管理审批
     event :do_group_admin_audit do
-      transitions :from => :normal_admin_audit, :to => :active, :after => Proc.new {create_active_notice }
+      transitions :from => :regional_manager_audit, :to => :active, :after => Proc.new {create_active_notice }
     end
 
     #审批失败

@@ -4,6 +4,7 @@ class RecordReportsController < ApplicationController
   def index
     @orders_pie_labels = ["下单金额", "发货金额", "回款金额"]
     @orders_pie_data = format_order_pie
+    p format_order_pie
 
     @projects_pie_labels, @projects_pie_data = format_project_data_for_pie('payment')
 

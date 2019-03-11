@@ -45,14 +45,28 @@ module ReportData
   # type： deliver, applied, payment
   def order_type_conn type
     search = ['1=1']
-    if params[:begin_date].present?
+    if type == 'payment'
+      if params[:begin_date].present?
+
       begin_date = params[:begin_date].to_date.beginning_of_day
-      search << "orders.#{type}_at >= '#{begin_date}'"
+      search << "payment_logs.#{type}_at >= '#{begin_date}'"
+      end
+      if params[:end_date].present?
+        end_date = params[:end_date].to_date.end_of_day
+        search << "payment_logs.#{type}_at <= '#{end_date}'"
+      end
+    else
+      if params[:begin_date].present?
+        begin_date = params[:begin_date].to_date.beginning_of_day
+        search << "orders.#{type}_at >= '#{begin_date}'"
+      end
+      if params[:end_date].present?
+        end_date = params[:end_date].to_date.end_of_day
+        search << "orders.#{type}_at <= '#{end_date}'"
+      end
     end
-    if params[:end_date].present?
-      end_date = params[:end_date].to_date.end_of_day
-      search << "orders.#{type}_at <= '#{end_date}'"
-    end
+
+
     search.join ' and '
   end
 
@@ -116,7 +130,7 @@ module ReportData
   end
 
   def total_payment
-    'sum(orders.payment) as total_payment'
+    'sum(payment_logs.amount) as total_payment, orders.* '
   end
 
   def total_cost
@@ -132,7 +146,11 @@ module ReportData
 
   ####################################### begin  data #######################################
   def order_data type
-    order_scope.where(search_conn).where(order_type_conn type)
+    if type == 'payment'
+      order_scope.joins(:payment_logs).where(search_conn).where(order_type_conn type).select('payment_logs.*, payment_logs.payment_at as payment_at, payment_logs.amount as amount, orders.*')
+    else
+      order_scope.where(search_conn).where(order_type_conn type)
+    end
   end
 
   def cost_data
@@ -153,19 +171,20 @@ module ReportData
   ####################################### begin chat data #######################################
   def order_data_for_pie type
     if type == 'payment'
-      order_data(type).select(total_payment).first.total_payment.to_f.round 2
+      order_data(type).select(total_payment).first&.total_payment.to_f.round 2
     else
-      order_data(type).select(total_price).first.total_price.to_f.round 2
+      order_data(type).select(total_price).first&.total_price.to_f.round 2
     end
   end
 
   def project_data_for_pie type
-    order_data = order_data type
+    order_data = order_data(type).group('orders.id')
     # {project1 => [order1, order2], project2 => [order3, order4]}
+    # byebug
     group_data = order_data.group_by{|order| order.project}
     datas = {}
     group_data.each do |project, orders|
-      datas[project] = orders.sum{|order| order.payment}.round 2
+      datas[project] = orders.sum{|order| order.total_payment}.round 2
     end
     datas
   end
@@ -234,10 +253,11 @@ module ReportData
     date_datas_hash = {}
     date_datas.each do |date, orders|
       order_datas_hash = {}
+      # payment 从payment_logs照片那个统计
       orders.group_by{|order| order.project.category}.each do |category, orders|
         amount = 0
         orders.each do |order|
-          amount += order.send("#{type == 'payment' ? 'payment' : 'total_price'}").to_f
+          amount += order.send("#{type == 'payment' ? 'amount' : 'total_price'}").to_f
         end
         order_datas_hash[category] = amount.round(2)
       end
@@ -280,7 +300,7 @@ module ReportData
       orders.group_by{|order| order.project}.each do |project, orders|
         amount = 0
         orders.each do |order|
-          amount += order.send("#{type == 'payment' ? 'payment' : 'total_price'}").to_f
+          amount += order.send("#{type == 'payment' ? 'amount' : 'total_price'}").to_f
         end
         order_datas_hash[project] = amount
       end
@@ -322,7 +342,7 @@ module ReportData
       orders.group_by{|order| order.project.owner}.each do |owner, orders|
         amount = 0
         orders.each do |order|
-          amount += order.send("#{type == 'payment' ? 'payment' : 'total_price'}").to_f
+          amount += order.send("#{type == 'payment' ? 'amount' : 'total_price'}").to_f
         end
         order_datas_hash[owner] = amount
       end
@@ -466,7 +486,7 @@ module ReportData
         price = 0
         if data[label].present?
           data[label].each do |d|
-            price += d.send("#{type == 'payment' ? 'payment' : 'total_price'}").to_f
+            price += d.send("#{type == 'payment' ? 'amount' : 'total_price'}").to_f
           end
         end
         bar_data << price.round(2)

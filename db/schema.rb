@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190308022719) do
+ActiveRecord::Schema.define(version: 20190311023708) do
 
   create_table "agents", force: :cascade do |t|
     t.string   "username",     limit: 255
@@ -214,7 +214,7 @@ ActiveRecord::Schema.define(version: 20190308022719) do
     t.string   "no",              limit: 255
     t.datetime "deleted_at"
     t.float    "payment",         limit: 24,  default: 0.0
-    t.datetime "payment_at"
+    t.datetime "last_payment_at"
     t.integer  "payment_id",      limit: 4
     t.datetime "apply_at"
     t.datetime "applied_at"

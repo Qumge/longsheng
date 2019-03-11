@@ -104,7 +104,7 @@ class User < ActiveRecord::Base
       status = 'wait'
     when 'regional_manager'
       status = 'project_manager_audit'
-    when 'normal_admin'
+    when 'group_admin'
       status = 'regional_audit'
     end
     view_projects.where(project_status: status)
@@ -172,7 +172,7 @@ class User < ActiveRecord::Base
     when 'normal_admin'
       status = 'regional_manager_audit'
     when 'group_admin'
-      status = 'normal_admin_audit'
+      status = 'regional_manager_audit'
     end
     agents.where(agent_status: status)
   end
