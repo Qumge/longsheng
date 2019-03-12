@@ -47,7 +47,7 @@
               </td>
               </td>
               <td><%= link_to project.name, project_path(project) %></td>
-              <td><%= project.a_name %></td>
+              <td><%= project.company&.name %></td>
               <td><%= project.owner.name %></td>
               <td><%= project.status %></td>
             </tr>

@@ -48,9 +48,9 @@ module ApplicationHelper
         audits: {
             index: '审批操作台',
             orders: '样品审批',
-            sales: '特价审批',
+            bargains: '特价审批',
             agents: '代理审批',
-            invoices: '开票审批'
+            invoices: '开票审批',
         },
         manage_orders: {
             index: '订单列表'

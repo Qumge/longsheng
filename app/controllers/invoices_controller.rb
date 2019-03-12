@@ -9,6 +9,7 @@ class InvoicesController < ApplicationController
 
   def create
     @invoice = @project.invoices.new
+    @invoice.user = current_user
     @flag = @invoice.update invoice_permit
   end
 

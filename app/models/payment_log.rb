@@ -14,7 +14,7 @@
 class PaymentLog < ActiveRecord::Base
   belongs_to :user
   belongs_to :order
-  validates_numericality_of :amount, greater_than_or_equal_to: 0
+  validates_numericality_of :amount
   validates_presence_of :payment_at, :amount
   after_save :compute_payment
 

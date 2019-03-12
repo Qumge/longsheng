@@ -178,13 +178,13 @@ module ReportData
   end
 
   def project_data_for_pie type
-    order_data = order_data(type).group('orders.id')
+    order_data = order_data(type)
     # {project1 => [order1, order2], project2 => [order3, order4]}
     # byebug
     group_data = order_data.group_by{|order| order.project}
     datas = {}
     group_data.each do |project, orders|
-      datas[project] = orders.sum{|order| order.total_payment}.round 2
+      datas[project] = orders.sum{|order| order.amount}.round 2
     end
     datas
   end

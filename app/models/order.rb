@@ -98,7 +98,7 @@ class Order < ActiveRecord::Base
 
     #审批失败
     event :do_failed do
-      transitions :from => [:apply, :regional_audit, :normal_admin_audit], :to => :failed, :after => Proc.new {create_failed_notice }
+      transitions :from => [:apply, :project_manager_audit , :regional_audit, :normal_admin_audit], :to => :failed, :after => Proc.new {create_failed_notice }
     end
 
   end

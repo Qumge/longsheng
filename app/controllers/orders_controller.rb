@@ -11,8 +11,8 @@ class OrdersController < ApplicationController
   def create
     @order.order_type = params[:type]
     @order_product = @order.order_products.new order_product_permit
-    @order.desc = params[:desc]
-    @order.factory_id = params[:factory_id]
+    @order.desc = params[:desc] if params[:desc].present?
+    @order.factory_id = params[:factory_id] if params[:factory_id].present?
     @flag = @order.save
 
   end

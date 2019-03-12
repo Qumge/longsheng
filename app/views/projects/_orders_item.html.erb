@@ -61,8 +61,6 @@
             <div class="col-md-12">
               <div class="col-md-4" style="text-align: left">
                 <b>订单厂商：</b><%= order.factory&.name %>
-                <% if order.failed? %><span style="color: red"><%= order.audit_failed_reason %></span>
-                <% end %>
               </div>
               <div class="col-md-4" style="text-align: left">
                 <b>状态：</b><%= order.get_status %>
