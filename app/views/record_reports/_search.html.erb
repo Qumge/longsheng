@@ -1,44 +1,40 @@
 <div class="input-group input-group-sm">
-  <div class="col-md-3 pull-right">
-    <%= select_tag :group_type, options_for_select([['日', 'day'], ['月', 'month'], ['年', 'year']], params[:group_type]), include_blank: false, class: 'form-control' %>
-  </div>
-    <div class=" pull-right col-md-3">
-      <div class="input-group">
+
+    <div class="col-md-3">
+      <div class="input-group" style="width:100%">
         <div class="input-group-addon">
           <i class="fa fa-calendar"></i>
         </div>
-        <input type="text" class="form-control" id="date_range" name="date_range" value="<%= params[:date_range] %>" style="width:180px; margin-right: 200px;">
+        <input type="text" class="form-control" id="date_range" name="date_range" value="<%= params[:date_range] %>">
       </div>
     </div>
 
     <% if params[:action] == 'projects' %>
-    <div class="col-md-3 pull-right">
+    <div class="col-md-3">
       <%= select_tag :project_id, options_for_select(Project.all.collect{|project| [project.name, project.id]}, params[:project_id]), include_blank: '项目', class: 'form-control select2' %>
     </div>
-    <div class="col-md-3 pull-right">
+    <div class="col-md-3 ">
       <%= select_tag :company_id, options_for_select(Company.all.collect{|company| [company.name, company.id]}, params[:company_id]), include_blank: '甲方名', class: 'form-control select2' %>
     </div>
     <% end %>
     <% if ['users', 'costs', 'invoices'].include? params[:action] %>
-    <div class="col-md-3 pull-right">
+    <div class="col-md-3">
       <%= select_tag :user_id, options_for_select(User.all.collect{|user| [user.name, user.id]}, params[:user_id]), include_blank: '销售人员', class: 'form-control select2' %>
     </div>
     <% if ['costs'].include? params[:action] %>
-      <div class="col-md-3 pull-right">
+      <div class="col-md-3">
       <%= select_tag :cost_category_id, options_for_select(CostCategory.all.collect{|cc| [cc.name, cc.id]}, params[:cost_category_id]), include_blank: '费用类型', class: 'form-control select2' %>
       </div>
     <% end %>
     <% end %>
     <% if ['products'].include? params[:action] %>
-      <div class="col-md-3 pull-right">
+      <div class="col-md-3">
         <%= select_tag :product_id, options_for_select(Product.all.collect{|product| [product.name, product.id]}, params[:product_id]), include_blank: '产品名', class: 'form-control select2' %>
       </div>
     <% end %>
-
-
-
-
-
+    <div class="col-md-3">
+      <%= select_tag :group_type, options_for_select([['日', 'day'], ['月', 'month'], ['年', 'year']], params[:group_type]), include_blank: false, class: 'form-control', style: 'width:100%' %>
+    </div>
   <div class="input-group-btn">
     <button type="submit" class="btn btn-default" ><i class="fa fa-search"></i></button>
   </div>

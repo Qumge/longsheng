@@ -1,6 +1,6 @@
 <%= render 'record_reports/header' %>
 <div class="row">
-  <div class="box">
+  <div class="my-chart-box">
     <div class="box-header with-border">
       <h3 class="box-title">订单报表</h3>
       <%= link_to '导出', orders_record_reports_path(format: 'xls', date_range: params[:date_range], user_id: params[:user_id], project_id: params[:project_id], group_type: params[:group_type]) %>

@@ -2,12 +2,13 @@
 #
 # Table name: trains
 #
-#  id         :integer          not null, primary key
-#  desc       :string(255)
-#  name       :string(255)
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
-#  user_id    :integer
+#  id          :integer          not null, primary key
+#  action_type :string(255)
+#  desc        :string(255)
+#  name        :string(255)
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
+#  user_id     :integer
 #
 
 class Train < ActiveRecord::Base
