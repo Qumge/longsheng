@@ -34,7 +34,7 @@ class Ability
     if user
       can :index, :projects
     end
-    if user.resources.present?
+    if user.present? && user.resources.present?
       user.resources.each do |resource|
         if resource.target =~ /\//
           eval "can :#{resource.action}, :'#{resource.target}'"
