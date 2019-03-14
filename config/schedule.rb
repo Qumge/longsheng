@@ -24,7 +24,7 @@ every '0 1 * * *' do
   runner "Order.check_overdue"
 end
 
-every 1.day, :at => '3:00' do
+every '0 3 * * *' do
   command "backup perform -t longsheng_backup"
   set :output, "/tmp/cron.log"
 end
