@@ -79,7 +79,7 @@ Rails.application.configure do
   config.active_record.dump_schema_after_migration = false
   config.middleware.use ExceptionNotification::Rack,
                         :email => {
-                            :email_prefix => "[龙胜工程]",
+                            :email_prefix => "[龙胜大客户]",
                             :sender_address => %{"系统异常" <noreply@longsheng.com>},
                             :exception_recipients => %w{645054538@qq.com 1210616324@qq.com}
                         }

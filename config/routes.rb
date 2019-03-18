@@ -187,6 +187,9 @@ Rails.application.routes.draw do
       get :deliver_message
       post :send_message
       get :payment_logs
+      get :edit_deliver
+      patch :update_deliver
+      get :deliver_logs
     end
   end
 
@@ -216,6 +219,8 @@ Rails.application.routes.draw do
       get 'invoices'
     end
   end
+
+  resources :attachments
 
   # match ':controller(/:action(/:id))', :via => :get
   mount ChinaCity::Engine => '/china_city'

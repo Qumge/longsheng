@@ -60,6 +60,9 @@ manage_orders:
   deliver_message: '订单-提醒收货界面'
   send_message: '订单-提醒收货'
   payment_logs: '订单-查看回款记录'
+  edit_deliver: '订单-录入发货款界面'
+  update_deliver: '订单-录入发货款'
+  deliver_logs: '订单-查看发货款记录'
 manage_invoices:
   index: '开票管理-列表'
   upload_file: '开票管理-上传票据'

@@ -12,7 +12,7 @@
     </tr>
     <tr>
       <th>发货金额</th>
-      <td><%= @project.need_payment %></td>
+      <td><%= @project.deliver_amount %></td>
     </tr>
     <tr>
       <th>回款金额</th>
@@ -24,7 +24,7 @@
     </tr>
     <tr>
       <th>待回款</th>
-      <td><%= @project.need_payment -  @project.payment %></td>
+      <td><%= @project.deliver_amount -  @project.payment %></td>
     </tr>
 
     </tbody>

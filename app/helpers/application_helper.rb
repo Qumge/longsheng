@@ -98,6 +98,9 @@ module ApplicationHelper
             invoices: '开票报表',
             cost: '人员费用报表',
             products: '产品报表'
+        },
+        attachments: {
+            index: '文件管理'
         }
     }
   end

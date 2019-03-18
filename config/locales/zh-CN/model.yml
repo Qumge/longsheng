@@ -124,6 +124,9 @@ zh-CN:
         payment_at: '回款时间'
       invoice:
         amount: '金额'
+      deliver_log:
+        amount: '发货金额'
+        payment_at: '发货时间'
 
 
 

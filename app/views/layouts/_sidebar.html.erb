@@ -170,6 +170,13 @@
         </ul>
       </li>
       <% end %>
+      <% if can? :index, :attachments %>
+        <li class="<%= active_class params, 'attachments' %>">
+          <%= link_to attachments_path do %>
+            <i class="fa fa-file"></i> <span>文件管理</span>
+          <% end %>
+        </li>
+      <% end %>
       <% if current_user.has_role? 'super_admin' %>
       <li>
         <%= link_to rails_admin_path do %>

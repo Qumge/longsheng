@@ -1,7 +1,7 @@
 class ManageOrdersController < ApplicationController
   include ApplicationHelper
-  before_action :set_uptoken, only: [:index, :deliver]
-  before_action :set_order, only: [:show, :deliver, :edit_payment, :update_payment, :deliver_message, :send_message, :payment_logs]
+  before_action :set_uptoken, only: [:edit_deliver, :update_deliver]
+  before_action :set_order, only: [:show, :deliver, :edit_payment, :update_payment, :deliver_message, :send_message, :payment_logs, :edit_deliver, :update_deliver, :deliver_logs ]
 
   def index
     @orders = Order.search_conn(params).order('updated_at desc').page(params[:page]).per(Settings.per_page)
@@ -42,8 +42,24 @@ class ManageOrdersController < ApplicationController
     @flag = @payment_log.update amount: params[:payment_log][:amount], payment_at: params[:payment_log][:payment_at], user: current_user
   end
 
+  def edit_deliver
+    @deliver_log = @order.deliver_logs.new
+    render layout: false
+  end
+
+  def deliver_logs
+    @deliver_logs = @order.deliver_logs.order('deliver_logs.deliver_at desc')
+    render layout: false
+  end
+
+  def update_deliver
+    @deliver_log = @order.deliver_logs.new
+    @deliver_log.build_deliver_file path: params[:path], file_name: params[:file_name] if params[:path].present?
+    @flag = @deliver_log.update amount: params[:amount], deliver_at: params[:deliver_at], user: current_user
+  end
+
   def payment_logs
-    @payment_logs = @order.payment_logs
+    @payment_logs = @order.payment_logs.order('payment_logs.payment_at desc')
     render layout: false
   end
 
