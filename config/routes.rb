@@ -144,7 +144,12 @@ Rails.application.routes.draw do
 
   resources :contracts do
     member do
-      resources :sales
+      resources :sales do
+        collection do
+          get :sale_import
+          post :do_import
+        end
+      end
     end
   end
 

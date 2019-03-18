@@ -6,6 +6,8 @@ group_admin:
     create: 价格体系-新建
     new: 价格体系-新建界面
     show: 价格体系-详情
+    sale_import: 价格体系-批量导入界面
+    do_import: 价格体系-批量导入
   projects:
     sales: 项目-价格体系
     agent: 项目-代理商
@@ -105,6 +107,8 @@ normal_admin:
     create: 价格体系-新建
     new: 价格体系-新建界面
     show: 价格体系-详情
+    sale_import: 价格体系-批量导入界面
+    do_import: 价格体系-批量导入
   projects:
     sales: 项目-价格体系
     agent: 项目-代理商

@@ -117,6 +117,8 @@ sales:
   update: '价格体系-编辑'
   destroy: '价格体系-删除'
   show: '价格体系-详情'
+  sale_import: '价格体系-批量导入界面'
+  do_import: '价格体系-批量导入'
 record_reports:
   index: '报表-今日看板'
   projects: '报表-项目'
@@ -125,6 +127,8 @@ record_reports:
   users: '报表-人员业绩'
   costs: '报表-费用'
   products: '报表-产品'
+attachments:
+  index: '文件-列表'
 
 
 
