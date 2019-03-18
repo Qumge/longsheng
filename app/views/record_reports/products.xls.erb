@@ -12,8 +12,6 @@
         <Cell><Data ss:Type="String">产品名</Data></Cell>
         <Cell><Data ss:Type="String">下单数量</Data></Cell>
         <Cell><Data ss:Type="String">下单金额</Data></Cell>
-        <Cell><Data ss:Type="String">发货数量</Data></Cell>
-        <Cell><Data ss:Type="String">发货金额</Data></Cell>
       </Row>
 
       <% @table_data.each do |data| %>
@@ -21,8 +19,6 @@
           <Cell><Data ss:Type="String"><%= data[0] %></Data></Cell>
           <Cell><Data ss:Type="String"><%= data[1].product_category&.name %></Data></Cell>
           <Cell><Data ss:Type="String"><%= data[1].name %></Data></Cell>
-          <Cell><Data ss:Type="String"><%= (@applied_hash[data[0]].present? && @applied_hash[data[0]][data[1]].present?) ? @applied_hash[data[0]][data[1]][:number] : 0 %></Data></Cell>
-          <Cell><Data ss:Type="String"><%= (@applied_hash[data[0]].present? && @applied_hash[data[0]][data[1]].present?) ? @applied_hash[data[0]][data[1]][:amount] : 0 %></Data></Cell>
           <Cell><Data ss:Type="String"><%= data[2] %></Data></Cell>
           <Cell><Data ss:Type="String"><%= data[3] %></Data></Cell>
         </Row>

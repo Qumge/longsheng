@@ -4,7 +4,6 @@ class RecordReportsController < ApplicationController
   def index
     @orders_pie_labels = ["下单金额", "发货金额", "回款金额"]
     @orders_pie_data = format_order_pie
-    p format_order_pie
 
     @projects_pie_labels, @projects_pie_data = format_project_data_for_pie('payment')
 
@@ -50,10 +49,9 @@ class RecordReportsController < ApplicationController
   end
 
   def products
-    @products_bar_labels, @products_bar_bars, @products_bar_data = format_product_category_data_for_bar 'deliver'
-    @table_data = format_product_data_for_table 'deliver'
+    @products_bar_labels, @products_bar_bars, @products_bar_data = format_product_category_data_for_bar 'applied'
+    @table_data = format_product_data_for_table 'applied'
     @products_array = Kaminari.paginate_array(@table_data).page(params[:page]).per(Settings.per_page)
-    @applied_hash = product_data_for_table 'applied'
     respond_to do |format|
       format.html
       format.js

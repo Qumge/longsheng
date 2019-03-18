@@ -21,7 +21,7 @@ class DeliverLog < ActiveRecord::Base
 
   def compute_deliver_amount
     self.order.do_deliver! if self.order.may_do_deliver?
-    self.order.update deliver_at: self.deliver_at
+    self.order.update last_deliver_at: self.deliver_at
     self.order.compute_deliver_amount
   end
 end

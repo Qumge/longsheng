@@ -55,6 +55,15 @@ module ReportData
         end_date = params[:end_date].to_date.end_of_day
         search << "payment_logs.#{type}_at <= '#{end_date}'"
       end
+    elsif type == 'deliver'
+      if params[:begin_date].present?
+        begin_date = params[:begin_date].to_date.beginning_of_day
+        search << "deliver_logs.#{type}_at >= '#{begin_date}'"
+      end
+      if params[:end_date].present?
+        end_date = params[:end_date].to_date.end_of_day
+        search << "deliver_logs.#{type}_at <= '#{end_date}'"
+      end
     else
       if params[:begin_date].present?
         begin_date = params[:begin_date].to_date.beginning_of_day
@@ -133,6 +142,10 @@ module ReportData
     'sum(payment_logs.amount) as total_payment, orders.* '
   end
 
+  def total_deliver
+    'sum(deliver_logs.amount) as total_amount, orders.* '
+  end
+
   def total_cost
     # 'sum(costs.amount) as total_amount'
   end
@@ -148,6 +161,8 @@ module ReportData
   def order_data type
     if type == 'payment'
       order_scope.joins(:payment_logs).where(search_conn).where(order_type_conn type).select('payment_logs.*, payment_logs.payment_at as payment_at, payment_logs.amount as amount, orders.*')
+      elsif type == 'deliver'
+        order_scope.joins(:deliver_logs).where(search_conn).where(order_type_conn type).select('deliver_logs.*, deliver_logs.deliver_at as deliver_at, deliver_logs.amount as amount, orders.*')
     else
       order_scope.where(search_conn).where(order_type_conn type)
     end
@@ -172,6 +187,8 @@ module ReportData
   def order_data_for_pie type
     if type == 'payment'
       order_data(type).select(total_payment).first&.total_payment.to_f.round 2
+    elsif type == 'deliver'
+      order_data(type).select(total_deliver).first&.total_amount.to_f.round 2
     else
       order_data(type).select(total_price).first&.total_price.to_f.round 2
     end
@@ -257,7 +274,7 @@ module ReportData
       orders.group_by{|order| order.project.category}.each do |category, orders|
         amount = 0
         orders.each do |order|
-          amount += order.send("#{type == 'payment' ? 'amount' : 'total_price'}").to_f
+          amount += order.send("#{type == 'applied' ? 'total_price' : 'amount'}").to_f
         end
         order_datas_hash[category] = amount.round(2)
       end
@@ -300,7 +317,7 @@ module ReportData
       orders.group_by{|order| order.project}.each do |project, orders|
         amount = 0
         orders.each do |order|
-          amount += order.send("#{type == 'payment' ? 'amount' : 'total_price'}").to_f
+          amount += order.send("#{type == 'applied' ? 'total_price' : 'amount'}").to_f
         end
         order_datas_hash[project] = amount
       end
@@ -342,7 +359,7 @@ module ReportData
       orders.group_by{|order| order.project.owner}.each do |owner, orders|
         amount = 0
         orders.each do |order|
-          amount += order.send("#{type == 'payment' ? 'amount' : 'total_price'}").to_f
+          amount += order.send("#{type == 'applied' ? 'total_price' : 'amount'}").to_f
         end
         order_datas_hash[owner] = amount
       end
@@ -486,7 +503,7 @@ module ReportData
         price = 0
         if data[label].present?
           data[label].each do |d|
-            price += d.send("#{type == 'payment' ? 'amount' : 'total_price'}").to_f
+            price += d.send("#{type == 'applied' ? 'total_price' : 'amount'}").to_f
           end
         end
         bar_data << price.round(2)
@@ -567,7 +584,7 @@ module ReportData
           amount = data[date][product][:amount]
           number = data[date][product][:number]
         end
-        datas << [date, product, number, amount.round(2)]
+        datas << [date, product, number, amount.round(2)] if number > 0
       end
     end
     datas
@@ -599,7 +616,7 @@ module ReportData
       users.each do |user|
         amount = 0
         amount = data[date][user] if data[date].present? && data[date][user].present?
-        datas << [date, user, amount.round(2)]
+        datas << [date, user, amount.round(2)] if amount > 0
       end
     end
     datas
@@ -614,7 +631,7 @@ module ReportData
       users.each do |user|
         amount = 0
         amount = data[date][user] if data[date].present? && data[date][user].present?
-        datas << [date, user, amount.round(2)]
+        datas << [date, user, amount.round(2)] if amount > 0
       end
     end
     datas

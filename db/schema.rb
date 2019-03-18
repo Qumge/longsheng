@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190316074732) do
+ActiveRecord::Schema.define(version: 20190318034436) do
 
   create_table "agents", force: :cascade do |t|
     t.string   "username",     limit: 255
@@ -228,7 +228,7 @@ ActiveRecord::Schema.define(version: 20190316074732) do
     t.datetime "apply_at"
     t.datetime "applied_at"
     t.float    "payment_percent", limit: 24
-    t.datetime "deliver_at"
+    t.datetime "last_deliver_at"
     t.float    "total_price",     limit: 24
     t.integer  "factory_id",      limit: 4
     t.float    "deliver_amount",  limit: 24

@@ -7,8 +7,8 @@
 #  apply_at        :datetime
 #  deleted_at      :datetime
 #  deliver_amount  :float(24)
-#  deliver_at      :datetime
 #  desc            :string(255)
+#  last_deliver_at :datetime
 #  last_payment_at :datetime
 #  no              :string(255)
 #  order_status    :string(255)
@@ -130,7 +130,7 @@ class Order < ActiveRecord::Base
   end
 
   def set_deliver_at
-    self.update deliver_at: DateTime.now
+    self.update last_deliver_at: DateTime.now
   end
 
   # 通知项目经理审批
@@ -253,11 +253,11 @@ class Order < ActiveRecord::Base
   def payment_overdue?
     flag = false
     # 已经发货
-    if deliver_at.present?
+    if last_deliver_at.present?
       days = project&.contract&.process_time.present? ? project.contract.process_time : 45
       percent = Settings.need_payment_percent
       percent ||= 0.8
-      flag = (deliver_at + days.days) < DateTime.now && payment.to_f < total_price.to_f * percent
+      flag = (last_deliver_at + days.days) < DateTime.now && payment.to_f < total_price.to_f * percent
     end
     flag
   end
