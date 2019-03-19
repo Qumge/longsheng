@@ -44,17 +44,20 @@
       </p>
       <p class="text-muted ">
         <span><b>发货清单:</b></span>
-        <% if @order.deliver_file.present? %>
-          <a href="javascript:void(0)" onclick="show_file(this)" class="btn show-file" data-url="<%= @order.deliver_file.preview_url%>" data-file-name="<%= @order.deliver_file.file_name %>">
-            <i class="fa fa-eye"></i><%= show_file_name '发货清单', @order.deliver_file %>
-          </a>
+        <%@order.deliver_logs.each do |deliver_log| %>
+          <% if deliver_log.deliver_file.present? %>
+            <a href="javascript:void(0)" onclick="show_file(this)" class="btn show-file" data-url="<%= deliver_log.deliver_file.preview_url%>" data-file-name="<%= deliver_log.deliver_file.file_name %>">
+              <i class="fa fa-eye"></i><%= show_file_name "发货清单-#{simple_time deliver_log.deliver_at}", deliver_log.deliver_file %>
+            </a>
+          <% end %>
         <% end %>
+
       </p>
       <p class="text-muted ">
         <span><b>签收清单:</b></span>
-        <% if @order.sign_file.present?  %>
-          <a href="javascript:void(0)" onclick="show_file(this)" class="btn show-file" data-url="<%= @order.sign_file.preview_url%>" data-file-name="<%= @order.sign_file.file_name %>">
-            <i class="fa fa-eye"></i><%= show_file_name '签收清单', @order.sign_file %>
+        <% @order.sign_files.each do |sign_file|  %>
+          <a href="javascript:void(0)" onclick="show_file(this)" class="btn show-file" data-url="<%= sign_file.preview_url%>" data-file-name="<%= sign_file.file_name %>">
+            <i class="fa fa-eye"></i><%= show_file_name '签收清单', sign_file %>
           </a>
         <% end %>
       </p>

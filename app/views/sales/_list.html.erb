@@ -4,14 +4,22 @@
       <div class="box-header with-border">
         <h3 class="box-title">价格体系</h3>
         <% if can? :new, :sales %>
-          <%= link_to  '添加价格', new_sale_path, 'data-toggle' => "modal", 'data-target' => "#global-modal", class: 'font-a label pull-right bg-green', style: 'font-size: 100%' %>
+          <small>
+            <%= link_to  '添加价格', new_sale_path, 'data-toggle' => "modal", 'data-target' => "#global-modal", class: 'font-a label bg-green', style: 'font-size: 100%' %>
+          </small>
         <% end %>
+        <div class="pull-right">
+          <% if can? :sale_import, :sales %>
+            <small><%= link_to '批量导入', sale_import_sales_path , class: 'font-a label bg-green', 'data-toggle' => "modal", 'data-target' => "#global-modal" %></small>
+          <% end %>
+        </div>
       </div>
       <!-- /.box-header -->
       <div class="box-body">
         <table class="table table-bordered">
           <tr>
-            <th>序号</th>
+            <th>产品代码</th>
+            <th>产品名</th>
             <th>产品型号</th>
             <th>价格</th>
             <th></th>
@@ -21,6 +29,7 @@
               <% sales.each do |sale| %>
               <tr>
                 <td><%= link_to (sale.product&.no).to_s, sale_path(sale), 'data-toggle' => "modal", 'data-target' => "#global-modal" %></td>
+                <td><%= sale.product&.name %></td>
                 <td><%= sale.product&.product_no %></td>
                 <td><%= sale.price %></td>
                 <td>
@@ -39,7 +48,7 @@
             <% end %>
           <% else %>
             <tr>
-              <td colspan="6" align="center">没有可显示的内容</td>
+              <td colspan="5" align="center">没有可显示的内容</td>
             </tr>
           <% end %>
           </tr>

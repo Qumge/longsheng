@@ -50,11 +50,16 @@ class ProjectsController < ApplicationController
       type, id, a_type = params[:name].split('_')
       a_type = "#{a_type}_file"
       order = @project.orders.find_by id: id
-      if order.send(a_type).present?
-        @flag = order.send(a_type).update file_name: params[:file_name], path: params[:path]
+      if a_type == 'sign_file'
+        @flag = order.sign_files.create file_name: params[:file_name], path: params[:path]
       else
-        @flag = order.send("create_#{a_type}", ({file_name: params[:file_name], path: params[:path]}))
+        if order.send(a_type).present?
+          @flag = order.send(a_type).update file_name: params[:file_name], path: params[:path]
+        else
+          @flag = order.send("create_#{a_type}", ({file_name: params[:file_name], path: params[:path]}))
+        end
       end
+
     else
       if ['project_contract', 'advance', 'bond'].include? params[:name]
         if @project.send(params[:name]).present?

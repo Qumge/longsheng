@@ -26,11 +26,7 @@ class Attachment < ActiveRecord::Base
 
   # 上传完图片后 执行order的操作
   def do_order
-    # 发货清单 上传后表示已经发货
-    if self.model_type == 'deliver'
-      order = Order.find_by id: model_id
-      order.do_deliver! if order.may_do_deliver?
-    elsif self.model_type == 'sign'
+    if self.model_type == 'sign'
       order = Order.find_by id: model_id
       order.do_sign! if order.may_do_sign?
     elsif self.model_type == 'invoice'
@@ -38,6 +34,37 @@ class Attachment < ActiveRecord::Base
       invoice.do_sended! if invoice.may_do_sended?
     end
 
+  end
+
+  class << self
+    def search_conn params
+      attachments = Attachment.all
+      begin_date = DateTime.now.beginning_of_day
+      end_date = DateTime.now.end_of_day
+      if params[:date_range].present?
+        arr = params[:date_range].split(' - ')
+        params[:begin_date] = arr[0].to_date
+        params[:end_date] = arr[1].to_date
+        begin_date = params[:begin_date].to_date.beginning_of_day
+        end_date = params[:end_date].to_date.end_of_day
+      end
+      attachments = attachments.where("created_at >= '#{begin_date}' and created_at < '#{end_date}'")
+
+      if params[:model_type].present?
+        attachments = attachments.where(model_type: params[:model_type])
+      end
+
+      if params[:table_search].present?
+        attachments = attachments.where('file_name like ?', "%#{params[:table_search]}%")
+      end
+      attachments
+    end
+
+    def model_types
+      {place: '订货单', deliver: '发货单', sign: '签收单', contract: '项目合同文件', advance: '预付请款资料', payment: '进度款请款资料', settlement: '结算款资料', bond: '尾款资料',
+       train: '培训资料', competitor: '竞品信息', invoice: '发票'
+      }
+    end
   end
 
 

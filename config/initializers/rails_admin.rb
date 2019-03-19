@@ -11,11 +11,12 @@ RailsAdmin.config do |config|
   config.authenticate_with do
     # authenticate_admin_user!
     # warden.authenticate! scope: :user
+    redirect_to main_app.root_path, alert: '无权限' unless current_user.present? && current_user.has_role?('super_admin')
   end
 
   ## == Cancan ==
   # config.authorize_with :cancan
-  config.authorize_with :cancancan
+  # config.authorize_with :cancancan
   ## == Pundit ==
   # config.authorize_with :pundit
 
@@ -28,7 +29,7 @@ RailsAdmin.config do |config|
   ## To disable Gravatar integration in Navigation Bar set to false
   # config.show_gravatar = true
   #
-  config.main_app_name = ["龙胜", "工程"]
+  config.main_app_name = ["龙胜", "大客户"]
   config.included_models = ["Resource", 'Role', 'User', 'Organization', 'Company', 'Category', 'ProductCategory', 'CostCategory', 'Factory']
 
   config.model 'User' do
@@ -148,6 +149,7 @@ RailsAdmin.config do |config|
       label '详情'
     end
   end
+
 
 
 

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190312024632) do
+ActiveRecord::Schema.define(version: 20190318034436) do
 
   create_table "agents", force: :cascade do |t|
     t.string   "username",     limit: 255
@@ -124,6 +124,15 @@ ActiveRecord::Schema.define(version: 20190312024632) do
     t.integer  "cost_category_id", limit: 4
   end
 
+  create_table "deliver_logs", force: :cascade do |t|
+    t.integer  "order_id",   limit: 4
+    t.integer  "user_id",    limit: 4
+    t.float    "amount",     limit: 24
+    t.datetime "deliver_at"
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
+  end
+
   create_table "delivers", force: :cascade do |t|
     t.integer  "order_id",   limit: 4
     t.string   "phone_to",   limit: 255
@@ -219,9 +228,10 @@ ActiveRecord::Schema.define(version: 20190312024632) do
     t.datetime "apply_at"
     t.datetime "applied_at"
     t.float    "payment_percent", limit: 24
-    t.datetime "deliver_at"
+    t.datetime "last_deliver_at"
     t.float    "total_price",     limit: 24
     t.integer  "factory_id",      limit: 4
+    t.float    "deliver_amount",  limit: 24
   end
 
   add_index "orders", ["deleted_at"], name: "index_orders_on_deleted_at", using: :btree
@@ -315,6 +325,7 @@ ActiveRecord::Schema.define(version: 20190312024632) do
     t.integer  "company_id",        limit: 4
     t.integer  "category_id",       limit: 4
     t.float    "payment_percent",   limit: 24
+    t.float    "deliver_amount",    limit: 24
   end
 
   add_index "projects", ["deleted_at"], name: "index_projects_on_deleted_at", using: :btree

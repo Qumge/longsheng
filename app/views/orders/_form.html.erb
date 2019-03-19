@@ -7,7 +7,7 @@
   </div>
   <%= simple_form_for(@order_product, url: url,html: {class: 'form-horizontal group_form', onkeydown: "if(event.keyCode==13)return false;"}, wrapper: :horizontal_form) do |f| %>
     <div class="modal-body" >
-      <%= f.input :product_id, label: '序号 / 商品名 / 产品型号', input_html: { class: 'select2 form-control', style: 'width:100%' }, collection: Product.all.collect{|product| ["#{product.no} / #{product.name} / #{product.product_no}", product.id, data: {price: product.default_price(@project)}.to_json]} %>
+      <%= f.input :product_id, label: '产品代码 / 产品名 / 产品型号', input_html: { class: 'select2 form-control', style: 'width:100%' }, collection: Product.all.collect{|product| ["#{product.no} / #{product.name} / #{product.product_no}", product.id, data: {price: product.default_price(@project)}.to_json]} %>
       <%= f.input :number, label: '数量' %>
       <% if @order.id.blank? %>
         <div class="form-group row string optional sale_desc">

@@ -6,8 +6,9 @@
 #  applied_at      :datetime
 #  apply_at        :datetime
 #  deleted_at      :datetime
-#  deliver_at      :datetime
+#  deliver_amount  :float(24)
 #  desc            :string(255)
+#  last_deliver_at :datetime
 #  last_payment_at :datetime
 #  no              :string(255)
 #  order_status    :string(255)
@@ -40,9 +41,9 @@ class Order < ActiveRecord::Base
   after_create :set_no
   has_and_belongs_to_many :invoices, join_table: "order_invoices"
   has_one :place_file, -> {where(model_type: 'place')}, class_name: 'Attachment', foreign_key: :model_id
-  has_one :deliver_file, -> {where(model_type: 'deliver')}, class_name: 'Attachment', foreign_key: :model_id
-  has_one :sign_file, -> {where(model_type: 'sign')}, class_name: 'Attachment', foreign_key: :model_id
+  has_many :sign_files, -> {where(model_type: 'sign')}, class_name: 'Attachment', foreign_key: :model_id
   has_many :audits, -> {where(model_type: 'Order')}, foreign_key: :model_id
+  has_many :deliver_logs
   has_many :delivers
   # after_update :check_payment
 
@@ -68,12 +69,12 @@ class Order < ActiveRecord::Base
 
     # 发货
     event :do_deliver do
-      transitions :from => :active, :to => :deliver, :after => Proc.new {compute_need_payment; set_deliver_at; create_sign_notice }
+      transitions :from => :active, :to => :deliver, :after => Proc.new {create_sign_notice }
     end
 
     # 签收
     event :do_sign do
-      transitions :from => :deliver, :to => :sign, :after => Proc.new {compute_need_payment}
+      transitions :from => :deliver, :to => :sign
     end
 
     # 项目经理审批
@@ -129,7 +130,7 @@ class Order < ActiveRecord::Base
   end
 
   def set_deliver_at
-    self.update deliver_at: DateTime.now
+    self.update last_deliver_at: DateTime.now
   end
 
   # 通知项目经理审批
@@ -227,7 +228,8 @@ class Order < ActiveRecord::Base
     self.payment_logs.each do |payment|
       amount += payment.amount
     end
-    self.update payment: amount, payment_percent: amount / self.real_total_price
+    self.update payment: amount
+    self.update payment_percent: amount / self.deliver_amount.to_f if self.deliver_amount.to_f > 0
     self.project.compute_payment
   end
 
@@ -237,15 +239,25 @@ class Order < ActiveRecord::Base
   #   end
   # end
 
+  def compute_deliver_amount
+    amount = 0
+    self.deliver_logs.each do |deliver|
+      amount += deliver.amount.to_f
+    end
+    self.update deliver_amount: amount
+    self.update payment_percent: self.payment / amount.to_f if amount.to_f > 0
+    self.project.compute_deliver_amount
+  end
+
   # 进度款是否到期
   def payment_overdue?
     flag = false
     # 已经发货
-    if deliver_at.present?
+    if last_deliver_at.present?
       days = project&.contract&.process_time.present? ? project.contract.process_time : 45
       percent = Settings.need_payment_percent
       percent ||= 0.8
-      flag = (deliver_at + days.days) < DateTime.now && payment.to_f < total_price.to_f * percent
+      flag = (last_deliver_at + days.days) < DateTime.now && payment.to_f < total_price.to_f * percent
     end
     flag
   end

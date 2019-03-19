@@ -60,6 +60,9 @@ manage_orders:
   deliver_message: '订单-提醒收货界面'
   send_message: '订单-提醒收货'
   payment_logs: '订单-查看回款记录'
+  edit_deliver: '订单-录入发货款界面'
+  update_deliver: '订单-录入发货款'
+  deliver_logs: '订单-查看发货款记录'
 manage_invoices:
   index: '开票管理-列表'
   upload_file: '开票管理-上传票据'
@@ -114,6 +117,8 @@ sales:
   update: '价格体系-编辑'
   destroy: '价格体系-删除'
   show: '价格体系-详情'
+  sale_import: '价格体系-批量导入界面'
+  do_import: '价格体系-批量导入'
 record_reports:
   index: '报表-今日看板'
   projects: '报表-项目'
@@ -122,6 +127,8 @@ record_reports:
   users: '报表-人员业绩'
   costs: '报表-费用'
   products: '报表-产品'
+attachments:
+  index: '文件-列表'
 
 
 

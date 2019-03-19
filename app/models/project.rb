@@ -16,6 +16,7 @@
 #  cost              :string(255)
 #  cost_phone        :string(255)
 #  deleted_at        :datetime
+#  deliver_amount    :float(24)
 #  design            :string(255)
 #  design_phone      :string(255)
 #  estimate          :integer
@@ -274,15 +275,25 @@ class Project < ActiveRecord::Base
   def compute_payment
     amount = 0
     self.orders.each do |order|
-      amount += order.payment
+      amount += order.payment.to_f
     end
     self.update payment: amount
     compute_payment_percent
   end
 
+  # 已发货金额
+  def compute_deliver_amount
+    amount = 0
+    self.orders.each do |order|
+      amount += order.deliver_amount.to_f
+    end
+    self.update deliver_amount: amount
+    compute_payment_percent
+  end
+
   # 计算回款百分比
   def compute_payment_percent
-    self.update payment_percent: self.payment/self.need_payment if self.need_payment.to_f > 0
+    self.update payment_percent: self.payment/self.deliver_amount if self.deliver_amount.to_f > 0
   end
 
 
