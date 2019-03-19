@@ -53,6 +53,8 @@
 
 Rails.application.routes.draw do
 
+  get 'git/status'
+
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
   devise_for :users
   root 'projects#index'
@@ -226,6 +228,13 @@ Rails.application.routes.draw do
   end
 
   resources :attachments
+  resources :dynamic_reports do
+    collection do
+      get :payment
+      get :deliver
+      get :applied
+    end
+  end
 
   # match ':controller(/:action(/:id))', :via => :get
   mount ChinaCity::Engine => '/china_city'

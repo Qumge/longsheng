@@ -9,11 +9,14 @@ module DynamicReport
   end
 
   def dynamic_deliver_report
-
+    datas = dynamic_deliver_scope.select('sum(deliver_logs.amount) as deliver_logs_amounts').where(search_conn).where(deliver_conn).group(dynamic_group_columns)
+    datas = datas.select(dynamic_select_columns) if dynamic_select_columns.present?
+    datas = datas.select(dynamic_default_select_columns) if dynamic_default_select_columns.present?
+    datas
   end
 
   def dynamic_applied_report
-    datas = dynamic_order_scope.select('sum(orders.total_price) as orders_total_price').where(search_conn).where(applied_conn).group(dynamic_group_columns)
+    datas = dynamic_order_scope.select('sum(order_products.discount_total_price) as order_products_discount_total_price').where(search_conn).where(applied_conn).group(dynamic_group_columns)
     datas = datas.select(dynamic_select_columns) if dynamic_select_columns.present?
     datas = datas.select(dynamic_default_select_columns) if dynamic_default_select_columns.present?
     datas
@@ -26,8 +29,12 @@ module DynamicReport
     PaymentLog.joins(order: {project: [:owner, :category, :company]})
   end
 
+  def dynamic_deliver_scope
+    DeliverLog.joins(order: {project: [:owner, :category, :company]})
+  end
+
   def dynamic_order_scope
-    Order.joins(project: [:owner, :category, :company])
+    OrderProduct.joins(:product, order: {project: [:owner, :category, :company]})
   end
 
   def dynamic_cost_scope
@@ -47,7 +54,7 @@ module DynamicReport
 
   #params[:select_columns] = ['users.id, users.name']
   def dynamic_select_columns
-    params[:select_columns].collect{|column| "#{column} as #{column.gsub '.', '_'}"}.join('')
+    params[:select_columns].collect{|column| "#{column} as #{column.gsub '.', '_'}"}.join(',')
   end
   ######################columns############################
 
@@ -92,11 +99,11 @@ module DynamicReport
     search = ['1=1']
     if params[:begin_date].present?
       begin_date = params[:begin_date].to_date.beginning_of_day
-      search << "orders.deliver_at >= '#{begin_date}'"
+      search << "deliver_logs.deliver_at >= '#{begin_date}'"
     end
     if params[:end_date].present?
       end_date = params[:end_date].to_date.end_of_day
-      search << "orders.deliver_at <= '#{end_date}'"
+      search << "deliver_logs.deliver_at <= '#{end_date}'"
     end
     search.join ' and '
   end
