@@ -37,6 +37,7 @@ $.fn.datepicker.dates['zh-cn'] = {
     weekStart: 0
 };
 var initPage = function () {
+    Turbolinks.clearCache();
     $(".modal").on("hidden.bs.modal", function() {
         $(this).removeData("bs.modal");
     });
@@ -100,7 +101,7 @@ function textToImg() {
 
 
 $(document).ready(initPage);
-// $(document).on("turbolinks:load", initPage);
+$(document).on("turbolinks:load", initPage);
 
 
 
