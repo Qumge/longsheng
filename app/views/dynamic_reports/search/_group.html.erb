@@ -1,26 +1,53 @@
 <div class="row">
   <div class="col-md-3">
-    <div class="box box-solid">
-      <div class="box-header with-border">
-        <h3 class="box-title">Folders</h3>
-
-        <div class="box-tools">
-          <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-          </button>
-        </div>
-      </div>
-      <div class="box-body no-padding">
-        <ul class="nav nav-pills nav-stacked">
-          <li class="active"><a href="#"><i class="fa fa-inbox"></i> Inbox
-            <span class="label label-primary pull-right">12</span></a></li>
-          <li><a href="#"><i class="fa fa-envelope-o"></i> Sent</a></li>
-          <li><a href="#"><i class="fa fa-file-text-o"></i> Drafts</a></li>
-          <li><a href="#"><i class="fa fa-filter"></i> Junk <span class="label label-warning pull-right">65</span></a>
-          </li>
-          <li><a href="#"><i class="fa fa-trash-o"></i> Trash</a></li>
-        </ul>
-      </div>
-      <!-- /.box-body -->
+    <div class="checkbox">
+      <label>
+        <input type="checkbox" value="categories" name="groups[]">
+        项目类型
+      </label>
     </div>
+  </div>
+  <div class="col-md-3">
+    <div class="checkbox">
+      <label>
+        <input type="checkbox" value="projects" name="groups[]">
+        项目
+      </label>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="checkbox">
+      <label>
+        <input type="checkbox" value="product_categories" name="groups[]">
+        产品分类
+      </label>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="checkbox">
+      <label>
+        <input type="checkbox" value="products" name="groups[]">
+        产品
+      </label>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="checkbox">
+      <label>
+        <input type="checkbox" value="companies" name="groups[]">
+        甲方
+      </label>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="checkbox">
+      <label>
+        <input type="checkbox" value="users" name="groups[]">
+        销售人员
+      </label>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <%= select_tag 'groups[date]', options_for_select([['日', 'day'], ['月', 'month'], ['年', 'year']], params[:groups][:date]), include_blank: '时间', class: 'form-control', style: 'width:100px;' %>
   </div>
 </div>

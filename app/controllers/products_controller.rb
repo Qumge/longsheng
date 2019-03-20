@@ -45,7 +45,7 @@ class ProductsController < ApplicationController
       Import::ProductImporter.import(params[:file].path) if params[:file]
       redirect_to products_path, notice: '导入成功！'
     rescue => e
-      redirect_to products_path, alert: e.message
+      redirect_to products_path, notice: e.message
     end
   end
 
