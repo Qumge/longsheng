@@ -17,6 +17,7 @@ zh-CN:
         role_id: '角色'
         agent_id: '代理商'
         title: '职务'
+        name: '姓名'
       organization:
         name: '组织名'
         created_at: '创建时间'
@@ -127,6 +128,12 @@ zh-CN:
       deliver_log:
         amount: '发货金额'
         payment_at: '发货时间'
+      company:
+        name: '公司名'
+      category:
+        name: '项目类型'
+      product_category:
+        name: '产品类型'
 
 
 

@@ -1,6 +1,11 @@
 <div class="row">
-  <div class="box-body">
-    <div class="form-group col-md-6">
-    </div>
-  </div>
+  <%= render 'dynamic_reports/search/_select_columns/category' %>
+  <%= render 'dynamic_reports/search/_select_columns/project' %>
+  <%= render 'dynamic_reports/search/_select_columns/user' %>
+  <%= render 'dynamic_reports/search/_select_columns/organization' %>
+  <%= render 'dynamic_reports/search/_select_columns/company' %>
+  <% if params[:action] == 'applied' %>
+    <%= render 'dynamic_reports/search/_select_columns/product_category' %>
+    <%= render 'dynamic_reports/search/_select_columns/product' %>
+  <% end %>
 </div>

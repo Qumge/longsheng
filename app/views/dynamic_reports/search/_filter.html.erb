@@ -1,22 +1,22 @@
 <div class="row" style="padding-left: 15px; padding-right: 15px;">
-  <form class="form-horizontal">
+  <%= form_tag payment_dynamic_reports_path, class: "form-horizontal", remote: true, method: 'get' do %>
     <div class="nav-tabs-custom">
       <ul class="nav nav-tabs" data-turbolinks="false">
-        <li class="active"><a href="#tab_1" data-toggle="tab">检索条件</a></li>
-        <li><a href="#tab_2" data-toggle="tab">分组信息</a></li>
-        <li><a href="#tab_3" data-toggle="tab">查询内容</a></li>
+        <li class="active"><a href="#tab_1" data-toggle="tab">选择模块</a></li>
+        <li><a href="#tab_2" data-toggle="tab">选择关联模块</a></li>
+        <li><a href="#tab_3" data-toggle="tab">检索条件</a></li>
       </ul>
       <div class="tab-content">
         <div class="tab-pane active" id="tab_1">
-          <%= render 'dynamic_reports/search/search' %>
+          <%= render 'dynamic_reports/search/model' %>
         </div>
         <div class="tab-pane" id="tab_2">
-          <%= render 'dynamic_reports/search/group' %>
+          <%= render 'dynamic_reports/search/columns' %>
 
         </div>
-        <!-- /.tab-pane -->
+
         <div class="tab-pane" id="tab_3">
-          <%= render 'dynamic_reports/search/columns' %>
+          <%= render 'dynamic_reports/search/search' %>
         </div>
         <!-- /.tab-pane -->
       </div>
@@ -26,7 +26,7 @@
       </div>
       <!-- /.tab-content -->
     </div>
-  </form>
+  <% end %>
 
 
 </div>

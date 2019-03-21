@@ -204,4 +204,25 @@ module ApplicationHelper
     (page - 1) * Settings.per_page
   end
 
+  def get_select_columns column
+    arr = []
+    column.split('.').each_with_index do |s, index|
+      if index == 0
+        arr << s.singularize
+      else
+        arr << s
+      end
+    end
+    arr.join '.'
+  end
+
+  def format_select_column column
+    I18n.t "activerecord.attributes.#{get_select_columns(column)}"
+  end
+
+  def format_select_value data, column
+    data.send column.split('.').join('_')
+  end
+
+
 end

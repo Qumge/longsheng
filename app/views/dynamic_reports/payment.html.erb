@@ -2,13 +2,8 @@
 <div>
   <div class="box">
     <div class="box-header with-border">
-      <h3 class="box-title">人员报表</h3>
-      <%= link_to '导出', users_record_reports_path(format: 'xls', date_range: params[:date_range], user_id: params[:user_id], project_id: params[:project_id], group_type: params[:group_type]) %>
-    </div>
-    <div class="box-tools">
-      <%= form_tag users_record_reports_path, method: :get do %>
-
-      <% end %>
+      <h3 class="box-title">动态报表</h3>
+      <%#= link_to '导出', users_record_reports_path(format: 'xls', date_range: params[:date_range], user_id: params[:user_id], project_id: params[:project_id], group_type: params[:group_type]) %>
     </div>
     <!-- /.box-header -->
     <div class="box-body">
@@ -16,6 +11,9 @@
       <%= render 'dynamic_reports/search/filter' %>
     </div>
   </div>
+</div>
+<div class="row" id="datas" style="padding:15px;">
+  <%#= render 'dynamic_reports/datas' %>
 </div>
 
 
