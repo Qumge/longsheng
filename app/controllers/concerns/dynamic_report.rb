@@ -19,7 +19,7 @@ module DynamicReport
   def dynamic_applied_report
     datas = dynamic_order_scope.select('sum(order_products.discount_total_price) as amounts').where(search_conn).where(applied_conn).group(dynamic_group_columns 'applied')
     datas = datas.select(dynamic_select_columns 'applied')
-    datas = datas.select(dynamic_default_select_columns) if dynamic_default_select_columns.present?
+    datas = datas.select('order_products.*').select(dynamic_default_select_columns) if dynamic_default_select_columns.present?
     datas
   end
 
@@ -27,15 +27,15 @@ module DynamicReport
   private
   ############################scope####################
   def dynamic_payment_scope
-    PaymentLog.joins(order: {project: [{owner: :organization}, :category, :company]})
+    PaymentLog.joins(order: [:factory, {project: [{owner: :organization}, :category, :company, :agent, :contract]}])
   end
 
   def dynamic_deliver_scope
-    DeliverLog.joins(order: {project: [{owner: :organization}, :category, :company]})
+    DeliverLog.joins(order: [:factory, {project: [{owner: :organization}, :category, :company, :agent, :contract]}])
   end
 
   def dynamic_order_scope
-    OrderProduct.joins(product: :product_category, order: {project: [{owner: :organization}, :category, :company]})
+    OrderProduct.joins(product: [:product_category, :sales], order: [:factory, {project: [{owner: :organization}, :category, :company, :agent, :contract]}])
   end
 
   def dynamic_cost_scope

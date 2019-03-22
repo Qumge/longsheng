@@ -228,13 +228,7 @@ Rails.application.routes.draw do
   end
 
   resources :attachments
-  resources :dynamic_reports do
-    collection do
-      get :payment
-      get :deliver
-      get :applied
-    end
-  end
+  resources :dynamic_reports
 
   # match ':controller(/:action(/:id))', :via => :get
   mount ChinaCity::Engine => '/china_city'

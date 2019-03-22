@@ -34,17 +34,26 @@
       $('#model_type').change(function(e){
           var model_type = $(this).val();
           if(model_type == 'applied'){
-              $('#products').show();
-              $('#product_categories').show();
-              $('#products input').removeAttr("disabled");
-              $('#product_categories input').removeAttr("disabled");
+              show_column('products');
+              show_column('product_categories');
+              show_column('order_products');
+              show_column('sales');
           }else{
-              $('#products').hide();
-              $('#product_categories').hide();
-              $('#products input').attr("disabled","disabled");
-              $('#product_categories input').attr("disabled","disabled");
+              hide_column('products');
+              hide_column('product_categories');
+              hide_column('order_products');
+              hide_column('sales');
           }
       })
   });
+
+  function show_column(id){
+      $('#' + id).show();
+      $('#' + id + ' input').removeAttr("disabled");
+  }
+  function hide_column(id){
+      $('#' + id).hide();
+      $('#' + id + ' input').attr("disabled","disabled");
+  }
 
 </script>

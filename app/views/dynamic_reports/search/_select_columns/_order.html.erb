@@ -3,6 +3,7 @@
     <div class="box-header with-border">
       <h3 class="box-title">订单</h3>
       <!-- /.box-tools -->
+
     </div>
     <!-- /.box-header -->
     <div class="box-body" style="display: block;">
@@ -16,6 +17,30 @@
         <label>
           <input type="checkbox" value="orders.applied_at" name="select_columns[]">
           下单时间
+        </label>
+      </div>
+      <div class="checkbox">
+        <label>
+          <input type="checkbox" value="orders.total_price" name="select_columns[]">
+          下单金额
+        </label>
+      </div>
+      <div class="checkbox">
+        <label>
+          <input type="checkbox" value="orders.deliver_amount" name="select_columns[]">
+          发货金额
+        </label>
+      </div>
+      <div class="checkbox">
+        <label>
+          <input type="checkbox" value="orders.payment" name="select_columns[]">
+          进度款
+        </label>
+      </div>
+      <div class="checkbox">
+        <label>
+          <input type="checkbox" value="orders.payment_percent" name="select_columns[]">
+          回款百分比
         </label>
       </div>
 

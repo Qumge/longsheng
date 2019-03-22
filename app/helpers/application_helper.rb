@@ -221,6 +221,8 @@ module ApplicationHelper
       '订单编号'
     elsif column == 'products.no'
       '产品代码'
+    elsif column == 'contracts.no'
+      '合同编号'
     else
       I18n.t "activerecord.attributes.#{get_select_columns(column)}"
     end
@@ -228,7 +230,14 @@ module ApplicationHelper
 
   def format_select_value data, column
     value = data.send column.split('.').join('_')
-    value = simple_time_mini(value) if value.is_a? Time
+    if value.is_a? Time
+      value = simple_time_mini(value)
+    elsif column == 'projects.city'
+      value = ChinaCity.get(value, prepend_parent: true) if value.present?
+    elsif column == 'sales.price'
+      p data
+      value = data.contract_sale_price
+    end
     value
   end
 

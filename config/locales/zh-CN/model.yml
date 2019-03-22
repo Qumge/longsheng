@@ -50,6 +50,9 @@ zh-CN:
         category_id: '项目类别'
         company_id: '甲方名称'
         approval_time: '项目批准时间'
+        deliver_amount: '项目发货金额'
+        payment: '项目回款金额'
+        payment_percent: '项目回款百分比'
       contract:
         name: '明细'
         no: '合同编号'
@@ -64,12 +67,13 @@ zh-CN:
         others: '合同其他关键条款'
       sale:
         product_id: '序号 / 产品型号'
-        price: '价格'
+        price: '合同价'
         desc: '备注'
       order_product:
         product_id: '产品'
         number: '数量'
         discount: '折扣'
+        discount_price: '销售单价'
       agent:
         name: '代理公司名'
         city: '代理城市'
@@ -118,6 +122,9 @@ zh-CN:
         payment: '进度款'
         no: '订单编号'
         applied_at: '下单时间'
+        total_price: '下单金额'
+        deliver_amount: '发货金额'
+        payment_percent: '回款百分比'
       deliver:
         name: '物流联系人'
         number: '货物件数'
@@ -137,6 +144,9 @@ zh-CN:
         name: '项目类型'
       product_category:
         name: '产品类型'
+      factory:
+        name: '厂商名'
+        address: '厂商地址'
 
 
 
