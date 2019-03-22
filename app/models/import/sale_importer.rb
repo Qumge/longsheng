@@ -18,16 +18,15 @@ class Import::SaleImporter < ActiveImporter::Base
     raise "第#{row_count}行 产品名不存在。" unless row['产品名'].present?
     product = Product.find_by name: row['产品名']
     raise "第#{row_count}行 #{row['产品名']}不存在。" unless product.present?
-    sale = Sale.find_or_initialize_by product: product
+    sale = Sale.find_or_initialize_by product: product, contract: params[:contract]
     sale
   end
 
   on :row_processing do
     sale = model
     raise "第#{row_count}行 价格不存在。" unless row['价格'].present?
-    unless sale.update contract: params[:contract], price: row['价格'], desc: row['备注']
+    unless sale.update price: row['价格'], desc: row['备注']
       error = sale.errors.messages.first
-      p errors, 1111111
       raise "第#{row_count}行 #{I18n.t "activerecord.attributes.product.#{error.first.to_s}"}: #{error[1][0].to_s}"
     end
   end
