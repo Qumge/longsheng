@@ -3,21 +3,27 @@ class DynamicReportsController < ApplicationController
 
   before_action :set_params
 
-  def payment
-    params[:groups] ||= ['payment_logs']
-    @datas = dynamic_payment_report.page(params[:page]).per(Settings.per_page)
-  end
+  def index
+    @datas = []
+    if params[:model_type] == 'payment'
+      params[:groups] ||= ['payment_logs']
+      @datas = dynamic_payment_report.page(params[:page]).per(Settings.per_page)
+    elsif params[:model_type] == 'deliver'
+      params[:groups] ||= ['deliver_logs']
+      @datas = dynamic_deliver_report.page(params[:page]).per(Settings.per_page)
+    elsif params[:model_type] == 'applied'
+      params[:groups] ||= ['order_products']
+      @datas = dynamic_applied_report.page(params[:page]).per(Settings.per_page)
+    end
+    respond_to do |format|
+      format.html
+      format.js
+      format.xls do
+        headers["Content-Disposition"] = "attachment; filename=\"动态报表-#{Date.today}.xls\""
+      end
+    end
 
-  def deliver
-    params[:groups] ||= ['deliver_logs']
-    @datas = dynamic_deliver_report.page(params[:page]).per(Settings.per_page)
   end
-
-  def applied
-    params[:groups] ||= ['order_products']
-    @datas = dynamic_applied_report
-  end
-
 
   def set_params
     params[:select_columns] ||= []

@@ -27,7 +27,6 @@ class Import::SaleImporter < ActiveImporter::Base
     raise "第#{row_count}行 价格不存在。" unless row['价格'].present?
     unless sale.update contract: params[:contract], price: row['价格'], desc: row['备注']
       error = sale.errors.messages.first
-      p errors, 1111111
       raise "第#{row_count}行 #{I18n.t "activerecord.attributes.product.#{error.first.to_s}"}: #{error[1][0].to_s}"
     end
   end

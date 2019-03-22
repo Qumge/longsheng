@@ -49,6 +49,7 @@ zh-CN:
         contract_id: '战略合作方'
         category_id: '项目类别'
         company_id: '甲方名称'
+        approval_time: '项目批准时间'
       contract:
         name: '明细'
         no: '合同编号'
@@ -75,8 +76,8 @@ zh-CN:
         username: '代理商姓名'
         phone: '电话'
       product:
-        no: '产品代码'
         product_no: '产品型号'
+        no: '产品代码'
         name: '产品名'
         reference_price: '单价'
         unit: '单位'
@@ -115,6 +116,8 @@ zh-CN:
         name: '文件名'
       order:
         payment: '进度款'
+        no: '订单编号'
+        applied_at: '下单时间'
       deliver:
         name: '物流联系人'
         number: '货物件数'

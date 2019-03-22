@@ -217,11 +217,19 @@ module ApplicationHelper
   end
 
   def format_select_column column
-    I18n.t "activerecord.attributes.#{get_select_columns(column)}"
+    if column == 'orders.no'
+      '订单编号'
+    elsif column == 'products.no'
+      '产品代码'
+    else
+      I18n.t "activerecord.attributes.#{get_select_columns(column)}"
+    end
   end
 
   def format_select_value data, column
-    data.send column.split('.').join('_')
+    value = data.send column.split('.').join('_')
+    value = simple_time_mini(value) if value.is_a? Time
+    value
   end
 
 

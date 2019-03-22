@@ -2,8 +2,8 @@
 <div>
   <div class="box">
     <div class="box-header with-border">
-      <h3 class="box-title">动态报表</h3>
-      <%#= link_to '导出', users_record_reports_path(format: 'xls', date_range: params[:date_range], user_id: params[:user_id], project_id: params[:project_id], group_type: params[:group_type]) %>
+      <h3 class="box-title">报表</h3>
+      <%= link_to '导出', dynamic_reports_path(format: 'xls', params: params), id: 'reports' %>
     </div>
     <!-- /.box-header -->
     <div class="box-body">

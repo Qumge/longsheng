@@ -1,5 +1,5 @@
 <div class="row" style="padding-left: 15px; padding-right: 15px;">
-  <%= form_tag payment_dynamic_reports_path, class: "form-horizontal", remote: true, method: 'get' do %>
+  <%= form_tag dynamic_reports_path, class: "form-horizontal", remote: true, method: 'get' do %>
     <div class="nav-tabs-custom">
       <ul class="nav nav-tabs" data-turbolinks="false">
         <li class="active"><a href="#tab_1" data-toggle="tab">选择模块</a></li>
@@ -28,5 +28,23 @@
     </div>
   <% end %>
 
-
 </div>
+<script type="text/javascript">
+  $(function(){
+      $('#model_type').change(function(e){
+          var model_type = $(this).val();
+          if(model_type == 'applied'){
+              $('#products').show();
+              $('#product_categories').show();
+              $('#products input').removeAttr("disabled");
+              $('#product_categories input').removeAttr("disabled");
+          }else{
+              $('#products').hide();
+              $('#product_categories').hide();
+              $('#products input').attr("disabled","disabled");
+              $('#product_categories input').attr("disabled","disabled");
+          }
+      })
+  });
+
+</script>

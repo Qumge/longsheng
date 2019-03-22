@@ -2,7 +2,7 @@ module DynamicReport
   extend ActiveSupport::Concern
 
   def dynamic_payment_report
-    datas = dynamic_payment_scope.select('sum(payment_logs.amount) as payment_logs_amounts').where(search_conn).where(payment_conn).group(dynamic_group_columns 'payment')
+    datas = dynamic_payment_scope.select('sum(payment_logs.amount) as amounts').where(search_conn).where(payment_conn).group(dynamic_group_columns 'payment')
     datas = datas.select(dynamic_select_columns 'payment')
     datas = datas.select(dynamic_default_select_columns) if dynamic_default_select_columns.present?
     datas = datas.order(group_date_column 'payment')
@@ -10,14 +10,14 @@ module DynamicReport
   end
 
   def dynamic_deliver_report
-    datas = dynamic_deliver_scope.select('sum(deliver_logs.amount) as deliver_logs_amounts').where(search_conn).where(deliver_conn).group(dynamic_group_columns 'deliver')
+    datas = dynamic_deliver_scope.select('sum(deliver_logs.amount) as amounts').where(search_conn).where(deliver_conn).group(dynamic_group_columns 'deliver')
     datas = datas.select(dynamic_select_columns 'deliver')
     datas = datas.select(dynamic_default_select_columns) if dynamic_default_select_columns.present?
     datas
   end
 
   def dynamic_applied_report
-    datas = dynamic_order_scope.select('sum(order_products.discount_total_price) as order_products_discount_total_price').where(search_conn).where(applied_conn).group(dynamic_group_columns 'applied')
+    datas = dynamic_order_scope.select('sum(order_products.discount_total_price) as amounts').where(search_conn).where(applied_conn).group(dynamic_group_columns 'applied')
     datas = datas.select(dynamic_select_columns 'applied')
     datas = datas.select(dynamic_default_select_columns) if dynamic_default_select_columns.present?
     datas
@@ -35,7 +35,7 @@ module DynamicReport
   end
 
   def dynamic_order_scope
-    OrderProduct.joins(:product, order: {project: [{owner: :organization}, :category, :company]})
+    OrderProduct.joins(product: :product_category, order: {project: [{owner: :organization}, :category, :company]})
   end
 
   def dynamic_cost_scope

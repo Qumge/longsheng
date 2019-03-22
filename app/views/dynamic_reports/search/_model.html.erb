@@ -4,7 +4,7 @@
       <label for="categories" class="col-sm-3 control-label">模块</label>
 
       <div class="col-sm-9">
-        <%= select_tag :model_type, options_for_select([['回款', 'payment'], ['发货款', 'deliver'], ['下单金额', 'applied'], ['费用', 'cost']], params[:model_type]), class: "form-control select2", style: 'width:100%' %>
+        <%= select_tag :model_type, options_for_select([['回款', 'payment'], ['发货款', 'deliver'], ['下单金额', 'applied']], params[:model_type]), class: "form-control select2", style: 'width:100%' %>
       </div>
     </div>
   </div>

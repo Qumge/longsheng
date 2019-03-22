@@ -1,11 +1,10 @@
 <div class="row">
   <%= render 'dynamic_reports/search/_select_columns/category' %>
+  <%= render 'dynamic_reports/search/_select_columns/company' %>
   <%= render 'dynamic_reports/search/_select_columns/project' %>
   <%= render 'dynamic_reports/search/_select_columns/user' %>
   <%= render 'dynamic_reports/search/_select_columns/organization' %>
-  <%= render 'dynamic_reports/search/_select_columns/company' %>
-  <% if params[:action] == 'applied' %>
-    <%= render 'dynamic_reports/search/_select_columns/product_category' %>
-    <%= render 'dynamic_reports/search/_select_columns/product' %>
-  <% end %>
+  <%= render 'dynamic_reports/search/_select_columns/order' %>
+  <%= render 'dynamic_reports/search/_select_columns/product_category' %>
+  <%= render 'dynamic_reports/search/_select_columns/product' %>
 </div>

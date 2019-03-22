@@ -3,7 +3,7 @@
     <h3 class="box-title">报表</h3>
   </div>
   <!-- /.box-header -->
-  <div class="box-body">
+  <div class="box-body" style="overflow-x: scroll">
     <table class="table table-bordered">
       <tbody>
       <tr>
@@ -16,7 +16,7 @@
       <%@datas.each do |data| %>
       <tr>
         <td>
-          <%= data.view_date %>
+          <%= simple_time_mini data.view_date %>
         </td>
         <% params[:select_columns].each do |column| %>
           <td>
@@ -24,7 +24,7 @@
           </td>
         <% end %>
         <td>
-          <%= data.payment_logs_amounts %>
+          <%= data.amounts %>
         </td>
       </tr>
       <% end %>

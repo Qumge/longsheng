@@ -1,0 +1,2 @@
+$('#datas').html('<%= j render "dynamic_reports/datas"%>');
+$('#reports').replaceWith('<%= link_to '导出', dynamic_reports_path(format: 'xls', params: params), id: 'reports' %>')
