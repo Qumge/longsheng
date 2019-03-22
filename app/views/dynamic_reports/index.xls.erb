@@ -11,7 +11,7 @@
         <% params[:select_columns].each do |column| %>
           <Cell><Data ss:Type="String"><%= format_select_column column %></Data></Cell>
         <% end %>
-        <Cell><Data ss:Type="String">金额</Data></Cell>
+        <Cell><Data ss:Type="String">明细金额</Data></Cell>
       </Row>
       <%@datas.each do |data| %>
         <Row>
