@@ -13,7 +13,7 @@ class RecordReportsController < ApplicationController
 
     @costs_pie_labels, @costs_pie_data = format_cost_data_for_pie
 
-    @products_pie_labels, @products_pie_data = format_product_data_for_pie 'deliver'
+    @products_pie_labels, @products_pie_data = format_product_data_for_pie 'applied'
 
   end
 

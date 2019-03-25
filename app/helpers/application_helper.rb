@@ -51,6 +51,8 @@ module ApplicationHelper
             bargains: '特价审批',
             agents: '代理审批',
             invoices: '开票审批',
+            projects: '项目审批',
+            audits: '我的审批记录'
         },
         manage_orders: {
             index: '订单列表'

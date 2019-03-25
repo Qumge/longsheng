@@ -237,9 +237,9 @@ module ReportData
   end
 
   def product_data_for_pie type
-    product_data = product_data type
+    product_datas = product_data type
     # {project1 => [order1, order2], project2 => [order3, order4]}
-    group_data = product_data.group_by{|order_product| order_product.product.product_category}
+    group_data = product_datas.group_by{|order_product| order_product.product.product_category}
     datas = {}
     group_data.each do |product_category, order_products|
       number = 0
