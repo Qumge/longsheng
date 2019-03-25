@@ -1,0 +1,40 @@
+<div class="box">
+  <div class="box-header with-border">
+    <h3 class="box-title">报表</h3>
+  </div>
+  <!-- /.box-header -->
+  <div class="box-body" style="overflow-x: scroll">
+    <table class="table table-bordered">
+      <tbody>
+      <tr>
+        <th>时间</th>
+        <% params[:select_columns].each do |column| %>
+          <th><%= format_select_column column %></th>
+        <% end %>
+        <th>明细金额</th>
+      </tr>
+      <%@datas.each do |data| %>
+      <tr>
+        <td>
+          <%= simple_time_mini data.view_date %>
+        </td>
+        <% params[:select_columns].each do |column| %>
+          <td>
+            <%= format_select_value data, column %>
+          </td>
+        <% end %>
+        <td>
+          <%= data.amounts %>
+        </td>
+      </tr>
+      <% end %>
+
+      </tbody></table>
+  </div>
+  <!-- /.box-body -->
+  <div class="box-footer clearfix">
+    <ul class="pagination pagination-sm no-margin pull-right">
+      <%= paginate @datas, params: params, remote: true%>
+    </ul>
+  </div>
+</div>

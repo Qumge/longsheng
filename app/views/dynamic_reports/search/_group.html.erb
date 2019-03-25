@@ -1,0 +1,55 @@
+<div class="row">
+  <div class="col-md-3">
+    <div class="checkbox">
+      <label>
+        <input type="checkbox" value="categories" name="groups[]">
+        项目类型
+      </label>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="checkbox">
+      <label>
+        <input type="checkbox" value="projects" name="groups[]">
+        项目
+      </label>
+    </div>
+  </div>
+  <% if params[:action] == 'applied' %>
+  <div class="col-md-3">
+    <div class="checkbox">
+      <label>
+        <input type="checkbox" value="product_categories" name="groups[]">
+        产品分类
+      </label>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="checkbox">
+      <label>
+        <input type="checkbox" value="products" name="groups[]">
+        产品
+      </label>
+    </div>
+  </div>
+    <% end %>
+  <div class="col-md-3">
+    <div class="checkbox">
+      <label>
+        <input type="checkbox" value="companies" name="groups[]">
+        甲方
+      </label>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="checkbox">
+      <label>
+        <input type="checkbox" value="users" name="groups[]">
+        销售人员
+      </label>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <%= select_tag 'date_group', options_for_select([['日', 'day'], ['月', 'month'], ['年', 'year']], params[:date_group]), include_blank: '时间', style: 'width:100px;' %>
+  </div>
+</div>

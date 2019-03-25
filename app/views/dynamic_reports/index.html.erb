@@ -1,0 +1,19 @@
+<%= render 'dynamic_reports/header' %>
+<div>
+  <div>
+    <div class="box-header with-border">
+      <h3 class="box-title">报表</h3>
+      <%= link_to '导出', dynamic_reports_path(format: 'xls', params: params), id: 'reports' %>
+    </div>
+    <!-- /.box-header -->
+    <div class="box-body">
+
+      <%= render 'dynamic_reports/search/filter' %>
+    </div>
+  </div>
+</div>
+<div class="row" id="datas" style="padding:15px;">
+  <%#= render 'dynamic_reports/datas' %>
+</div>
+
+

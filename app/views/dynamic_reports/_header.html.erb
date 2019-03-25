@@ -1,0 +1,14 @@
+<% content_for :content_header do %>
+  <h1>
+    动态报表
+    <small><%= get_title params %></small>
+
+  </h1>
+  <ol class="breadcrumb">
+    <li>
+      <%=link_to dynamic_reports_path do %>
+        <i class="fa fa-dashboard"></i> 动态报表
+      <% end %>
+    </li>
+  </ol>
+<% end %>

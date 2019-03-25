@@ -13,7 +13,6 @@
 
 // This file includes the common AdminLTE JS files that is commonly used on every page
 //= require jquery
-//= require turbolinks
 //= require dist/adminlte
 //= require dist/adminlte_extra
 //= require dashboard_v1
@@ -38,7 +37,7 @@ $.fn.datepicker.dates['zh-cn'] = {
     weekStart: 0
 };
 var initPage = function () {
-    Turbolinks.clearCache();
+    //Turbolinks.clearCache();
     $(".modal").on("hidden.bs.modal", function() {
         $(this).removeData("bs.modal");
     });

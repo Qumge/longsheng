@@ -1,3 +1,4 @@
+
 class SalesController < ApplicationController
   before_action :set_default_sale, only: [:new, :create, :sale_import, :do_import]
   before_action :set_sale, only: [:show, :edit, :update, :destroy]

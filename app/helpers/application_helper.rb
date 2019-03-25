@@ -204,4 +204,42 @@ module ApplicationHelper
     (page - 1) * Settings.per_page
   end
 
+  def get_select_columns column
+    arr = []
+    column.split('.').each_with_index do |s, index|
+      if index == 0
+        arr << s.singularize
+      else
+        arr << s
+      end
+    end
+    arr.join '.'
+  end
+
+  def format_select_column column
+    if column == 'orders.no'
+      '订单编号'
+    elsif column == 'products.no'
+      '产品代码'
+    elsif column == 'contracts.no'
+      '合同编号'
+    else
+      I18n.t "activerecord.attributes.#{get_select_columns(column)}"
+    end
+  end
+
+  def format_select_value data, column
+    value = data.send column.split('.').join('_')
+    if value.is_a? Time
+      value = simple_time_mini(value)
+    elsif column == 'projects.city'
+      value = ChinaCity.get(value, prepend_parent: true) if value.present?
+    elsif column == 'sales.price'
+      p data
+      value = data.contract_sale_price
+    end
+    value
+  end
+
+
 end

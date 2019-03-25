@@ -110,7 +110,7 @@
       <% if can? :index, :record_reports %>
       <li class="treeview <%= active_class params, 'record_reports' %>">
         <a href="javascript:void(0)">
-          <i class="fa fa-bar-chart"></i>
+          <i class="fa fa-pie-chart"></i>
           <span>报表</span>
           <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
@@ -169,6 +169,13 @@
 
         </ul>
       </li>
+      <% end %>
+      <% if can? :index, :dynamic_reports %>
+        <li class="<%= active_class params, 'dynamic_reports' %>">
+          <%= link_to dynamic_reports_path do %>
+            <i class="fa fa-bar-chart"></i> <span>动态报表</span>
+          <% end %>
+        </li>
       <% end %>
       <% if can? :index, :attachments %>
         <li class="<%= active_class params, 'attachments' %>">

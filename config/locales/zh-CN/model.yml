@@ -17,6 +17,7 @@ zh-CN:
         role_id: '角色'
         agent_id: '代理商'
         title: '职务'
+        name: '姓名'
       organization:
         name: '组织名'
         created_at: '创建时间'
@@ -48,6 +49,10 @@ zh-CN:
         contract_id: '战略合作方'
         category_id: '项目类别'
         company_id: '甲方名称'
+        approval_time: '项目批准时间'
+        deliver_amount: '项目发货金额'
+        payment: '项目回款金额'
+        payment_percent: '项目回款百分比'
       contract:
         name: '明细'
         no: '合同编号'
@@ -62,20 +67,21 @@ zh-CN:
         others: '合同其他关键条款'
       sale:
         product_id: '序号 / 产品型号'
-        price: '价格'
+        price: '合同价'
         desc: '备注'
       order_product:
         product_id: '产品'
         number: '数量'
         discount: '折扣'
+        discount_price: '销售单价'
       agent:
         name: '代理公司名'
         city: '代理城市'
         username: '代理商姓名'
         phone: '电话'
       product:
-        no: '产品代码'
         product_no: '产品型号'
+        no: '产品代码'
         name: '产品名'
         reference_price: '单价'
         unit: '单位'
@@ -114,6 +120,11 @@ zh-CN:
         name: '文件名'
       order:
         payment: '进度款'
+        no: '订单编号'
+        applied_at: '下单时间'
+        total_price: '下单金额'
+        deliver_amount: '发货金额'
+        payment_percent: '回款百分比'
       deliver:
         name: '物流联系人'
         number: '货物件数'
@@ -127,6 +138,15 @@ zh-CN:
       deliver_log:
         amount: '发货金额'
         payment_at: '发货时间'
+      company:
+        name: '公司名'
+      category:
+        name: '项目类型'
+      product_category:
+        name: '产品类型'
+      factory:
+        name: '厂商名'
+        address: '厂商地址'
 
 
 

@@ -23,6 +23,7 @@
 class OrderProduct < ActiveRecord::Base
   belongs_to :product
   belongs_to :order
+  has_one :sale
   validates_presence_of :number, :product_id#, :discount
   before_save :set_price
   validates_numericality_of :number, only_integer: true, greater_than: 0, if: ->(order_project) { order_project.number.present? }
@@ -46,6 +47,13 @@ class OrderProduct < ActiveRecord::Base
     self.total_price = price * number if self.total_price.blank?
     self.discount_price = discount * price if self.discount_price.blank?
     self.discount_total_price = discount_price * number if self.discount_total_price.blank?
+  end
+
+  def contract_sale_price
+    contract = self.order&.project&.contract
+    if contract.present?
+      Sale.find_by(contract: contract, product: self.product)&.price
+    end
   end
 
 end
