@@ -37,7 +37,6 @@ $.fn.datepicker.dates['zh-cn'] = {
     weekStart: 0
 };
 var initPage = function () {
-    //Turbolinks.clearCache();
     $(".modal").on("hidden.bs.modal", function() {
         $(this).removeData("bs.modal");
     });
@@ -61,7 +60,7 @@ var initPage = function () {
 function show_file(e){
     var filename = $(e).attr('data-file-name');
     var url = $(e).attr('data-url');
-    var ext = filename.split('.').pop();
+    var ext = filename.split('.').pop().toLowerCase();
     // word ppt xls 使用微软在线编辑
     // pdf 使用
     $('#file-modal-label').text($(e).attr('data-file-name'));
