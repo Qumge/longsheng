@@ -1,7 +1,7 @@
 class ProjectsController < ApplicationController
   before_action :set_project, only: [:show, :upload, :update_agency, :edit_information, :update_information,
                                      :delete_attachment, :payment, :done, :step_event, :agent, :sales, :report,
-                                     :order_import, :do_import, :show_money]
+                                     :order_import, :do_import, :show_money, :edit, :update]
   before_action :set_uptoken, only: [:show, :upload, :update_agency, :update_information, :delete_attachment, :payment, :done, :step_event]
   include ApplicationHelper
   def index
@@ -14,6 +14,14 @@ class ProjectsController < ApplicationController
 
   def show
 
+  end
+
+  def edit
+    render layout: false
+  end
+
+  def update
+    @flag =  @project.update project_permit
   end
 
   def create

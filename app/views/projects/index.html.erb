@@ -36,6 +36,7 @@
             <th>甲方</th>
             <th>负责人</th>
             <th>状态</th>
+            <th></th>
           </tr>
           <% if @projects.present? %>
           <% @projects.each do |project| %>
@@ -50,11 +51,18 @@
               <td><%= project.company&.name %></td>
               <td><%= project.owner.name %></td>
               <td><%= project.status %></td>
+              <td>
+                <% if can? :edit, :projects %>
+                  <%= link_to  edit_project_path(project), class: 'label label-success', 'data-toggle' => "modal", 'data-target' => "#global-modal" do %>
+                    <i class="fa fa-edit"></i>编辑
+                  <% end %>
+                <%end %>
+              </td>
             </tr>
           <% end %>
           <% else %>
             <tr>
-              <td colspan="7" align="center">没有可显示的内容</td>
+              <td colspan="6" align="center">没有可显示的内容</td>
             </tr>
           <% end %>
 

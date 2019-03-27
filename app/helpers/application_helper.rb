@@ -35,7 +35,9 @@ module ApplicationHelper
             show: '详情',
             agent: '代理商',
             report: '项目报备',
-            sales: '价格体系'
+            sales: '价格体系',
+            edit: '项目编辑',
+            update: '项目编辑'
         },
         contracts: {
             index: '战略合同列表',

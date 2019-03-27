@@ -30,6 +30,8 @@
     <%= f.input :butt_name, label: '项目对接人名' %>
     <%= f.input :butt_title, label: '对接人职务' %>
     <%= f.input :butt_phone, label: '对接人电话' %>
+    <% if @project.id.blank? %>
     <%= f.button :submit, '提交', class: "btn btn-primary" %>
+      <% end %>
   </div>
 <% end %>
