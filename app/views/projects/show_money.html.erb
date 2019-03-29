@@ -24,7 +24,7 @@
     </tr>
     <tr>
       <th>待回款</th>
-      <td><%= @project.deliver_amount -  @project.payment %></td>
+      <td><%= @project.deliver_amount.to_f -  @project.payment.to_f  %></td>
     </tr>
 
     </tbody>
