@@ -106,7 +106,7 @@ projects:
   do_import: '项目-批量导入订单'
   show_money: '项目-查看金额'
   edit: '项目-编辑界面'
-  update: '项目-编辑界面'
+  update: '项目-编辑'
   reapply: '项目-申请审核'
 reports:
   new: '项目报备-新建界面'

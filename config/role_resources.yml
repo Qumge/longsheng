@@ -356,6 +356,7 @@ project_user:
     index: 项目-列表
     show: 项目-详情
     show_money: 项目-查看金额
+    reapply: 项目-申请审核
   products:
     show: 产品-详情
     index: 产品-列表
@@ -418,6 +419,7 @@ agency:
     show: 项目-详情
     index: 项目-列表
     show_money: 项目-查看金额
+    reapply: 项目-申请审核
   products:
     show: 产品-详情
     index: 产品-列表
