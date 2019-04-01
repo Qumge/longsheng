@@ -85,6 +85,9 @@ class Project < ActiveRecord::Base
     state :wait, :initial => true
     state :project_manager_audit, :regional_audit, :active, :finish, :overdue, :failed
 
+    event :do_apply do
+      transitions :from => :failed, :to => :wait, :after => Proc.new {create_project_manager_notice }
+    end
 
     #项目经理审批
     event :do_project_manager_audit do

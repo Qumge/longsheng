@@ -1,7 +1,7 @@
 class ProjectsController < ApplicationController
   before_action :set_project, only: [:show, :upload, :update_agency, :edit_information, :update_information,
                                      :delete_attachment, :payment, :done, :step_event, :agent, :sales, :report,
-                                     :order_import, :do_import, :show_money, :edit, :update]
+                                     :order_import, :do_import, :show_money, :edit, :update, :reapply]
   before_action :set_uptoken, only: [:show, :upload, :update_agency, :update_information, :delete_attachment, :payment, :done, :step_event]
   include ApplicationHelper
   def index
@@ -39,6 +39,12 @@ class ProjectsController < ApplicationController
   def update_agency
     @flag = @project.update agency_id: params[:agency_id]
     render template: 'projects/reload_process'
+  end
+
+  def reapply
+    if @project.may_do_apply?
+      @project.do_apply!
+    end
   end
 
   # 添加项目资料

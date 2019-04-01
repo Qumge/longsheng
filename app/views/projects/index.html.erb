@@ -53,8 +53,15 @@
               <td><%= project.status %></td>
               <td>
                 <% if can? :edit, :projects %>
-                  <%= link_to  edit_project_path(project), class: 'label label-success', 'data-toggle' => "modal", 'data-target' => "#global-modal" do %>
+                  <%= link_to  edit_project_path(project), class: 'btn btn-success btn-xs', 'data-toggle' => "modal", 'data-target' => "#global-modal" do %>
                     <i class="fa fa-edit"></i>编辑
+                  <% end %>
+                <% end %>
+                <% if can? :reapply, :projects %>
+                  <% if project.may_do_apply? %>
+                    <%= link_to 'JavaScript:void(0)', onclick: "apply_project(#{project.id})",class: 'btn btn-primary btn-xs' do  %>
+                      <i class="fa fa-circle-o"></i>申请
+                    <% end %>
                   <% end %>
                 <%end %>
               </td>
@@ -79,3 +86,21 @@
     <!-- /.box -->
   </div>
 </div>
+<script type="text/javascript">
+  function apply_project(id){
+      if(confirm('确认申请吗？')){
+          showSpinner();
+          $.ajax({
+              type: 'POST',
+              url: '<%= reapply_projects_path %>',
+              data: {id: id},
+              dataType: 'script',
+              success: function (data) {
+
+              }
+          })
+      }
+
+  }
+
+</script>
