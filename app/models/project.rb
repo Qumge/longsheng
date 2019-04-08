@@ -358,6 +358,9 @@ class Project < ActiveRecord::Base
       if params[:table_search].present?
         projects = projects.joins(:owner).where('projects.name like ? or projects.a_name like ? or users.name like ?', "%#{params[:table_search]}%", "%#{params[:table_search]}%", "%#{params[:table_search]}%")
       end
+      if params[:project_status].present?
+        projects = projects.where(project_status: params[:project_status])
+      end
       if params[:payment_percent].present?
         from = 0
         to = 10000

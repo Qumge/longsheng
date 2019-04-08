@@ -14,9 +14,10 @@
         <%= form_tag projects_path, method: :get do %>
           <div class="input-group input-group-sm">
             <div class="pull-right">
-              <div class="col-xs-6"><%= select_tag :payment_percent, options_for_select([['0%~25%', 'danger'], ['25%~50%', 'warning'], ['50%~75%', 'blue'],['75%~95%', 'info'], ['95%以上', 'green']], params[:payment_percent]), include_blank: '回款百分比', class: 'form-control' %></div>
+              <div class="col-xs-6 col-md-4"><%= select_tag :project_status, options_for_select(Project::STATUS.collect{|key, value| [value, key]}, params[:project_status]), include_blank: '审核状态', class: 'form-control' %></div>
+              <div class="col-xs-6 col-md-4"><%= select_tag :payment_percent, options_for_select([['0%~25%', 'danger'], ['25%~50%', 'warning'], ['50%~75%', 'blue'],['75%~95%', 'info'], ['95%以上', 'green']], params[:payment_percent]), include_blank: '回款百分比', class: 'form-control' %></div>
 
-              <div class="col-xs-6">
+              <div class="col-xs-6 col-md-4">
                 <input type="text" name="table_search" class="form-control" placeholder="检索" value="<%= params[:table_search] %>">
               </div>
             </div>
