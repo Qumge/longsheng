@@ -118,6 +118,7 @@ Rails.application.routes.draw do
     member do
       post :update_agency
       post :upload
+      get :edit_information
       patch :update_information
       post :delete_attachment
       post :payment
