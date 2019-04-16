@@ -32,4 +32,15 @@ class Contract < ActiveRecord::Base
   validates_numericality_of :tail_time, if: Proc.new{|p| p.tail_time.present?}
   has_many :sales
   has_one :project
+
+
+  class << self
+    def search_conn params
+    contracts = self.all
+      if params[:table_search].present?
+        contracts = contracts.where('contracts.name like ? or contracts.partner like ? or contracts.no like ? ', "%#{params[:table_search]}%", "%#{params[:table_search]}%", "%#{params[:table_search]}%")
+      end
+      contracts
+    end
+  end
 end

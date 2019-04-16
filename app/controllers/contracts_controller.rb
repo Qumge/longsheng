@@ -1,7 +1,7 @@
 class ContractsController < ApplicationController
   before_action :set_contract, only: [:show, :edit, :update]
   def index
-    @contracts = Contract.includes(:sales).page(params[:page]).per(Settings.per_page)
+    @contracts = Contract.search_conn(params).page(params[:page]).per(Settings.per_page)
   end
 
   def new
