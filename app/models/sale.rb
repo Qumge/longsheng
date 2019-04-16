@@ -26,7 +26,11 @@ class Sale < ActiveRecord::Base
   validates_presence_of :contract_id, :price, :product_id
   validates_numericality_of :price, if: proc{|sale| sale.price.present?}
   validates_uniqueness_of :product_id, scope: :contract_id
+  before_save :set_price
 
+  def set_price
+    self.price = self.price.round 2
+  end
 
   class << self
     def default_sales

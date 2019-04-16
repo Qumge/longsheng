@@ -1,5 +1,5 @@
 class ProjectsController < ApplicationController
-  before_action :set_project, only: [:show, :upload, :update_agency, :edit_information, :update_information,
+  before_action :set_project, only: [:show, :upload, :update_agency, :edit_information, :update_information, :edit_owner, :update_owner,
                                      :delete_attachment, :payment, :done, :step_event, :agent, :sales, :report,
                                      :order_import, :do_import, :show_money, :edit, :update, :reapply]
   before_action :set_uptoken, only: [:show, :upload, :update_agency, :update_information, :delete_attachment, :payment, :done, :step_event]
@@ -55,6 +55,16 @@ class ProjectsController < ApplicationController
   # 添加项目资料
   def update_information
     @flag = @project.update information_permit
+  end
+
+  # 变更负责人
+  def edit_owner
+    render layout: false
+  end
+
+  # 添加项目资料
+  def update_owner
+    @flag = @project.update owner_permit
   end
 
   # 上传各类文件资料
@@ -168,6 +178,10 @@ class ProjectsController < ApplicationController
   def information_permit
     params.require(:project).permit(:purchase, :purchase_phone, :design, :design_phone, :cost, :cost_phone, :settling,
                                     :settling_phone, :constructor, :constructor_phone, :supervisor, :supervisor_phone)
+  end
+
+  def owner_permit
+    params.require(:project).permit(:owner_id)
   end
 
 

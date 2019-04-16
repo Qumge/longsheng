@@ -128,6 +128,8 @@ Rails.application.routes.draw do
       get :sales
       get :report
       get :order_import
+      get :edit_owner
+      patch :update_owner
       post :do_import
       resources :reports
       resources :orders do

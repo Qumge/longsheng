@@ -191,6 +191,14 @@ class User < ActiveRecord::Base
     self.roles.collect{|role| role.resources}.flatten!
   end
 
+  def charge_users
+    if self.is_rear?
+      User.all
+    else
+      User.where(organization_id: self.organization.subtree_ids)
+    end
+  end
+
   class << self
     # 业务人员
     def service_users

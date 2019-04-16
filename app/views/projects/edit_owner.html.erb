@@ -1,22 +1,11 @@
 <div id="form">
   <div class="modal-header" style="padding:5px; padding-left: 15px;">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-    <h4 class="modal-title" id="file-modal-label">完善项目资料</h4>
+    <h4 class="modal-title" id="file-modal-label">负责人变更</h4>
   </div>
-  <%= simple_form_for(@project, url: update_information_project_path(@project), html: {class: 'form-horizontal group_form', onkeydown: "if(event.keyCode==13)return false;"}, wrapper: :horizontal_form) do |f| %>
+  <%= simple_form_for(@project, url: update_owner_project_path(@project), html: {class: 'form-horizontal group_form', onkeydown: "if(event.keyCode==13)return false;"}, wrapper: :horizontal_form) do |f| %>
     <div class="modal-body" >
-      <%= f.input :purchase, label: '采购'%>
-      <%= f.input :purchase_phone, label: '采购号码'%>
-      <%= f.input :design, label: '设计'%>
-      <%= f.input :design_phone, label: '设计电话'%>
-      <%= f.input :cost, label: '成本负责人'%>
-      <%= f.input :cost_phone, label: '成本负责人电话'%>
-      <%= f.input :settling, label: '结算负责人'%>
-      <%= f.input :settling_phone, label: '结算负责人电话'%>
-      <%= f.input :constructor, label: '施工方'%>
-      <%= f.input :constructor_phone, label: '施工方电话'%>
-      <%= f.input :supervisor, label: '监理'%>
-      <%= f.input :supervisor_phone, label: '监理电话'%>
+      <%= f.input :owner_id, collection: current_user.charge_users.collect{|user| [user.name, user.id]}, input_html: { class: 'select2', style: 'width:100%' }, label: '负责人'%>
     </div>
   <% end %>
 

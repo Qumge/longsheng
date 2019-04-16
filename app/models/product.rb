@@ -35,6 +35,11 @@ class Product < ActiveRecord::Base
   validates_uniqueness_of :no, if: proc{|product| product.no.present?}
   validates_uniqueness_of :name, if: proc{|product| product.no.present?}
   validates_numericality_of :reference_price, greater_than: 0
+  before_save :set_price
+
+  def set_price
+    self.market_price = self.market_price.round 2
+  end
 
 
   def default_price project
