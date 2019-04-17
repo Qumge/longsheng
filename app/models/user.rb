@@ -80,7 +80,7 @@ class User < ActiveRecord::Base
     #   projects.where('1 = -1')
     # end
     if ['regional_manager', 'project_manager'].include? self.role&.desc
-      projects.where('owner_id in (?)', self.organization.subtree_ids)
+      projects.where('owner_id in (?)', self.organization.subtree.map(&:users).flatten.map(&:id))
     elsif ['super_admin', 'group_admin', 'normal_admin'].include? self.role&.desc
       projects
     elsif 'project_user' == self.role&.desc
