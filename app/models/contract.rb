@@ -32,6 +32,7 @@ class Contract < ActiveRecord::Base
   validates_numericality_of :tail_time, if: Proc.new{|p| p.tail_time.present?}
   has_many :sales
   has_one :project
+  has_and_belongs_to_many :projects, join_table: "projects_contracts"
 
 
   class << self

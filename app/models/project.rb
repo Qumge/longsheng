@@ -79,6 +79,7 @@ class Project < ActiveRecord::Base
   belongs_to :agent, foreign_key: :agency_id
   has_one :report
   has_many :audits, -> {where(model_type: 'Project')}, foreign_key: :model_id
+  has_and_belongs_to_many :contracts, join_table: "projects_contracts"
   #
   STATUS = {wait: '待审批', project_manager_audit: '项目经理已审批', regional_audit: '大区经理已审批', active: '进行中', finish: '已完结', overdue: '逾期', failed: '审核失败'}
   aasm :project_status do
@@ -434,6 +435,13 @@ class Project < ActiveRecord::Base
             Cost.create purpose: 'test', user: user, amount: rand(2000), occur_time: date
           end
         end
+      end
+    end
+
+    def change_contract_to_contracts
+      Project.all.each do |project|
+        project.contracts << project.contract unless project.contracts.include? project.contract
+        project.save
       end
     end
   end

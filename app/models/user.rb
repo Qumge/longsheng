@@ -62,7 +62,7 @@ class User < ActiveRecord::Base
   end
 
   def view_projects
-    projects = Project.includes(:owner, :audit)
+    projects = Project.joins(:owner)
     # 后台人员权限 可以查看所有项目
     # 大区经理和项目经理能查看当前架构所有的项目
     # 项目专员只能查看自己创建的项目
@@ -80,7 +80,7 @@ class User < ActiveRecord::Base
     #   projects.where('1 = -1')
     # end
     if ['regional_manager', 'project_manager'].include? self.role&.desc
-      projects.where('owner_id in (?)', self.organization.subtree.map(&:users).flatten.map(&:id))
+      projects.where('owner_id in (?)', self.organization.subtree_ids)
     elsif ['super_admin', 'group_admin', 'normal_admin'].include? self.role&.desc
       projects
     elsif 'project_user' == self.role&.desc

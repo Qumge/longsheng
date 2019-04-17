@@ -163,7 +163,7 @@ class ProjectsController < ApplicationController
   private
   def project_permit
     params.require(:project).permit(:name, :company_id, :category_id, :address, :city, :supplier_type, :strategic, :estimate,
-                                    :butt_name, :butt_title, :butt_phone, :contract_id)
+                                    :butt_name, :butt_title, :butt_phone, contract_ids: [])
   end
 
   def set_project

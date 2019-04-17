@@ -38,21 +38,22 @@ class Product < ActiveRecord::Base
   before_save :set_price
 
   def set_price
-    self.market_price = self.market_price.round 2
+    self.reference_price = self.reference_price.round 2
   end
 
 
   def default_price project
     price = self.reference_price
     if project.contract.present?
-      sale = project.contract.sales.find_by(product_id: self.id)
+      sale = self.sale project
       price = sale.price if sale.present?
     end
     price.to_f
   end
 
   def sale project
-    sale = project.contract.sales.find_by(product_id: self.id)
+    Sale.joins({contract: :projects}, :product).where('projects.id = ? and products.id = ?', project.id, self.id).first
+    #sale = project.contract.sales.find_by(product_id: self.id)
   end
 
   class << self

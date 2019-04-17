@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190318034436) do
+ActiveRecord::Schema.define(version: 20190417020824) do
 
   create_table "agents", force: :cascade do |t|
     t.string   "username",     limit: 255
@@ -329,6 +329,13 @@ ActiveRecord::Schema.define(version: 20190318034436) do
   end
 
   add_index "projects", ["deleted_at"], name: "index_projects_on_deleted_at", using: :btree
+
+  create_table "projects_contracts", force: :cascade do |t|
+    t.integer  "project_id",  limit: 4
+    t.integer  "contract_id", limit: 4
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
+  end
 
   create_table "reports", force: :cascade do |t|
     t.integer  "project_id",    limit: 4

@@ -46,7 +46,7 @@ zh-CN:
         constructor_phone: '施工方电话'
         supervisor: '监理'
         supervisor_phone: '监理电话'
-        contract_id: '战略合作方'
+        contract_ids: '战略合作方'
         category_id: '项目类别'
         company_id: '甲方名称'
         approval_time: '项目批准时间'
