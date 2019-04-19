@@ -55,6 +55,17 @@ var initPage = function () {
 
 };
 
+function show_flash(type, message){
+    $(".page_tips").fadeIn(function(){
+        setTimeout(function(){
+            $(".page_tips").fadeOut();
+            $(".page_tips").html('');
+        }, 3000);
+    });
+    $(".page_tips").append(
+        '<div class="' + type +'"> <div class="inner">'+ message + '<i class="fa fa-close close-tips"></i> </div> </div>');
+}
+
 
 // 在线预览office pdf
 function show_file(e){
@@ -71,6 +82,10 @@ function show_file(e){
         $('#file-modal-body').html("<iframe src='/pdfjs-2.0.943-dist/web/viewer.html?file=" + url + "' width='100%' height='100%' frameborder='0' scrolling='no'></iframe>");
     }else if(['png', 'jpg', 'jepg', 'gif', 'bmp'].indexOf(ext) >= 0){
         $('#file-modal-body').html("<div style='text-align:center;'><image style='max-width:90%' src='"+ url + "'></image></div>");
+    }else{
+        alert('该文件格式暂时不支持在线预览，点击确定后直接下载文件。');
+        location.href = url;
+        return;
     }
     $('#file-modal').modal();
 }
