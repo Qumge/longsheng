@@ -7,6 +7,9 @@
         <i class="fa fa-bell-o"></i>
 
         <h3 class="box-title">通知消息</h3>
+        <% if can? :read_all, :notices%>
+          <%= link_to '全部已读', '#', onclick: 'check_all()',  class: 'font-a label pull-right bg-primary', style: 'font-size: 100%' %>
+        <% end %>
       </div>
       <!-- /.box-header -->
       <div class="box-body">
@@ -41,10 +44,28 @@
 </style>
 <script type="text/javascript">
   function check_notice(id, type){
+      showSpinner();
       $.ajax({
           type: "POST",
           url: '<%= check_notices_path %>',
           data: {id: id, type: type},
+          dataType: 'script',
+          async: false,
+          error: function(request) {
+              alert("Connection error");
+          },
+          success: function(data) {
+              //接收后台返回的结果
+          }
+      });
+  }
+
+  function check_all(){
+      showSpinner();
+      $.ajax({
+          type: "POST",
+          url: '<%= check_all_notices_path %>',
+          data: {},
           dataType: 'script',
           async: false,
           error: function(request) {

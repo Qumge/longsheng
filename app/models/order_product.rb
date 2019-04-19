@@ -45,15 +45,12 @@ class OrderProduct < ActiveRecord::Base
   def set_price
     self.price = product.default_price self.order.project if self.price.blank?
     self.total_price = price * number if self.total_price.blank?
-    self.discount_price = discount * price if self.discount_price.blank?
-    self.discount_total_price = discount_price * number if self.discount_total_price.blank?
+    self.discount_price = discount * price
+    self.discount_total_price = discount_price * number
   end
 
   def contract_sale_price
-    contract = self.order&.project&.contract
-    if contract.present?
-      Sale.find_by(contract: contract, product: self.product)&.price
-    end
+    self.product.default_price self.order.project
   end
 
 end

@@ -14,4 +14,9 @@ class NoticesController < ApplicationController
 
   end
 
+  def check_all
+    current_user.notices.update_all readed: true
+    render js: 'location.reload()'
+  end
+
 end

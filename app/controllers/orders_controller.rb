@@ -2,6 +2,7 @@ class OrdersController < ApplicationController
   before_action :set_default_order, only: [:new, :create]
   before_action :set_order, only: [:show, :edit, :update, :destroy]
   after_action :reload_project, only: [:update, :create]
+  before_action :greater, only: [:create, :update]
   def new
     @order_product = OrderProduct.new
     render layout: false
@@ -14,7 +15,6 @@ class OrdersController < ApplicationController
     @order.desc = params[:desc] if params[:desc].present?
     @order.factory_id = params[:factory_id] if params[:factory_id].present?
     @flag = @order.save
-
   end
 
   def edit
@@ -52,6 +52,15 @@ class OrdersController < ApplicationController
   end
 
   private
+  def greater
+    unless current_user.is_rear?
+      if params[:order_product].present? && !(params[:order_product][:number].to_i > 0)
+        render js: "alert('请勿输入负数');"
+        return
+      end
+    end
+  end
+
   def set_default_order
     @project = current_user.view_projects.find_by id: params[:id]
     redirect_to projects_path, alert: '找不到数据' unless @project.present?

@@ -69,6 +69,7 @@ manage_invoices:
 notices:
   index: '消息通知-列表'
   check: '消息通知-标记'
+  check_all: '消息通知-全部已读'
 orders:
   new: '订单-添加商品界面'
   create: '订单-添加商品'

@@ -218,6 +218,7 @@ Rails.application.routes.draw do
   resources :notices do
     collection do
       post :check
+      post :check_all
     end
   end
 

@@ -30,6 +30,7 @@ group_admin:
   notices:
     check: 消息通知-标记
     index: 消息通知-列表
+    check_all: 消息通知-全部已读
   manage_orders:
     show: 订单-详情
     deliver: 订单管理-发货
@@ -241,6 +242,7 @@ regional_manager:
   notices:
     check: 消息通知-标记
     index: 消息通知-列表
+    check_all: 消息通知-全部已读
   invoices:
     update: 开票-编辑
     edit: 开票-编辑界面
@@ -312,6 +314,7 @@ project_manager:
   notices:
     check: 消息通知-标记
     index: 消息通知-列表
+    check_all: 消息通知-全部已读
   invoices:
     update: 开票-编辑
     edit: 开票-编辑界面
@@ -374,6 +377,7 @@ project_user:
   notices:
     check: 消息通知-标记
     index: 消息通知-列表
+    check_all: 消息通知-全部已读
   invoices:
     update: 开票-编辑
     edit: 开票-编辑界面
@@ -434,6 +438,7 @@ agency:
   notices:
     check: 消息通知-标记
     index: 消息通知-列表
+    check_all: 消息通知-全部已读
   invoices:
     update: 开票-编辑
     edit: 开票-编辑界面

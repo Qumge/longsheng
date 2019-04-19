@@ -239,7 +239,6 @@ module ApplicationHelper
     elsif column == 'projects.city'
       value = ChinaCity.get(value, prepend_parent: true) if value.present?
     elsif column == 'sales.price'
-      p data
       value = data.contract_sale_price
     end
     value

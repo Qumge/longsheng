@@ -27,15 +27,15 @@ module DynamicReport
   private
   ############################scope####################
   def dynamic_payment_scope
-    PaymentLog.joins(order: [:factory, {project: [{owner: :organization}, :category, :company, :agent, :contract]}])
+    PaymentLog.joins(order: [:factory, {project: [{owner: :organization}, :category, :company, :agent]}])
   end
 
   def dynamic_deliver_scope
-    DeliverLog.joins(order: [:factory, {project: [{owner: :organization}, :category, :company, :agent, :contract]}])
+    DeliverLog.joins(order: [:factory, {project: [{owner: :organization}, :category, :company, :agent]}])
   end
 
   def dynamic_order_scope
-    OrderProduct.joins(product: [:product_category, :sales], order: [:factory, {project: [{owner: :organization}, :category, :company, :agent, :contract]}])
+    OrderProduct.joins(product: [:product_category, :sales], order: [:factory, {project: [{owner: :organization}, :category, :company, :agent]}])
   end
 
   def dynamic_cost_scope
