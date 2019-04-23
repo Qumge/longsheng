@@ -59,7 +59,7 @@ class Project < ActiveRecord::Base
   belongs_to :create_user, class_name: 'User', foreign_key: :create_id
   has_one :audit, -> {where(model_type: 'Project')}, foreign_key: :model_id
   after_create :create_project_manager_notice
-  validates_presence_of :name, :company_id, :contract_id, :category_id, :address, :city, :supplier_type
+  validates_presence_of :name, :company_id, :category_id, :address, :city, :supplier_type
   validates_numericality_of :estimate, if: Proc.new{|p| p.estimate.present?}
   validates_uniqueness_of :name
   has_one :project_contract, -> {where(model_type: 'contract')}, class_name: 'Attachment', foreign_key: :model_id
@@ -250,11 +250,19 @@ class Project < ActiveRecord::Base
   def can_view? step
     steps = [:contract, :advance, :pattern, :plate, :detail, :order, :process_payment, :shipment_ended, :settlement, :payment, :bond, :confirm, :done]
     # 当前进度大于步骤 可见
-    steps.index(self.step_status.to_sym) >= steps.index(step)
+    steps.index(self.step_status.to_sym) >= steps.index(step.to_sym)
   end
 
   # 判断是否可以操作
   def can_do? step
+    can_view? step
+    # step = step.is_a?(String) ? step.to_sym : step
+    # self.step_status.to_sym == step
+    # true
+  end
+
+  # 判断是否可以操作
+  def can_do_next? step
     step = step.is_a?(String) ? step.to_sym : step
     self.step_status.to_sym == step
   end

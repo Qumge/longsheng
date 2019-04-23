@@ -34,7 +34,7 @@
         <% end %>
         <% if can? :step_event, :projects %>
         <div style="text-align: right">
-          <%= link_to '下一步', 'JavaScript:void(0)', onclick: "step_event('done_bond')",class: 'btn  btn-success btn-sm' if @project.can_do? :bond %>
+          <%= link_to '下一步', 'JavaScript:void(0)', onclick: "step_event('done_bond')",class: 'btn  btn-success btn-sm' if @project.can_do_next? :bond %>
         </div>
         <% end %>
       <% end %>

@@ -15,7 +15,7 @@
       </p>
       <% if can? :step_event, :projects %>
         <div style="text-align: right">
-          <%= link_to '下一步', 'JavaScript:void(0)', onclick: "step_event('done_shipment_ended')",class: 'btn  btn-success btn-sm' if @project.can_do? :shipment_ended %>
+          <%= link_to '下一步', 'JavaScript:void(0)', onclick: "step_event('done_shipment_ended')",class: 'btn  btn-success btn-sm' if @project.can_do_next? :shipment_ended %>
         </div>
       <% end %>
     </div>

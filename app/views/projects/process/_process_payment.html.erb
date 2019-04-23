@@ -37,7 +37,7 @@
         <% end %>
         <% if can? :step_event, :projects %>
         <div style="text-align: right">
-          <%= link_to '下一步', 'JavaScript:void(0)', onclick: "step_event('done_process_payment')",class: 'btn  btn-success btn-sm' if @project.can_do? :process_payment %>
+          <%= link_to '下一步', 'JavaScript:void(0)', onclick: "step_event('done_process_payment')",class: 'btn  btn-success btn-sm' if @project.can_do_next? :process_payment %>
         </div>
         <%end %>
       <% end %>
