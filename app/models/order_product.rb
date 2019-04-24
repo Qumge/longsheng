@@ -21,11 +21,12 @@
 #
 
 class OrderProduct < ActiveRecord::Base
+  attr_accessor :skip_before_save
   belongs_to :product
   belongs_to :order
   has_one :sale
   validates_presence_of :number, :product_id#, :discount
-  before_save :set_price
+  before_save :set_price, :unless => :skip_before_save
   validates_numericality_of :number, only_integer: true, if: ->(order_project) { order_project.number.present? }
   validates_numericality_of :discount, greater_than_or_equal_to: 0, if: ->(order_project) { order_project.discount.present? }
 
@@ -44,7 +45,7 @@ class OrderProduct < ActiveRecord::Base
 
   def set_price
     self.price = product.default_price self.order.project if self.price.blank?
-    self.total_price = price * number if self.total_price.blank?
+    self.total_price = price * number
     self.discount_price = discount * price
     self.discount_total_price = discount_price * number
   end

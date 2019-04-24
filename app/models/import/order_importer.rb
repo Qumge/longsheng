@@ -55,6 +55,7 @@ class Import::OrderImporter < ActiveImporter::Base
     raise "第#{row_count}行 【金额】计算不正确。" unless  row['金额'].to_f == total_price
     order_product = OrderProduct.new order: order, product: product, number: number, price: product.default_price(project), total_price: number * product.default_price(project),
                              discount_price: price, discount_total_price: total_price
+    order_product.skip_before_save = true
     unless order_product.save
       error = product.errors.messages.first
       raise "第#{row_count}行 #{I18n.t "activerecord.attributes.product.#{error.first.to_s}"}: #{error[1][0].to_s}"
