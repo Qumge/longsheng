@@ -33,7 +33,7 @@ class Order < ActiveRecord::Base
   include AASM
   belongs_to :project
   belongs_to :factory
-  has_many :order_products
+  has_many :order_products, dependent: :destroy
   has_and_belongs_to_many :products, join_table: 'order_products'
   has_many :order_invoices
   has_many :payment_logs

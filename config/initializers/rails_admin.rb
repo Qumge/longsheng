@@ -32,7 +32,7 @@ RailsAdmin.config do |config|
   config.forgery_protection_settings = {with: :null_session}
 
   config.main_app_name = ["龙胜", "大客户"]
-  config.included_models = ["Resource", 'Role', 'User', 'Organization', 'Company', 'Category', 'ProductCategory', 'CostCategory', 'Factory']
+  config.included_models = ["Resource", 'Role', 'User', 'Organization', 'Company', 'Category', 'ProductCategory', 'CostCategory', 'Factory', 'Order']
 
   config.model 'User' do
     label_plural "用户"
@@ -139,6 +139,25 @@ RailsAdmin.config do |config|
     end
   end
 
+  config.model 'Order' do
+    label_plural "订单"
+    field :no do
+      label '编号'
+    end
+    field :project do
+      associated_collection_cache_all true  # REQUIRED if you want to SORT the list as below
+      label '项目名'
+    end
+    field :user do
+      associated_collection_cache_all true  # REQUIRED if you want to SORT the list as below
+      label '创建人'
+    end
+    field :total_price do
+      label '总金额'
+    end
+
+  end
+
   config.model 'Factory' do
     label_plural "订单厂商"
     field :name do
@@ -162,9 +181,11 @@ RailsAdmin.config do |config|
     export
     bulk_delete
     show
-    edit
+    edit do
+      except [Order]
+    end
     delete
-    show_in_app
+    # show_in_app
 
     ## With an audit adapter, you can add:
     # history_index
