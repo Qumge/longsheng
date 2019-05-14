@@ -131,6 +131,8 @@ Rails.application.routes.draw do
       get :edit_owner
       patch :update_owner
       post :do_import
+      get :contract_order
+      post :do_contract_order
       resources :reports
       resources :orders do
         collection do

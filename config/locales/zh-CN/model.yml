@@ -125,6 +125,8 @@ zh-CN:
         total_price: '下单金额'
         deliver_amount: '发货金额'
         payment_percent: '回款百分比'
+        factory_id: '订单厂商'
+        desc: '备注'
       deliver:
         name: '物流联系人'
         number: '货物件数'

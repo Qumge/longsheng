@@ -22,10 +22,13 @@
             <% if can? :order_import, :projects %>
               <small><%= link_to '批量导入', order_import_project_path(@project) , class: 'font-a label bg-green', 'data-toggle' => "modal", 'data-target' => "#global-modal" if @project.can_do? :order %></small>
             <% end %>
+            <% if can? :contract_order, :projects %>
+              <small><%= link_to '集采订单', contract_order_project_path(@project) , class: 'font-a label bg-primary' if @project.can_do? :order %></small>
+            <% end %>
           </div>
           <h4 class="box-title">
             <% if can? :new, :orders %>
-            <%= link_to '添加新订单', new_order_path(@project, type: 'normal'), 'data-toggle' => "modal", 'data-target' => "#global-modal", class: 'btn' if @project.can_do? :order %>
+            <%= link_to '新订单', new_order_path(@project, type: 'normal'), 'data-toggle' => "modal", 'data-target' => "#global-modal", class: 'btn' if @project.can_do? :order %>
             <%= link_to '申请特价', new_order_path(@project, type: 'bargains'), 'data-toggle' => "modal", 'data-target' => "#global-modal", class: 'btn' if @project.can_do? :order %>
             <%end %>
           </h4>

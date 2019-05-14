@@ -361,6 +361,16 @@ class Project < ActiveRecord::Base
     create_money_notice 'bond' if bond_overdue?
   end
 
+  def contract_sales
+    array = []
+    self.contracts.each do |contract|
+      contract.sales.each do |sale|
+        array << sale
+      end
+    end
+    array
+  end
+
   class << self
     def search_conn params
       projects = self.all

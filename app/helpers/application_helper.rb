@@ -37,7 +37,9 @@ module ApplicationHelper
             report: '项目报备',
             sales: '价格体系',
             edit: '项目编辑',
-            update: '项目编辑'
+            update: '项目编辑',
+            contract_order: '集采订单',
+            do_contract_order: '集采订单'
         },
         contracts: {
             index: '战略合同列表',

@@ -1,7 +1,7 @@
 class ProjectsController < ApplicationController
   before_action :set_project, only: [:show, :upload, :update_agency, :edit_information, :update_information, :edit_owner, :update_owner,
                                      :delete_attachment, :payment, :done, :step_event, :agent, :sales, :report,
-                                     :order_import, :do_import, :show_money, :edit, :update, :reapply]
+                                     :order_import, :do_import, :show_money, :edit, :update, :reapply, :contract_order, :do_contract_order]
   before_action :set_uptoken, only: [:show, :upload, :update_agency, :update_information, :delete_attachment, :payment, :done, :step_event]
   include ApplicationHelper
   def index
@@ -160,6 +160,40 @@ class ProjectsController < ApplicationController
     render layout: false
   end
 
+  def contract_order
+    @order = @project.normal_orders.new
+  end
+
+  def do_contract_order
+    @order = @project.normal_orders.new
+    params[:numbers] ||= []
+    params[:numbers].each do |key, value|
+      if value.present?
+        product = Product.find_by id: key.gsub('product_', '')
+        unless product.present?
+          redirect_to project_path(@project), alert: '产品不存在'
+        end
+        sale = product.sale @project
+        unless sale.present?
+          redirect_to project_path(@project), alert: '集采价不存在'
+        end
+        order_product = OrderProduct.new product: product, number: value
+        @order.order_products << order_product
+        p @order.order_products
+      end
+    end
+    if @order.order_products.present?
+      @order.user = current_user
+      if @order.update order_permit
+        redirect_to project_path(@project), notice: '订单创建成功'
+      else
+        redirect_to project_path(@project), alert: '订单创建失败'
+      end
+    else
+      redirect_to project_path(@project), alert: '空订单'
+    end
+  end
+
   private
   def project_permit
     params.require(:project).permit(:name, :company_id, :category_id, :address, :city, :supplier_type, :strategic, :estimate,
@@ -182,6 +216,10 @@ class ProjectsController < ApplicationController
 
   def owner_permit
     params.require(:project).permit(:owner_id)
+  end
+
+  def order_permit
+    params.require(:order).permit(:desc, :factory_id)
   end
 
 

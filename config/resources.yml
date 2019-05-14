@@ -109,6 +109,8 @@ projects:
   edit: '项目-编辑界面'
   update: '项目-编辑'
   reapply: '项目-申请审核'
+  contract_order: '项目-集采订单界面'
+  do_contract_order: '项目-集采订单'
 reports:
   new: '项目报备-新建界面'
   create: '项目报备-新建'

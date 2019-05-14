@@ -17,6 +17,8 @@ group_admin:
     order_import: 项目-批量订单界面
     do_import: 项目-批量导入订单
     show_money: 项目-查看金额
+    contract_order: 项目-集采订单界面
+    do_contract_order: 项目-集采订单
   products:
     show: 产品-详情
     update: 产品-编辑
@@ -119,6 +121,8 @@ normal_admin:
     order_import: 项目-批量订单界面
     do_import: 项目-批量导入订单
     show_money: 项目-查看金额
+    contract_order: 项目-集采订单界面
+    do_contract_order: 项目-集采订单
   products:
     show: 产品-详情
     update: 产品-编辑
