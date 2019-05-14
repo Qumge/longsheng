@@ -25,8 +25,8 @@ class Import::OrderImporter < ActiveImporter::Base
     product = Product.find_by name: row['产品名']
     raise "第#{row_count}行 #{row['产品名']}不存在。" unless product.present?
     raise "第#{row_count}行 【数量】不存在。" unless row['数量'].present? && row['数量'].to_i > 0
-    raise "第#{row_count}行 【单价（特价）】不存在。" unless row['单价（特价）'].present?
-    raise "第#{row_count}行 【金额】不存在。" unless row['金额'].present?
+    #raise "第#{row_count}行 【单价（特价）】不存在。" unless row['单价（特价）'].present?
+    #raise "第#{row_count}行 【金额】不存在。" unless row['金额'].present?
     product
   end
 
@@ -34,7 +34,11 @@ class Import::OrderImporter < ActiveImporter::Base
     project = params[:project]
     product = model
     sale = Sale.find_by product: product, contract: project.contract
-    price = row['单价（特价）'].to_f
+    if row['单价（特价）'].present?
+      price = row['单价（特价）'].to_f
+    else
+      price = product.default_price project
+    end
     if sale.present? && sale.price == row['单价（特价）'].to_f
       @normal_order.desc = "#{@normal_order.desc}#{row['备注/特殊要求']}; "
       order = @normal_order
@@ -52,7 +56,7 @@ class Import::OrderImporter < ActiveImporter::Base
     end
     number = row['数量'].to_i
     total_price = number * price
-    raise "第#{row_count}行 【金额】计算不正确。" unless  row['金额'].to_f == total_price
+    #raise "第#{row_count}行 【金额】计算不正确。" unless  row['金额'].to_f == total_price
     order_product = OrderProduct.new order: order, product: product, number: number, price: product.default_price(project), total_price: number * product.default_price(project),
                              discount_price: price, discount_total_price: total_price
     order_product.skip_before_save = true
