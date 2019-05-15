@@ -35,7 +35,7 @@ module ApplicationHelper
             show: '详情',
             agent: '代理商',
             report: '项目报备',
-            sales: '价格体系',
+            sales: '合同价格体系',
             edit: '项目编辑',
             update: '项目编辑',
             contract_order: '集采订单',

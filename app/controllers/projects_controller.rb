@@ -140,7 +140,8 @@ class ProjectsController < ApplicationController
   end
 
   def sales
-    @products = Product.all.page(params[:page]).per(Settings.per_page)
+    @sales = @project.contract_sales
+    #@products = Product.all.page(params[:page]).per(Settings.per_page)
   end
 
   def order_import
