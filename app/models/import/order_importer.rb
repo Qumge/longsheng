@@ -39,7 +39,7 @@ class Import::OrderImporter < ActiveImporter::Base
     else
       price = product.default_price project
     end
-    if sale.present? && sale.price == row['单价（特价）'].to_f
+    if sale.present? && sale.price == price
       @normal_order.desc = "#{@normal_order.desc}#{row['备注/特殊要求']}; "
       order = @normal_order
     else
