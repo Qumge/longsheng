@@ -59,6 +59,7 @@ gem 'active_importer'                                         # excel导入
 gem 'rest-client' # http请求
 gem 'whenever', require: false
 gem 'exception_notification'
+gem 'left_join'
 
 
 

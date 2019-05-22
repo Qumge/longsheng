@@ -185,6 +185,7 @@ GEM
       kaminari (>= 0.13.0)
       rails
     kaminari-core (1.1.1)
+    left_join (0.2.1)
     libv8 (3.16.14.19)
     loofah (2.2.3)
       crass (~> 1.0.2)
@@ -371,6 +372,7 @@ DEPENDENCIES
   jquery-ui-rails (= 6.0.1)
   kaminari
   kaminari-bootstrap (~> 3.0.1)
+  left_join
   mina (= 0.3.8)
   momentjs-rails (= 2.17.1)
   morris.js-rails (= 1.0.1)
