@@ -41,8 +41,8 @@
     <table class="table">
       <tbody>
       <tr>
-        <th>战略合作方</th>
-        <td><%= @project.contract&.partner %></td>
+        <th>战略合同</th>
+        <td><%= @project.contracts.collect{|con| "#{con.partner}/ #{con.name}"}.join '; '%></td>
       </tr>
       <tr>
         <th>预估规模</th>

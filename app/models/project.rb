@@ -74,7 +74,7 @@ class Project < ActiveRecord::Base
   has_many :normal_orders, -> {where(order_type: 'normal')}, class_name: 'Order', foreign_key: :project_id
   has_many :bargains_orders, -> {where(order_type: 'bargains')}, class_name: 'Order', foreign_key: :project_id
   has_many :default_orders, -> {where(order_type: ['normal', 'bargains'])}, class_name: 'Order', foreign_key: :project_id
-  belongs_to :contract
+  #belongs_to :contract
   has_many :invoices
   belongs_to :agent, foreign_key: :agency_id
   has_one :report
@@ -359,6 +359,10 @@ class Project < ActiveRecord::Base
     create_money_notice 'advance' if advance_overdue?
     create_money_notice 'settlement' if settlement_overdue?
     create_money_notice 'bond' if bond_overdue?
+  end
+
+  def contract
+    self.contracts&.first
   end
 
   def contract_sales

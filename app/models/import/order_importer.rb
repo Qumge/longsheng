@@ -33,7 +33,8 @@ class Import::OrderImporter < ActiveImporter::Base
   on :row_processing do
     project = params[:project]
     product = model
-    sale = Sale.find_by product: product, contract: project.contract
+    sale = product.sale project
+    # sale = Sale.find_by product: product, contract: project.contracts
     if row['单价（特价）'].present?
       price = row['单价（特价）'].to_f
     else
