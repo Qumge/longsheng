@@ -7,7 +7,7 @@
         <i class="fa fa-bell-o"></i>
 
         <h3 class="box-title">通知消息</h3>
-        <% if can? :read_all, :notices%>
+        <% if can? :check_all, :notices%>
           <%= link_to '全部已读', '#', onclick: 'check_all()',  class: 'font-a label pull-right bg-primary', style: 'font-size: 100%' %>
         <% end %>
       </div>
