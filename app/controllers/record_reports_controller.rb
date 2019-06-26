@@ -15,6 +15,12 @@ class RecordReportsController < ApplicationController
 
     @products_pie_labels, @products_pie_data = format_product_data_for_pie 'applied'
 
+    @chatColor = ['#00a65a', '#dd4b39', '#00c0ef', '#f39c12', '#3c8dbc', '#ff0084', '#205081', '#f94877', '#001f3f','#d2d6de']
+    @order_month_amounts = order_month_amounts
+    @deliver_month_amounts = deliver_month_amounts
+    @payment_month_amounts =  payment_month_amounts
+    @need_payment_amounts = need_payment_amounts
+
   end
 
 

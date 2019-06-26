@@ -13,7 +13,16 @@
     </div>
   </div>
   <div class="box-body">
+    <div class="col-md-3">
+      <ul class="chart-legend clearfix">
+        <% @products_pie_labels.each_with_index do |label, index| %>
+        <li><i class="fa fa-circle-o" style="color: <%=@chatColor[index] %>"></i>  <%= label %>: <%= @products_pie_data[index] %></li>
+          <% end %>
+      </ul>
+    </div>
+    <div class="col-md-9">
     <canvas id="products_pie" style="height:250px"></canvas>
+    </div>
   </div>
   <!-- /.box-body -->
 </div>

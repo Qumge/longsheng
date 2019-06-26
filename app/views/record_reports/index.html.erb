@@ -1,23 +1,79 @@
 <%= render 'record_reports/header' %>
 <div class="row">
+  <div class="box-body">
+    <div class="col-md-3 col-sm-6 col-xs-12">
+      <div class="info-box">
+        <span class="info-box-icon bg-aqua" style="font-size: 20px;">订单</span>
+        <%= link_to orders_record_reports_path, style: 'color' do %>
+        <div class="info-box-content" style="padding-top: 20px;color: #333333">
+          <span class="info-box-text">日：<%= @orders_pie_data[0] %></span>
+          <span class="info-box-number">月：<%= @order_month_amounts %></span>
+        </div>
+          <% end %>
+        <!-- /.info-box-content -->
+      </div>
+      <!-- /.info-box -->
+    </div>
+    <div class="col-md-3 col-sm-6 col-xs-12">
+      <div class="info-box">
+        <span class="info-box-icon bg-yellow" style="font-size: 20px;">发货</span>
+        <%= link_to orders_record_reports_path, style: 'color' do %>
+        <div class="info-box-content" style="padding-top: 20px;color: #333333">
+          <span class="info-box-text">日：<%= @orders_pie_data[1] %></span>
+          <span class="info-box-number">月：<%= @deliver_month_amounts %></span>
+        </div>
+        <% end %>
+        <!-- /.info-box-content -->
+      </div>
+      <!-- /.info-box -->
+    </div>
+
+    <div class="col-md-3 col-sm-6 col-xs-12">
+      <div class="info-box" >
+        <span class="info-box-icon bg-green" style="font-size: 20px;">回款</span>
+        <%= link_to orders_record_reports_path, style: 'color' do %>
+        <div class="info-box-content" style="padding-top: 20px;color: #333333">
+          <span class="info-box-text">日：<%= @orders_pie_data[2] %></span>
+          <span class="info-box-number">月：<%= @payment_month_amounts %></span>
+        </div>
+        <% end %>
+        <!-- /.info-box-content -->
+      </div>
+      <!-- /.info-box -->
+    </div>
+
+    <div class="col-md-3 col-sm-6 col-xs-12">
+      <div class="info-box">
+        <span class="info-box-icon bg-red" style="font-size: 30px;">应收</span>
+
+        <div class="info-box-content" style="padding-top: 30px;">
+          <span class="info-box-number"><%= @need_payment_amounts %></span>
+        </div>
+        <!-- /.info-box-content -->
+      </div>
+      <!-- /.info-box -->
+    </div>
+  </div>
+</div>
+<div class="row">
   <div>
     <!-- /.box-header -->
     <div class="box-body">
-      <div class="col-md-6">
-       <%= render 'record_reports/orders/pie' %>
-      </div>
-      <div class="col-md-6">
-        <%= render 'record_reports/projects/category_pie' %>
-      </div>
-      <div class="col-md-6">
-        <%= render 'record_reports/projects/projects_pie' %>
-      </div>
+<!--      <div class="col-md-6">-->
+       <%#= render 'record_reports/orders/pie' %>
+<!--      </div>-->
+<!--      <div class="col-md-6">-->
+        <%#= render 'record_reports/projects/category_pie' %>
+<!--      </div>-->
+<!--      <div class="col-md-6">-->
+        <%#= render 'record_reports/projects/projects_pie' %>
+<!--      </div>-->
       <div class="col-md-6">
         <%= render 'record_reports/products/pie' %>
       </div>
-      <div class="col-md-6">
-        <%= render 'record_reports/users/pie' %>
-      </div>
+<!--      <div class="col-md-6">-->
+        <%#= render 'record_reports/users/pie' %>
+<!--      </div>-->
       <div class="col-md-6">
         <%= render 'record_reports/users/cost' %>
       </div>

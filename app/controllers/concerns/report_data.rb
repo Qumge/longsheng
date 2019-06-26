@@ -683,4 +683,30 @@ module ReportData
     end
     new_array
   end
+
+
+  ##===========================================================================
+  def order_month_amounts
+    date = params[:begin_date]
+    order_scope.where(search_conn).where(applied_at: date.beginning_of_month..date.end_of_month).select(total_price).first&.total_price.to_f.round 2
+  end
+
+  def payment_month_amounts
+    date = params[:begin_date]
+    order_scope.joins(:payment_logs).where(search_conn).where("payment_logs.payment_at >= '#{date.beginning_of_month}' and payment_logs.payment_at <= '#{date.end_of_month}'").select(total_payment).first&.total_payment.to_f.round 2
+  end
+
+  def deliver_month_amounts
+    date = params[:begin_date]
+    order_scope.joins(:deliver_logs).where(search_conn).where("deliver_logs.deliver_at >= '#{date.beginning_of_month}' and deliver_logs.deliver_at <= '#{date.end_of_month}'").select(total_deliver).first&.total_amount.to_f.round 2
+  end
+
+
+  def need_payment_amounts
+    total_payment = order_scope.joins(:payment_logs).where(search_conn).select('sum(payment_logs.amount) as total_payment, orders.* ').first&.total_payment.to_f.round 2
+    total_deliver = order_scope.joins(:deliver_logs).where(search_conn).select('sum(deliver_logs.amount) as total_amount, orders.* ').first&.total_amount.to_f.round 2
+    total_deliver - total_payment
+  end
+
+
 end
