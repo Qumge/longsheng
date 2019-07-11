@@ -20,7 +20,6 @@
 //= require plupload/js/plupload.dev
 //= require select2-full
 //= require icheck
-//= require 'china_city/jquery.china_city'
 //= require externals/Chart
 //= require my_chat
 
