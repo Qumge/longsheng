@@ -19,6 +19,10 @@
             </div>
             <%= f.input :factory_id,  as: :select, collection: Factory.all.collect{|p| [p.name, p.id]}  %>
             <%= f.input :desc %>
+
+            <div>
+              <input class="form-control string required" type="text" id="product_search" style="width:50%" placeholder="输入产品名检索">
+            </div>
             <div class="form-group row string required product_no">
               <label class="col-sm-3 col-form-label string required" style="font-size: 16px;" > 产品名</label>
               <label class="col-sm-3 col-form-label string required" style="font-size: 16px;"> 型号</label>
@@ -27,8 +31,8 @@
 
             </div>
             <% @project.contract_sales.each do |sale| %>
-              <div class="form-group row string required product_no">
-                <label class="col-sm-3 col-form-label string required" for="product_<%= sale.product_id %>"> <%= "#{sale.product&.name}" %></label>
+              <div class="form-group row string required products">
+                <label class="col-sm-3 col-form-label string required product_name" for="product_<%= sale.product_id %>"> <%= "#{sale.product&.name}" %></label>
                 <label class="col-sm-3 col-form-label string required" for="product_<%= sale.product_id %>"> <%= "#{sale.product&.product_no}" %></label>
                 <label class="col-sm-3 col-form-label string required" for="product_<%= sale.product_id %>"> <%= "#{sale.price}" %></label>
                 <div class="col-sm-3">
@@ -42,12 +46,27 @@
             <%= link_to '返回', project_path(@project), class: 'btn btn-default' %>
           </div>
         <% end %>
-
-
       </div>
 
     </div>
   </div>
 </div>
+<script type="text/javascript">
+  $(function(){
+      $('#product_search').on('keyup', function(e){
+          var search = $(this).val();
+          console.log(1);
+          $('.products').each(function(e){
+              var that = this;
+              var text = $(this).children('.product_name').first().text();
+              if(text.indexOf(search) >= 0){
+                  $(that).show();
+              }else{
+                  $(that).hide();
+              }
+          })
+      })
+  });
+</script>
 
 
