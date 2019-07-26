@@ -133,6 +133,7 @@ record_reports:
   users: '报表-人员业绩'
   costs: '报表-费用'
   products: '报表-产品'
+  all: '报表-跨区'
 attachments:
   index: '文件-列表'
 

@@ -1,11 +1,13 @@
 <%= render 'record_reports/header' %>
 <div class="nav-tabs-custom">
+  <% if can? :all, :record_reports %>
   <ul class="nav nav-tabs">
     <li class="<%= 'active' if params[:organization_id].blank?%>"><%= link_to '全部', record_reports_path %></li>
     <% Organization.regional_organization.each do |org| %>
       <li class="<%= 'active' if params[:organization_id].to_i == org.id %>"><%= link_to org.name, record_reports_path(organization_id: org.id) %></li>
     <% end %>
   </ul>
+  <% end %>
   <div class="tab-content">
     <div class="tab-pane active" id="tab_1">
       <div class="row">

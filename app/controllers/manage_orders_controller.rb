@@ -4,7 +4,7 @@ class ManageOrdersController < ApplicationController
   before_action :set_order, only: [:show, :deliver, :edit_payment, :update_payment, :deliver_message, :send_message, :payment_logs, :edit_deliver, :update_deliver, :deliver_logs ]
 
   def index
-    @orders = Order.search_conn(params).order('applied_at desc').page(params[:page]).per(Settings.per_page)
+    @orders = current_user.view_orders.search_conn(params).order('applied_at desc').page(params[:page]).per(Settings.per_page)
     response do |format|
       format.js
     end

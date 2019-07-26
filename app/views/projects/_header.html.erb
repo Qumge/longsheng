@@ -1,7 +1,7 @@
 <% content_for :content_header do %>
   <h1>
     项目管理
-    <small><%= get_title params %></small>
+    <small><%= @project.present? ? @project.name : get_title(params) %></small>
 
   </h1>
   <ol class="breadcrumb">
