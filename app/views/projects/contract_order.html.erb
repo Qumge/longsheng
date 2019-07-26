@@ -65,6 +65,10 @@
                   $(that).hide();
               }
           })
+      });
+      $('.products').hover(function(e){
+          $('.tr-hover').removeClass('tr-hover');
+          $(this).addClass('tr-hover');
       })
   });
 </script>
