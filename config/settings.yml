@@ -1,4 +1,5 @@
 per_page: 15
+regional_ids: [3, 4, 5]
 submail:
   message:
     appid: '32549'

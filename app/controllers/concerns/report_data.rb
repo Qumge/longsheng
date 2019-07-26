@@ -6,15 +6,21 @@ module ReportData
   end
 
   def order_scope
-    Order.joins({project: [:category, :owner]})
+    orders = Order.joins({project: [:category, owner: :organization]})
+    orders = orders.where('organizations.id in (?)', @organization.subtree_ids) if @organization.present?
+    orders
   end
 
   def cost_scope
-    Cost.joins(:user)
+    costs = Cost.joins(user: :organization)
+    costs = costs.where('organizations.id in (?)', @organization.subtree_ids) if @organization.present?
+    costs
   end
 
   def invoice_scope
-    Invoice.joins(:user)
+    invoices = Invoice.joins(user: :organization)
+    invoices = invoices.where('organizations.id in (?)', @organization.subtree_ids) if @organization.present?
+    invoices
   end
 
   ############# end scope
@@ -671,6 +677,8 @@ module ReportData
       params[:end_date] = DateTime.now
       params[:date_range] = "#{params[:begin_date].strftime('%Y-%m-%d')} - #{params[:end_date].strftime('%Y-%m-%d')}"
     end
+    @organization = current_user.regional_organization
+    @organization = Organization.find_by id: params[:organization_id] if  params[:organization_id].present?
 
   end
 

@@ -55,6 +55,15 @@ class User < ActiveRecord::Base
     errors.add(:agent_id, '非代理商时，请勿指定代理商') if self.role.present? && self.role.desc != 'agency' && self.agent_id.present?
   end
 
+  # 获取所在大区
+  def regional_organization
+    regional_ids = Settings.regional_ids
+    regional_ids ||= []
+    if self.organization.present?
+      self.organization.path.where('organizations.id in (?)', regional_ids).first
+    end
+  end
+
 
 
   def has_role? role

@@ -35,6 +35,9 @@
     <div class="col-md-3">
       <%= select_tag :group_type, options_for_select([['日', 'day'], ['月', 'month'], ['年', 'year']], params[:group_type]), include_blank: false, class: 'form-control', style: 'width:100%' %>
     </div>
+    <div class="col-md-3">
+      <%= select_tag :organization_id, options_for_select(Organization.regional_organization.collect{|org| [org.name, org.id]}, params[:organization_id]), include_blank: '大区', class: 'form-control', style: 'width:100%' %>
+    </div>
   <div class="input-group-btn">
     <button type="submit" class="btn btn-default" ><i class="fa fa-search"></i></button>
   </div>

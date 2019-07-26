@@ -3,7 +3,7 @@
   <div class="box-header with-border">
     <h3 class="box-title">销售费用
       <% if can? :costs, :record_reports %>
-        <small><%= link_to '更多', costs_record_reports_path , class: 'font-a label bg-green' %></small>
+        <small><%= link_to '更多', costs_record_reports_path(organization_id: params[:organization_id]) , class: 'font-a label bg-green' %></small>
       <% end %>
     </h3>
 

@@ -2,7 +2,7 @@
   <div class="box-header with-border">
     <h3 class="box-title">产品类型（下单金额）
       <% if can? :projects, :record_reports %>
-        <small><%= link_to '更多', products_record_reports_path , class: 'font-a label bg-green' %></small>
+        <small><%= link_to '更多', products_record_reports_path(organization_id: params[:organization_id]) , class: 'font-a label bg-green' %></small>
       <% end %>
     </h3>
 

@@ -1,10 +1,19 @@
 <%= render 'record_reports/header' %>
+<div class="nav-tabs-custom">
+  <ul class="nav nav-tabs">
+    <li class="<%= 'active' if params[:organization_id].blank?%>"><%= link_to '全部', record_reports_path %></li>
+    <% Organization.regional_organization.each do |org| %>
+      <li class="<%= 'active' if params[:organization_id].to_i == org.id %>"><%= link_to org.name, record_reports_path(organization_id: org.id) %></li>
+    <% end %>
+  </ul>
+  <div class="tab-content">
+    <div class="tab-pane active" id="tab_1">
 <div class="row">
   <div class="box-body">
     <div class="col-md-3 col-sm-6 col-xs-12">
       <div class="info-box">
         <span class="info-box-icon bg-aqua" style="font-size: 20px;">订单</span>
-        <%= link_to orders_record_reports_path, style: 'color' do %>
+        <%= link_to orders_record_reports_path(organization_id: params[:organization_id]), style: 'color' do %>
         <div class="info-box-content" style="padding-top: 20px;color: #333333">
           <span class="info-box-text">日：<%= @orders_pie_data[0] %></span>
           <span class="info-box-number">月：<%= @order_month_amounts %></span>
@@ -17,7 +26,7 @@
     <div class="col-md-3 col-sm-6 col-xs-12">
       <div class="info-box">
         <span class="info-box-icon bg-yellow" style="font-size: 20px;">发货</span>
-        <%= link_to orders_record_reports_path, style: 'color' do %>
+        <%= link_to orders_record_reports_path(organization_id: params[:organization_id]), style: 'color' do %>
         <div class="info-box-content" style="padding-top: 20px;color: #333333">
           <span class="info-box-text">日：<%= @orders_pie_data[1] %></span>
           <span class="info-box-number">月：<%= @deliver_month_amounts %></span>
@@ -31,7 +40,7 @@
     <div class="col-md-3 col-sm-6 col-xs-12">
       <div class="info-box" >
         <span class="info-box-icon bg-green" style="font-size: 20px;">回款</span>
-        <%= link_to orders_record_reports_path, style: 'color' do %>
+        <%= link_to orders_record_reports_path(organization_id: params[:organization_id]), style: 'color' do %>
         <div class="info-box-content" style="padding-top: 20px;color: #333333">
           <span class="info-box-text">日：<%= @orders_pie_data[2] %></span>
           <span class="info-box-number">月：<%= @payment_month_amounts %></span>
@@ -79,4 +88,29 @@
       </div>
     </div>
   </div>
+</div>
+    </div>
+    <!-- /.tab-pane -->
+    <div class="tab-pane" id="tab_2">
+      The European languages are members of the same family. Their separate existence is a myth.
+      For science, music, sport, etc, Europe uses the same vocabulary. The languages only differ
+      in their grammar, their pronunciation and their most common words. Everyone realizes why a
+      new common language would be desirable: one could refuse to pay expensive translators. To
+      achieve this, it would be necessary to have uniform grammar, pronunciation and more common
+      words. If several languages coalesce, the grammar of the resulting language is more simple
+      and regular than that of the individual languages.
+    </div>
+    <!-- /.tab-pane -->
+    <div class="tab-pane" id="tab_3">
+      Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+      Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
+      when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+      It has survived not only five centuries, but also the leap into electronic typesetting,
+      remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset
+      sheets containing Lorem Ipsum passages, and more recently with desktop publishing software
+      like Aldus PageMaker including versions of Lorem Ipsum.
+    </div>
+    <!-- /.tab-pane -->
+  </div>
+  <!-- /.tab-content -->
 </div>

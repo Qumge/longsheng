@@ -19,6 +19,14 @@ class Organization < ActiveRecord::Base
   has_ancestry
   has_many :users
 
+  class << self
+    def regional_organization
+      regional_ids = Settings.regional_ids
+      regional_ids ||= []
+      Organization.where(id: regional_ids)
+    end
+  end
+
 
 
 end
