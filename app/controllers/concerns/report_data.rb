@@ -2,7 +2,9 @@ module ReportData
   extend ActiveSupport::Concern
   ####################################### begin scope  #######################################
   def order_product_scope
-    OrderProduct.joins({order: {project: :category}}, {product: :product_category})
+    order_products = OrderProduct.joins({order: {project: [:category, owner: :organization]}}, {product: :product_category})
+    order_products = order_products.where('organizations.id in (?)', @organization.subtree_ids) if @organization.present?
+    order_products
   end
 
   def order_scope
@@ -22,6 +24,7 @@ module ReportData
     invoices = invoices.where('organizations.id in (?)', @organization.subtree_ids) if @organization.present?
     invoices
   end
+
 
   ############# end scope
 
@@ -183,7 +186,7 @@ module ReportData
   end
 
   def product_data type
-    OrderProduct.joins(:product, :order).where(product_type_conn type)
+    order_product_scope.where(product_type_conn type)
   end
 
   ####################################### begin  data #######################################
