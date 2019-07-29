@@ -55,7 +55,6 @@
   $(function(){
       $('#product_search').on('keyup', function(e){
           var search = $(this).val();
-          console.log(1);
           $('.products').each(function(e){
               var that = this;
               var text = $(this).children('.product_name').first().text();

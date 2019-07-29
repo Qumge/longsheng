@@ -123,14 +123,14 @@ class User < ActiveRecord::Base
   def view_orders
     orders = Order.joins(project: :owner).all
     if ['regional_manager', 'project_manager'].include? self.role&.desc
-      orders.where('owner_id in (?)', self.organization.subtree.map(&:users).flatten.map(&:id))
+      orders.where('projects.owner_id in (?)', self.organization.subtree.map(&:users).flatten.map(&:id))
     elsif ['super_admin', 'group_admin', 'normal_admin'].include? self.role&.desc
       orders
     elsif 'project_user' == self.role&.desc
-      orders.where(owner_id: self.id)
+      orders.where('projects.owner_id = ?', self.id)
     elsif 'agency' == self.role&.desc
       #todo
-      orders.where(agency_id: self.agent.id)
+      orders.where('projects.agency_id = ?',  self.agent.id)
     else
       orders.where('1 = -1')
     end
