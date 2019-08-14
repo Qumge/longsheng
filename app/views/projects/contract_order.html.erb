@@ -41,11 +41,11 @@
               </div>
             <% end %>
           </div>
-          <div class="modal-footer">
-            <%= button_tag '保存', class: 'btn btn-primary commit commit', data: { disable_with: '保存中' } %>
-            <%= link_to '返回', project_path(@project), class: 'btn btn-default' %>
-          </div>
         <% end %>
+        <div class="modal-footer">
+          <%= button_tag '保存', class: 'btn btn-primary commit', data: { disable_with: '保存中' } %>
+          <%= link_to '返回', project_path(@project), class: 'btn btn-default' %>
+        </div>
       </div>
 
     </div>
@@ -68,6 +68,14 @@
       $('.products').hover(function(e){
           $('.tr-hover').removeClass('tr-hover');
           $(this).addClass('tr-hover');
+      })
+
+      $('.commit').click(function(e){
+          if($('#order_factory_id').val()){
+              $('#new_order').submit();
+          }else{
+              alert('订单厂商不能为空');
+          }
       })
   });
 </script>
