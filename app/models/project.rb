@@ -198,7 +198,7 @@ class Project < ActiveRecord::Base
     end
 
     event :done_confirm do
-      transitions :from => :confirm, :to => :done  do
+      transitions :from => :confirm, :to => :done, :after => Proc.new{do_finish!}  do
         guard do
           # 判断是否可以项目结清 TODO
           true
