@@ -70,7 +70,8 @@ class User < ActiveRecord::Base
     self.role && self.role.desc == role
   end
 
-  def view_projects
+  def role
+
     projects = Project.joins(:owner)
     # 后台人员权限 可以查看所有项目
     # 大区经理和项目经理能查看当前架构所有的项目
@@ -103,7 +104,7 @@ class User < ActiveRecord::Base
   end
 
   def role
-    self.roles.where(desc: Role::ROLES.map{|k, v| k.to_s}).first
+    self.roles.first
   end
 
   def audit_projects
