@@ -70,7 +70,7 @@ class User < ActiveRecord::Base
     self.role && self.role.desc == role
   end
 
-  def role
+  def view_projects
 
     projects = Project.joins(:owner)
     # 后台人员权限 可以查看所有项目
