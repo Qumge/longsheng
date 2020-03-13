@@ -96,7 +96,7 @@ class User < ActiveRecord::Base
     elsif 'agency' == self.role&.desc
       #todo
       projects.where(agency_id: self.agent.id)
-    elsif self.role.blank? || ['super_admin', 'group_admin', 'normal_admin'].include?(self.role&.desc)
+    elsif ['super_admin', 'group_admin', 'normal_admin', '总经办'].include?(self.role&.desc) || self.role&.desc.to_s.include?('all')
       projects
     else
       projects.where('1 = -1')
