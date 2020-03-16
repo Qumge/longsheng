@@ -91,13 +91,13 @@ class User < ActiveRecord::Base
     # end
     if ['regional_manager', 'project_manager'].include? self.role&.desc
       projects.where('owner_id in (?)', self.organization.subtree.map(&:users).flatten.map(&:id))
+    elsif ['super_admin', 'group_admin', 'normal_admin', '总经办'].include?(self.role&.desc) || self.role&.desc.to_s.include?('all')
+      projects
     elsif 'project_user' == self.role&.desc
       projects.where(owner_id: self.id)
     elsif 'agency' == self.role&.desc
       #todo
       projects.where(agency_id: self.agent.id)
-    elsif ['super_admin', 'group_admin', 'normal_admin', '总经办'].include?(self.role&.desc) || self.role&.desc.to_s.include?('all')
-      projects
     else
       projects.where('1 = -1')
     end
