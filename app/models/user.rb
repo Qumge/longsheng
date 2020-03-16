@@ -91,7 +91,7 @@ class User < ActiveRecord::Base
     # end
     if ['regional_manager', 'project_manager'].include? self.role&.desc
       projects.where('owner_id in (?)', self.organization.subtree.map(&:users).flatten.map(&:id))
-    elsif ['super_admin', 'group_admin', 'normal_admin', '总经办'].include?(self.role&.desc) || self.role&.desc.to_s.include?('all')
+    elsif ['super_admin', 'group_admin', 'normal_admin'].include?(self.role&.desc) || self.roles.first&.desc.to_s.include?('all') || self.roles.first&.desc.to_s == '总经办'
       projects
     elsif 'project_user' == self.role&.desc
       projects.where(owner_id: self.id)
@@ -104,7 +104,7 @@ class User < ActiveRecord::Base
   end
 
   def role
-    self.roles.first
+    self.roles.where(desc: Role::ROLES.map{|k, v| k.to_s}).first
   end
 
   def audit_projects
