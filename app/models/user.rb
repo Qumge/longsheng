@@ -125,7 +125,7 @@ class User < ActiveRecord::Base
     orders = Order.joins(project: :owner).all
     if ['regional_manager', 'project_manager'].include? self.role&.desc
       orders.where('projects.owner_id in (?)', self.organization.subtree.map(&:users).flatten.map(&:id))
-    elsif ['super_admin', 'group_admin', 'normal_admin'].include? self.role&.desc
+    elsif ['super_admin', 'group_admin', 'normal_admin'].include?(self.role&.desc) || self.roles.first&.desc.to_s.include?('all') || self.roles.first&.desc.to_s == '总经办'
       orders
     elsif 'project_user' == self.role&.desc
       orders.where('projects.owner_id = ?', self.id)
