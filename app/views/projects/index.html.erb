@@ -54,7 +54,7 @@
               <td><%= project.status %></td>
               <td>
                 <% if can? :edit, :projects %>
-                  <% if ['normal_admin', 'group_admin', 'super_admin'].include?(current_user.role.desc) || ['wait', 'failed'].include?(project.project_status) %>
+                  <% if ['normal_admin', 'group_admin', 'super_admin'].include?(current_user.&role&.desc) || ['wait', 'failed'].include?(project.project_status) %>
                   <%= link_to  edit_project_path(project), class: 'btn btn-success btn-xs', 'data-toggle' => "modal", 'data-target' => "#global-modal" do %>
                     <i class="fa fa-edit"></i>编辑
                   <% end %>
