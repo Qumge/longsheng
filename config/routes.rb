@@ -203,6 +203,10 @@ Rails.application.routes.draw do
       get :payment_logs
       get :edit_deliver
       patch :update_deliver
+      get :edit_sign
+      patch :update_sign
+      get :edit_fund
+      patch :update_fund
       get :deliver_logs
     end
   end

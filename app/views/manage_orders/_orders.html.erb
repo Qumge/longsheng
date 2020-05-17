@@ -12,6 +12,8 @@
         <th>订单厂商</th>
         <th>下单人</th>
         <th>下单时间</th>
+        <th>签收时间</th>
+        <th>请款时间</th>
         <th>发货金额</th>
         <th>回款金额</th>
         <th>类型</th>
@@ -28,6 +30,8 @@
             <td><%= order.factory&.name %></td>
             <td><%= order.user&.name %></td>
             <td><%= simple_time order.apply_at %></td>
+            <td><%= simple_time order.sign_log&.sign_at %></td>
+            <td><%= simple_time order.fund_log&.fund_at %></td>
             <td>
               <% if can?(:deliver_logs, :manage_orders) %>
                 <%= link_to deliver_logs_manage_order_path(order), 'data-toggle' => "modal", 'data-target' => "#global-modal", class: 'btn  btn-sm' do %>
@@ -50,22 +54,37 @@
             <td><%= order.get_status %></td>
 
             <td align="center">
-              <% if can?(:edit_deliver, :manage_orders) && (order.active? || order.deliver? || order.sign?) %>
+              <% if can?(:edit_deliver, :manage_orders) && (order.active? || order.deliver? || order.sign? || order.fund?) %>
                 <%= link_to edit_deliver_manage_order_path(order), 'data-toggle' => "modal", 'data-target' => "#global-modal", class: 'btn  btn-sm' do %>
                   <i class="fa  fa-send-o"></i>发货
                 <% end %>
               <% end %>
-              <% if can?(:edit_payment, :manage_orders) && (order.deliver? || order.sign?) %>
+              
+              <% if can?(:edit_sign, :manage_orders) && (order.deliver? || order.sign? || order.fund?) %>
+                <%= link_to edit_sign_manage_order_path(order), 'data-toggle' => "modal", 'data-target' => "#global-modal", class: 'btn  btn-sm' do %>
+                  <i class="fa fa-pencil"></i>签收
+                <% end %>
+              <% end %>
+
+              <% if can?(:edit_fund, :manage_orders) && (order.sign? || order.fund?) %>
+                <%= link_to edit_fund_manage_order_path(order), 'data-toggle' => "modal", 'data-target' => "#global-modal", class: 'btn  btn-sm' do %>
+                  <i class="fa fa-file-text-o"></i>请款资料
+                <% end %>
+              <% end %>
+
+              <% if can?(:edit_payment, :manage_orders) && (order.deliver? || order.sign? || order.fund?) %>
                 <%= link_to edit_payment_manage_order_path(order), 'data-toggle' => "modal", 'data-target' => "#global-modal", class: 'btn  btn-sm' do %>
                   <i class="fa fa-money"></i>进度款
                 <% end %>
               <% end %>
 
-              <% if can?(:deliver_message, :manage_orders) && (order.deliver? || order.sign?) %>
+              <% if can?(:deliver_message, :manage_orders) && (order.deliver? || order.sign? || order.fund?) %>
                 <%= link_to deliver_message_manage_order_path(order), 'data-toggle' => "modal", 'data-target' => "#global-modal", class: 'btn  btn-sm' do %>
                   <i class="fa  fa-send-o"></i>提醒收货
                 <% end %>
               <% end %>
+
+
             </td>
           </tr>
         <% end %>

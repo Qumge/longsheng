@@ -79,7 +79,7 @@ function show_file(e){
     }else if(['pdf'].indexOf(ext) >= 0){
         // $('#file-modal-body').html("<iframe src='" + url + "' width='100%' height='100%' frameborder='1'>\n");
         $('#file-modal-body').html("<iframe src='/pdfjs-2.0.943-dist/web/viewer.html?file=" + url + "' width='100%' height='100%' frameborder='0' scrolling='no'></iframe>");
-    }else if(['png', 'jpg', 'jepg', 'gif', 'bmp'].indexOf(ext) >= 0){
+    }else if(['png', 'jpg', 'jpeg', 'gif', 'bmp'].indexOf(ext) >= 0){
         $('#file-modal-body').html("<div style='text-align:center;'><image style='max-width:90%' src='"+ url + "'></image></div>");
     }else{
         alert('该文件格式暂时不支持在线预览，点击确定后直接下载文件。');

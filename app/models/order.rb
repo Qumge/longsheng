@@ -41,21 +41,23 @@ class Order < ActiveRecord::Base
   after_create :set_no
   has_and_belongs_to_many :invoices, join_table: "order_invoices"
   has_one :place_file, -> {where(model_type: 'place')}, class_name: 'Attachment', foreign_key: :model_id
-  has_many :sign_files, -> {where(model_type: 'sign')}, class_name: 'Attachment', foreign_key: :model_id
+  # has_many :sign_files, -> {where(model_type: 'sign')}, class_name: 'Attachment', foreign_key: :model_id
   has_many :audits, -> {where(model_type: 'Order')}, foreign_key: :model_id
   has_many :deliver_logs
   has_many :delivers
+  has_one :sign_log
+  has_one :fund_log
   # after_update :check_payment
 
   STATUS = {wait: '新订单', apply: '已申请', project_manager_audit: '项目经理已审核',
             regional_manager_audit: '大区经理已审核', normal_admin_audit: '后勤已审核',
-            active: '已下单或申请成功', deliver: '已发货', sign: '已签收', failed: '审核失败' }
+            active: '已下单或申请成功', deliver: '已发货', sign: '已签收', fund: '进度款', failed: '审核失败' }
 
   ORDER_TYPE = {sample: '样品', normal: '订单', bargains: '特价订单'}
 
   aasm :order_status do
     state :wait, :initial => true
-    state :apply, :project_manager_audit, :regional_manager_audit, :normal_admin_audit, :active, :deliver, :sign, :failed
+    state :apply, :project_manager_audit, :regional_manager_audit, :normal_admin_audit, :active, :deliver, :sign, :fund,:failed
 
     #申请
     event :do_apply do
@@ -75,6 +77,11 @@ class Order < ActiveRecord::Base
     # 签收
     event :do_sign do
       transitions :from => :deliver, :to => :sign
+    end
+
+    # 签收
+    event :do_fund do
+      transitions :from => :sign, :to => :fund
     end
 
     # 项目经理审批

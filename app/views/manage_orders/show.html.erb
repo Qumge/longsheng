@@ -55,9 +55,18 @@
       </p>
       <p class="text-muted ">
         <span><b>签收清单:</b></span>
-        <% @order.sign_files.each do |sign_file|  %>
-          <a href="javascript:void(0)" onclick="show_file(this)" class="btn show-file" data-url="<%= sign_file.preview_url%>" data-file-name="<%= sign_file.file_name %>">
-            <i class="fa fa-eye"></i><%= show_file_name '签收清单', sign_file %>
+        <% if @order.sign_log.present? && @order.sign_log.sign_file.present?  %>
+          <a href="javascript:void(0)" onclick="show_file(this)" class="btn show-file" data-url="<%= @order.sign_log.sign_file.preview_url%>" data-file-name="<%=  @order.sign_log.sign_file.file_name %>">
+            <i class="fa fa-eye"></i><%= show_file_name '签收清单', @order.sign_log.sign_file %>
+          </a>
+        <% end %>
+      </p>
+
+      <p class="text-muted ">
+        <span><b>请款资料:</b></span>
+        <% if @order.fund_log.present? && @order.fund_log.fund_file.present?  %>
+          <a href="javascript:void(0)" onclick="show_file(this)" class="btn show-file" data-url="<%= @order.fund_log.fund_file.preview_url%>" data-file-name="<%=  @order.fund_log.fund_file.file_name %>">
+            <i class="fa fa-eye"></i><%= show_file_name '请款资料', @order.fund_log.fund_file %>
           </a>
         <% end %>
       </p>

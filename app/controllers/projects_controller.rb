@@ -75,7 +75,7 @@ class ProjectsController < ApplicationController
       a_type = "#{a_type}_file"
       order = @project.orders.find_by id: id
       if a_type == 'sign_file'
-        @flag = order.sign_files.create file_name: params[:file_name], path: params[:path]
+        #@flag = order.sign_files.create file_name: params[:file_name], path: params[:path]
       else
         if order.send(a_type).present?
           @flag = order.send(a_type).update file_name: params[:file_name], path: params[:path]

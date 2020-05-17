@@ -1,7 +1,8 @@
 class ManageOrdersController < ApplicationController
   include ApplicationHelper
-  before_action :set_uptoken, only: [:edit_deliver, :update_deliver]
-  before_action :set_order, only: [:show, :deliver, :edit_payment, :update_payment, :deliver_message, :send_message, :payment_logs, :edit_deliver, :update_deliver, :deliver_logs ]
+  before_action :set_uptoken, only: [:edit_deliver, :update_deliver, :edit_sign, :update_sign, :edit_fund, :update_fund]
+  before_action :set_order, only: [:show, :deliver, :edit_payment, :update_payment, :deliver_message, :send_message, :payment_logs, :edit_deliver, 
+    :update_deliver, :deliver_logs, :edit_sign, :update_sign, :edit_fund, :update_fund ]
 
   def index
     @orders = current_user.view_orders.search_conn(params).order('applied_at desc').page(params[:page]).per(Settings.per_page)
@@ -56,6 +57,29 @@ class ManageOrdersController < ApplicationController
     @deliver_log = @order.deliver_logs.new
     @deliver_log.build_deliver_file path: params[:path], file_name: params[:file_name] if params[:path].present?
     @flag = @deliver_log.update amount: params[:amount], deliver_at: params[:deliver_at], user: current_user
+  end
+
+
+  def edit_sign
+    @sign_log = SignLog.find_or_initialize_by order: @order
+    render layout: false
+  end
+
+  def update_sign
+    @sign_log = SignLog.find_or_initialize_by order: @order
+    @sign_log.build_sign_file path: params[:path], file_name: params[:file_name] if params[:path].present?
+    @flag = @sign_log.update sign_at: params[:sign_at], user: current_user
+  end
+
+  def edit_fund
+    @fund_log = FundLog.find_or_initialize_by order: @order
+    render layout: false
+  end
+
+  def update_fund
+    @fund_log = FundLog.find_or_initialize_by order: @order
+    @fund_log.build_fund_file path: params[:path], file_name: params[:file_name] if params[:path].present?
+    @flag = @fund_log.update fund_at: params[:fund_at], user: current_user
   end
 
   def payment_logs

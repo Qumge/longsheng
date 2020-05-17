@@ -201,7 +201,7 @@ module ApplicationHelper
   end
 
   def format_float number
-   number.present? ?  "#{(number * 100).ceil 2}%" : ''
+   # number.present? ?  "#{(number * 100).ceil 2}%" : ''
   end
 
   def page_numbers params

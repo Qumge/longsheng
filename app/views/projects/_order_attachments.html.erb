@@ -26,19 +26,12 @@
 
   </p>
   <p class="text-muted ">
-    <% if can?(:upload, :projects) && (order.deliver? || order.sign?) %>
-      <a class="btn btn-xs bg-blue upload-file" id="order_<%= order.id %>_sign" href="javascript:void(0)" >
-        <i class="fa fa-plus"></i>
-        <span>签收清单</span>
-      </a>
-    <% else %>
       <span><b>签收清单:</b></span>
-    <% end %>
-    <% order.sign_files.each do |sign_file|  %>
-      <a href="javascript:void(0)" onclick="show_file(this)" class="btn show-file" data-url="<%= sign_file.preview_url%>" data-file-name="<%= sign_file.file_name %>">
-        <i class="fa fa-eye"></i><%= show_file_name '签收清单', sign_file %>
-      </a>
-    <% end %>
+    <% if order.sign_log.present? && order.sign_log.sign_file.present?  %>
+          <a href="javascript:void(0)" onclick="show_file(this)" class="btn show-file" data-url="<%= order.sign_log.sign_file.preview_url%>" data-file-name="<%= order.sign_log.sign_file.file_name %>">
+            <i class="fa fa-eye"></i><%= show_file_name '签收清单', order.sign_log.sign_file %>
+          </a>
+        <% end %>
   </p>
   <p class="text-muted ">
       <span><b>回款金额（元）:</b> <%= order.payment %></span>
