@@ -51,7 +51,7 @@ class Order < ActiveRecord::Base
 
   STATUS = {wait: '新订单', apply: '已申请', project_manager_audit: '项目经理已审核',
             regional_manager_audit: '大区经理已审核', normal_admin_audit: '后勤已审核',
-            active: '已下单或申请成功', deliver: '已发货', sign: '已签收', fund: '进度款', failed: '审核失败' }
+            active: '已下单或申请成功', deliver: '已发货', sign: '已签收', fund: '请款', failed: '审核失败' }
 
   ORDER_TYPE = {sample: '样品', normal: '订单', bargains: '特价订单'}
 
