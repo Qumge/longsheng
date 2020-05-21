@@ -55,7 +55,7 @@
       <% end %>
       <%# if can?(:upload, :projects) && (order.deliver? || order.sign?) %>
 <!--      var sign_qiniu = new QiniuJsSDK();-->
-<!--      var sign_option = set_option('order_<%=# order.id %>_sign');-->
+<!--      var sign_option = set_option('order_<%#= order.id %>_sign');-->
 <!--      sign_<%#= order.id %>_uploader = sign_qiniu.uploader(sign_option);-->
 <!--      $('.btn-box-tool').click(function(){-->
 <!--          setTimeout(function(){ sign_<%#= order.id %>_uploader.refresh(); }, 1000);-->
